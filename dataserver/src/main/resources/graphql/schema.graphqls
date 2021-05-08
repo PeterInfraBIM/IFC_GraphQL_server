@@ -1,0 +1,241 @@
+enum IfcElementCompositionEnum {
+	COMPLEX
+	ELEMENT
+	PARTIAL
+}
+
+interface IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+}
+
+interface IfcObjectDefinition {
+	isDecomposedByRef: [Ref!]
+	isDecomposedBy: [RelAggregates!]
+	isDecomposedByDir: [IfcObjectDefinition!]
+	decomposesRef: [Ref!]
+	decomposes: [RelAggregates!]
+	decomposesDir: [IfcObjectDefinition!]
+}
+
+interface IfcProduct {
+	objectPlacement: LocalPlacement
+}
+
+interface IfcSpatialStructureElement {
+	compositionType: IfcElementCompositionEnum
+}
+
+type Ref {
+	type: String!
+	ref: String!
+}
+
+type Root implements IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+}
+
+type ObjectDefinition implements IfcRoot & IfcObjectDefinition {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+}
+
+type Product implements IfcRoot & IfcObjectDefinition & IfcProduct {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+}
+
+type SpatialStructureElement implements IfcRoot 
+										& IfcObjectDefinition 
+										& IfcProduct 
+										& IfcSpatialStructureElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	compositionType: IfcElementCompositionEnum
+}
+
+type RelAggregates implements IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	relatingObject: Root
+	relatingObjectRef: Ref
+	relatedObjects: [Root!]
+	relatedObjectsRef: [Ref!]
+}
+
+type RelContainedInSpatialStructure implements IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	relatedElements: [Ref]
+	relatingStructure: 	Ref
+}
+
+type LocalPlacement {
+	placementRelTo: LocalPlacement
+	relativePlacement: Axis2Placement3D
+}
+
+type Axis2Placement3D {
+	location: CartesianPoint
+	axis: Direction
+	refDirection: Direction
+}
+
+type CartesianPoint {
+	coordinates: [Float]
+}
+
+type Direction {
+	directionRatios: [Float]
+}
+
+type Site implements IfcRoot & 
+					 IfcObjectDefinition &
+					 IfcProduct &
+					 IfcSpatialStructureElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	compositionType: IfcElementCompositionEnum
+	refLatitude: [Float]
+	refLongitude: [Float]
+}
+
+type Building implements IfcRoot &
+						 IfcObjectDefinition &
+					 	 IfcProduct &
+					 	 IfcSpatialStructureElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	compositionType: IfcElementCompositionEnum
+}
+
+# IfcBuildingStorey
+type BuildingStorey implements IfcRoot &
+						 	   IfcObjectDefinition &
+					 	 	   IfcProduct {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+}
+
+type Query {
+	# Get all Root objects
+	allRoots: [Root]
+	# Get all ObjectDefinition objects
+	allObjectDefinitions: [ObjectDefinition]
+	# Get all Product objects
+	allProducts: [Product]
+	# Get all SpatialStructureElement objects
+	allSpatialStructureElements: [SpatialStructureElement]
+	# Get all Site objects
+	allSites: [Site]	
+	# Get all Building objects
+	allBuildings: [Building]	
+	# Get all BuildingStorey objects
+	allBuildingStoreys: [BuildingStorey]
+	# Get all RelAggregates objects
+	allRelAggregates: [RelAggregates]
+	# Get all RelContainedInSpatialStructure objects
+	allRelContainedInSpatialStructures: [RelContainedInSpatialStructure]	
+}
+
+schema {
+  query: Query
+}
