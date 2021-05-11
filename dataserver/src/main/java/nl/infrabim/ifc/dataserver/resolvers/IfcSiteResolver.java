@@ -10,8 +10,9 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
-import nl.infrabim.ifc.dataserver.models.IfcRoot;
+import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcSite;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -69,5 +70,13 @@ public class IfcSiteResolver implements GraphQLResolver<IfcSite> {
 
 	public IfcLocalPlacement getObjectPlacement(IfcSite site) {
 		return productService.getObjectPlacement(site);
+	}
+
+	public List<IfcRelContainedInSpatialStructure> getContainsElements(IfcSite site) {
+		return spatialStructureElementService.getContainsElements(site);
+	}
+
+	public List<IfcProduct> getContainsElementsDir(IfcSite site) {
+		return spatialStructureElementService.getcontainsElementsDir(site);
 	}
 }

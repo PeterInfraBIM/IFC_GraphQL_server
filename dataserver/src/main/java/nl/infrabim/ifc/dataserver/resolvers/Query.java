@@ -8,15 +8,21 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 
+import nl.infrabim.ifc.dataserver.models.IfcArbitraryClosedProfileDef;
 import nl.infrabim.ifc.dataserver.models.IfcBuilding;
 import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
+import nl.infrabim.ifc.dataserver.models.IfcExtrudedAreaSolid;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcPolyline;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
+import nl.infrabim.ifc.dataserver.models.IfcProfileDef;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
+import nl.infrabim.ifc.dataserver.models.IfcRepresentationItem;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.IfcSite;
 import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
+import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -26,6 +32,7 @@ import nl.infrabim.ifc.dataserver.services.IfcRelContainedInSpatialStructureServ
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSiteService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
+import nl.infrabim.ifc.dataserver.services.IfcWallStandardCaseService;
 
 @Component
 public class Query implements GraphQLQueryResolver {
@@ -48,6 +55,8 @@ public class Query implements GraphQLQueryResolver {
 	private IfcRelAggregatesService relAggregatesService;
 	@Autowired
 	private IfcRelContainedInSpatialStructureService relContainedInSpatialStructureService;
+	@Autowired
+	private IfcWallStandardCaseService wallStandardCaseService;
 
 	public List<IfcRoot> allRoots() throws IOException {
 		return rootService.getAllRoots();
@@ -73,8 +82,16 @@ public class Query implements GraphQLQueryResolver {
 		return buildingService.getAllBuildings();
 	}
 
+	public IfcBuilding oneBuilding(String globalId) throws IOException {
+		return buildingService.getOneBuilding(globalId);
+	}
+
 	public List<IfcBuildingStorey> allBuildingStoreys() throws IOException {
 		return buildingStoreyService.getAllBuildingStoreys();
+	}
+
+	public IfcBuildingStorey oneBuildingStorey(String globalId) throws IOException {
+		return buildingStoreyService.getOneBuildingStorey(globalId);
 	}
 
 	public List<IfcRelAggregates> allRelAggregates() throws IOException {
@@ -83,6 +100,30 @@ public class Query implements GraphQLQueryResolver {
 
 	public List<IfcRelContainedInSpatialStructure> allRelContainedInSpatialStructures() throws IOException {
 		return relContainedInSpatialStructureService.getAllRelContainedInSpatialStructures();
+	}
+
+	public List<IfcWallStandardCase> allWallStandardCases() throws IOException {
+		return wallStandardCaseService.getAllWallStandardCases();
+	}
+
+	public IfcRepresentationItem getTestRepresentationItem() {
+		return new IfcRepresentationItem();
+	}
+
+	public IfcPolyline getTestPolyline() {
+		return new IfcPolyline();
+	}
+
+	public IfcExtrudedAreaSolid getTestExtrudedAreaSolid() {
+		return new IfcExtrudedAreaSolid();
+	}
+
+	public IfcProfileDef getTestProfileDef() {
+		return new IfcProfileDef();
+	}
+	
+	public IfcArbitraryClosedProfileDef getTestArbitraryClosedProfileDef() {
+		return new IfcArbitraryClosedProfileDef();
 	}
 
 }

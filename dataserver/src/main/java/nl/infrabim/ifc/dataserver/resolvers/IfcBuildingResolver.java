@@ -11,8 +11,11 @@ import nl.infrabim.ifc.dataserver.models.IfcBuilding;
 import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
+import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
+import nl.infrabim.ifc.dataserver.models.IfcSite;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -61,5 +64,13 @@ public class IfcBuildingResolver implements GraphQLResolver<IfcBuilding> {
 
 	public IfcLocalPlacement getObjectPlacement(IfcBuilding building) {
 		return productService.getObjectPlacement(building);
+	}
+	
+	public List<IfcRelContainedInSpatialStructure> getContainsElements(IfcBuilding building) {
+		return spatialStructureElementService.getContainsElements(building);
+	}
+	
+	public List<IfcProduct> getContainsElementsDir(IfcBuilding building) {
+		return spatialStructureElementService.getcontainsElementsDir(building);
 	}
 }

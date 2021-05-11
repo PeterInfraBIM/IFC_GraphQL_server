@@ -60,4 +60,10 @@ public class IfcRelContainedInSpatialStructureService {
 		return null;
 	}
 
+	public IfcRelContainedInSpatialStructure getRelContainedInSpatialStructureByGlobalId(String globalId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("globalId").is(globalId));
+		return mongoTemplate.findOne(query, IfcRelContainedInSpatialStructure.class);
+	}
+
 }

@@ -23,7 +23,15 @@ public class IfcRootService {
 	private MongoTemplate mongoTemplate;
 
 	public List<IfcRoot> getAllRoots() {
-		return rootRepository.findAll();
+		List<IfcRoot> filteredList = null;
+		for (IfcRoot candidate : rootRepository.findAll()) {
+			if (candidate.getName() != null || candidate.getDescription() != null) {
+				if (filteredList == null)
+					filteredList = new ArrayList<>();
+				filteredList.add(candidate);
+			}
+		}
+		return filteredList;
 	}
 
 	public List<IfcRoot> filterRootsByType(String filterType) {

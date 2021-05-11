@@ -7,15 +7,14 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
-import nl.infrabim.ifc.dataserver.models.IfcBuilding;
 import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
 import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
-import nl.infrabim.ifc.dataserver.models.IfcRoot;
+import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
@@ -63,5 +62,17 @@ public class IfcBuildingStoreyResolver implements GraphQLResolver<IfcBuildingSto
 
 	public IfcLocalPlacement getObjectPlacement(IfcBuildingStorey buildingStorey) {
 		return productService.getObjectPlacement(buildingStorey);
+	}
+
+	public List<IfcRelContainedInSpatialStructure> getContainsElements(IfcBuildingStorey buildingStorey) {
+		return spatialStructureElementService.getContainsElements(buildingStorey);
+	}
+
+	public List<IfcProduct> getContainsElementsDir(IfcBuildingStorey buildingStorey) {
+		return spatialStructureElementService.getcontainsElementsDir(buildingStorey);
+	}
+
+	public Float getElevation(IfcBuildingStorey buildingStorey) {
+		return buildingStoreyService.getElevation(buildingStorey);
 	}
 }

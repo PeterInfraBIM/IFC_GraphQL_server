@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
+import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.Ref;
@@ -21,7 +22,7 @@ public class IfcRelAggregatesResolver implements GraphQLResolver<IfcRelAggregate
 		return ifcRelAggregatesService.getRelatingObjectRef(relAggregates);
 	}
 
-	public IfcRoot getRelatingObject(IfcRelAggregates relAggregates) {
+	public IfcObjectDefinition getRelatingObject(IfcRelAggregates relAggregates) {
 		return ifcRelAggregatesService.getRelatingObject(relAggregates);
 	}
 
@@ -29,7 +30,7 @@ public class IfcRelAggregatesResolver implements GraphQLResolver<IfcRelAggregate
 		return ifcRelAggregatesService.getRelatedObjectsRef(relAggregates);
 	}
 
-	public List<IfcRoot> getRelatedObjects(IfcRelAggregates relAggregates) {
+	public List<IfcObjectDefinition> getRelatedObjects(IfcRelAggregates relAggregates) {
 		return ifcRelAggregatesService.getRelatedObjects(relAggregates);
 	}
 

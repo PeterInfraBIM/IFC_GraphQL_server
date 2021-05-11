@@ -4,9 +4,18 @@ enum IfcElementCompositionEnum {
 	PARTIAL
 }
 
-interface IfcRoot {
+enum IfcProfileTypeEnum {
+	CURVE
+	AREA
+}
+
+
+interface Addressable {
 	type: String!
 	globalId: ID!
+}
+
+interface IfcRoot {
 	name: String
 	description: String
 }
@@ -22,10 +31,14 @@ interface IfcObjectDefinition {
 
 interface IfcProduct {
 	objectPlacement: LocalPlacement
+	representation: ProductRepresentation
 }
 
 interface IfcSpatialStructureElement {
 	compositionType: IfcElementCompositionEnum
+	containsElementsRef: [Ref!]
+	containsElements: [RelContainedInSpatialStructure!]
+	containsElementsDir: [IfcProduct!]
 }
 
 type Ref {
@@ -33,14 +46,14 @@ type Ref {
 	ref: String!
 }
 
-type Root implements IfcRoot {
+type Root implements Addressable & IfcRoot {
 	type: String!
 	globalId: ID!
 	name: String
 	description: String
 }
 
-type ObjectDefinition implements IfcRoot & IfcObjectDefinition {
+type ObjectDefinition implements Addressable & IfcRoot & IfcObjectDefinition {
 	type: String!
 	globalId: ID!
 	name: String
@@ -59,7 +72,43 @@ type ObjectDefinition implements IfcRoot & IfcObjectDefinition {
 	decomposesDir: [ObjectDefinition!]
 }
 
-type Product implements IfcRoot & IfcObjectDefinition & IfcProduct {
+type ProductRepresentation {
+	representationsRef: [Ref!]
+	representations: [ShapeRepresentation!]
+}
+
+type ShapeRepresentation {
+	type: String!
+	globalId: String!
+	contextOfItemsRef: Ref
+	representationIdentifier: String
+	representationType: String
+	items: [RepresentationItem!]
+	ofProductRepresentation: [ProductRepresentation!]
+}
+
+union RepresentationItem = Polyline | ExtrudedAreaSolid
+
+type Polyline {
+	type: String!
+	points: [CartesianPoint!]
+}
+
+type ExtrudedAreaSolid  {
+	type: String!
+	extrudedDirection: Direction
+	depth: Float
+	position: Axis2Placement3D
+	sweptArea: ArbitraryClosedProfileDef
+}
+
+type ArbitraryClosedProfileDef {
+	type: String!
+	profileType: IfcProfileTypeEnum
+	outerCurve: Polyline;
+}
+
+type Product implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct {
 	type: String!
 	globalId: ID!
 	name: String
@@ -77,9 +126,11 @@ type Product implements IfcRoot & IfcObjectDefinition & IfcProduct {
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	representation: ProductRepresentation
 }
 
-type SpatialStructureElement implements IfcRoot 
+type SpatialStructureElement implements Addressable 
+										& IfcRoot 
 										& IfcObjectDefinition 
 										& IfcProduct 
 										& IfcSpatialStructureElement {
@@ -100,21 +151,25 @@ type SpatialStructureElement implements IfcRoot
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	representation: ProductRepresentation
 	compositionType: IfcElementCompositionEnum
+	containsElementsRef: [Ref!]
+	containsElements: [RelContainedInSpatialStructure!]
+	containsElementsDir: [Product!]
 }
 
-type RelAggregates implements IfcRoot {
+type RelAggregates implements Addressable & IfcRoot {
 	type: String!
 	globalId: ID!
 	name: String
 	description: String
-	relatingObject: Root
+	relatingObject: ObjectDefinition
 	relatingObjectRef: Ref
-	relatedObjects: [Root!]
+	relatedObjects: [ObjectDefinition!]
 	relatedObjectsRef: [Ref!]
 }
 
-type RelContainedInSpatialStructure implements IfcRoot {
+type RelContainedInSpatialStructure implements Addressable & IfcRoot {
 	type: String!
 	globalId: ID!
 	name: String
@@ -142,7 +197,8 @@ type Direction {
 	directionRatios: [Float]
 }
 
-type Site implements IfcRoot & 
+type Site implements Addressable & 
+					 IfcRoot & 
 					 IfcObjectDefinition &
 					 IfcProduct &
 					 IfcSpatialStructureElement {
@@ -163,12 +219,17 @@ type Site implements IfcRoot &
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	representation: ProductRepresentation	
 	compositionType: IfcElementCompositionEnum
+	containsElementsRef: [Ref!]
+	containsElements: [RelContainedInSpatialStructure!]
+	containsElementsDir: [Product!]
 	refLatitude: [Float]
 	refLongitude: [Float]
 }
 
-type Building implements IfcRoot &
+type Building implements Addressable & 
+						 IfcRoot &
 						 IfcObjectDefinition &
 					 	 IfcProduct &
 					 	 IfcSpatialStructureElement {
@@ -189,13 +250,16 @@ type Building implements IfcRoot &
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	representation: ProductRepresentation	
 	compositionType: IfcElementCompositionEnum
+	containsElementsRef: [Ref!]
+	containsElements: [RelContainedInSpatialStructure!]
+	containsElementsDir: [Product!]
 }
 
 # IfcBuildingStorey
-type BuildingStorey implements IfcRoot &
-						 	   IfcObjectDefinition &
-					 	 	   IfcProduct {
+type BuildingStorey 
+	implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct & IfcSpatialStructureElement {
 	type: String!
 	globalId: ID!
 	name: String
@@ -213,6 +277,34 @@ type BuildingStorey implements IfcRoot &
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	representation: ProductRepresentation	
+	compositionType: IfcElementCompositionEnum
+	containsElementsRef: [Ref!]
+	containsElements: [RelContainedInSpatialStructure!]
+	containsElementsDir: [Product!]
+	elevation: Float
+}
+
+# IfcWallStandardCase
+type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	representation: ProductRepresentation	
 }
 
 type Query {
@@ -228,12 +320,22 @@ type Query {
 	allSites: [Site]	
 	# Get all Building objects
 	allBuildings: [Building]	
+	# Get one Building object
+	oneBuilding(globalId: String!): Building
 	# Get all BuildingStorey objects
 	allBuildingStoreys: [BuildingStorey]
+	# Get one BuildingStorey object
+	oneBuildingStorey(globalId: String!): BuildingStorey
 	# Get all RelAggregates objects
 	allRelAggregates: [RelAggregates]
 	# Get all RelContainedInSpatialStructure objects
 	allRelContainedInSpatialStructures: [RelContainedInSpatialStructure]	
+	# Get all WallStandardCase objects
+	allWallStandardCases: [WallStandardCase]
+	getTestPolyline: Polyline
+	getTestExtrudedAreaSolid: ExtrudedAreaSolid
+	getTestRepresentationItem: RepresentationItem
+	getTestArbitraryClosedProfileDef: ArbitraryClosedProfileDef
 }
 
 schema {

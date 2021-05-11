@@ -9,7 +9,9 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 
 import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
+import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -49,6 +51,18 @@ public class IfcSpatialStructureElementResolver implements GraphQLResolver<IfcSp
 
 	public IfcElementCompositionEnum getCompositionType(IfcSpatialStructureElement spatialStructureElement) {
 		return spatialStructureElementService.getCompositionType(spatialStructureElement);
+	}
+
+	public List<Ref> getcontainsElementsRef(IfcSpatialStructureElement spatialStructureElement) {
+		return spatialStructureElementService.getcontainsElementsRef(spatialStructureElement);
+	}
+	
+	public List<IfcRelContainedInSpatialStructure> getContainsElements(IfcSpatialStructureElement spatialStructureElement) {
+		return spatialStructureElementService.getContainsElements(spatialStructureElement);
+	}
+	
+	public List<IfcProduct> getContainsElementsDir(IfcSpatialStructureElement spatialStructureElement) {
+		return spatialStructureElementService.getcontainsElementsDir(spatialStructureElement);
 	}
 
 }

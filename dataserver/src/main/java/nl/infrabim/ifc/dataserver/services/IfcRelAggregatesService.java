@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.Ref;
@@ -20,10 +21,10 @@ public class IfcRelAggregatesService {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
-
 	@Autowired
 	private IfcRootService rootService;
-
+	@Autowired
+	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
 	private IfcRelAggregatesRepository relAggregatesRepository;
 
@@ -55,10 +56,10 @@ public class IfcRelAggregatesService {
 		return null;
 	}
 
-	public IfcRoot getRelatingObject(IfcRelAggregates relAggregates) {
+	public IfcObjectDefinition getRelatingObject(IfcRelAggregates relAggregates) {
 		Optional<Ref> ref = Optional.ofNullable(getRelatingObjectRef(relAggregates));
 		if (ref.isPresent()) {
-			return rootService.getRootByGlobalId(ref.get().getRef());
+			return objectDefinitionService.getObjectDefinitionByGlobalId(ref.get().getRef());
 		}
 		return null;
 	}
@@ -71,14 +72,14 @@ public class IfcRelAggregatesService {
 		return null;
 	}
 
-	public List<IfcRoot> getRelatedObjects(IfcRelAggregates relAggregates) {
-		List<IfcRoot> relatedObjects = null;
+	public List<IfcObjectDefinition> getRelatedObjects(IfcRelAggregates relAggregates) {
+		List<IfcObjectDefinition> relatedObjects = null;
 		Optional<List<Ref>> refList = Optional.ofNullable(getRelatedObjectsRef(relAggregates));
 		if (refList.isPresent()) {
 			relatedObjects = new ArrayList<>();
 			List<Ref> relatedObjectsRef = refList.get();
 			for (Ref ref : relatedObjectsRef) {
-				relatedObjects.add(rootService.getRootByGlobalId(ref.getRef()));
+				relatedObjects.add(objectDefinitionService.getObjectDefinitionByGlobalId(ref.getRef()));
 			}
 		}
 		return relatedObjects;

@@ -2,6 +2,7 @@ package nl.infrabim.ifc.dataserver.models;
 
 public class IfcProduct extends IfcObjectDefinition {
 	private IfcLocalPlacement objectPlacement;
+	private IfcProductRepresentation representation;
 
 	public IfcProduct() {
 		super();
@@ -17,6 +18,14 @@ public class IfcProduct extends IfcObjectDefinition {
 
 	public void setObjectPlacement(IfcLocalPlacement objectPlacement) {
 		this.objectPlacement = objectPlacement;
+	}
+
+	public IfcProductRepresentation getRepresentation() {
+		return representation;
+	}
+
+	public void setRepresentation(IfcProductRepresentation representation) {
+		this.representation = representation;
 	}
 
 }

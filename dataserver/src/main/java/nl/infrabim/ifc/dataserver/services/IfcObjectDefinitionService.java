@@ -100,7 +100,7 @@ public class IfcObjectDefinitionService {
 		return isDecomposedByDir;
 	}
 
-	private IfcObjectDefinition getObjectDefinitionByGlobalId(String globalId) {
+	public IfcObjectDefinition getObjectDefinitionByGlobalId(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcObjectDefinition.class);
