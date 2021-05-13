@@ -1,6 +1,6 @@
 package nl.infrabim.ifc.dataserver.models;
 
-public class IfcProduct extends IfcObjectDefinition {
+public class IfcProduct extends IfcObject {
 	private IfcLocalPlacement objectPlacement;
 	private IfcProductRepresentation representation;
 

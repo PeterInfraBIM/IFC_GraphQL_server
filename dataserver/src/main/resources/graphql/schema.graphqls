@@ -4,6 +4,17 @@ enum IfcElementCompositionEnum {
 	PARTIAL
 }
 
+enum IfcDirectionSenseEnum {
+	POSITIVE
+	NEGATIVE
+}
+
+enum IfcLayerSetDirectionEnum {
+	AXIS1
+	AXIS2
+	AXIS3
+}
+
 enum IfcProfileTypeEnum {
 	CURVE
 	AREA
@@ -29,9 +40,23 @@ interface IfcObjectDefinition {
 	decomposesDir: [IfcObjectDefinition!]
 }
 
+interface IfcObject {
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+}
+
 interface IfcProduct {
 	objectPlacement: LocalPlacement
 	representation: ProductRepresentation
+}
+
+interface IfcElement {
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [IfcRelAssociates!]
+}
+
+interface IfcRelAssociates {
+	relatedObjectsRef: [Ref!]
 }
 
 interface IfcSpatialStructureElement {
@@ -178,6 +203,85 @@ type RelContainedInSpatialStructure implements Addressable & IfcRoot {
 	relatingStructure: 	Ref
 }
 
+type RelAssociates implements Addressable & IfcRoot & IfcRelAssociates {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	relatedObjectsRef: [Ref!]
+}
+
+type RelAssociatesMaterial implements Addressable & IfcRoot & IfcRelAssociates {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	relatedObjectsRef: [Ref!]
+	relatingMaterial: MaterialLayerSetUsage
+}
+
+type RelDefinesByProperties implements Addressable & IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	relatingPropertyDefinitionRef: Ref
+	relatingPropertyDefinition: PropertySet
+}
+
+type PropertySet implements IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	hasProperties: [Property!]
+}
+
+union Property = PropertySingleValue
+
+union Value = RealValue | BooleanValue
+
+type BooleanValue {
+	type: String!
+	booleanValue: Boolean
+}
+
+type RealValue {
+	type: String!
+	realValue: Float
+}
+
+type PropertySingleValue {
+	type: String!
+	name: String
+	description: String
+	nominalValue: Value
+}
+
+type MaterialLayerSetUsage {
+	type: String!
+	forLayerSet: MaterialLayerSet
+	layerSetDirection: IfcLayerSetDirectionEnum
+	directionSense: IfcDirectionSenseEnum
+	offsetFromReferenceLine: Float
+}
+
+type MaterialLayerSet{
+	type: String!
+	materialLayers: [MaterialLayer!]
+}
+
+type MaterialLayer {
+	type: String!
+	material: Material
+	layerThickness: Float!
+}
+
+type Material {
+	type: String!
+	name: String
+}
+
 type LocalPlacement {
 	placementRelTo: LocalPlacement
 	relativePlacement: Axis2Placement3D
@@ -286,7 +390,7 @@ type BuildingStorey
 }
 
 # IfcWallStandardCase
-type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct {
+type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
 	type: String!
 	globalId: ID!
 	name: String
@@ -304,7 +408,11 @@ type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & I
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
-	representation: ProductRepresentation	
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	representation: ProductRepresentation
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
 }
 
 type Query {
@@ -329,13 +437,25 @@ type Query {
 	# Get all RelAggregates objects
 	allRelAggregates: [RelAggregates]
 	# Get all RelContainedInSpatialStructure objects
-	allRelContainedInSpatialStructures: [RelContainedInSpatialStructure]	
+	allRelContainedInSpatialStructures: [RelContainedInSpatialStructure]
+	# Get all RelAssociates objects
+	allRelAssociates: [RelAssociates]
+	# Get all RelAssociatesMaterial objects
+	allRelAssociatesMaterials: [RelAssociatesMaterial]
+	# Get all RelDefinesByProperties objects
+	allRelDefinesByProperties: [RelDefinesByProperties]
 	# Get all WallStandardCase objects
 	allWallStandardCases: [WallStandardCase]
+	# Get all PropertySetDefinition objects
+	allPropertySets: [PropertySet]
 	getTestPolyline: Polyline
 	getTestExtrudedAreaSolid: ExtrudedAreaSolid
 	getTestRepresentationItem: RepresentationItem
 	getTestArbitraryClosedProfileDef: ArbitraryClosedProfileDef
+	getTestPropertySingleValue: PropertySingleValue
+	getTestValue: Value
+	getTestBooleanValue: BooleanValue
+	getTestRealValue: RealValue
 }
 
 schema {

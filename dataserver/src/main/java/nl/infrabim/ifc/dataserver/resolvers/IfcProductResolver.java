@@ -7,18 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
-import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
-import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
-import nl.infrabim.ifc.dataserver.models.IfcRoot;
-import nl.infrabim.ifc.dataserver.models.IfcSite;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
-import nl.infrabim.ifc.dataserver.services.IfcSiteService;
-import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
 
 @Component
 public class IfcProductResolver implements GraphQLResolver<IfcProduct> {

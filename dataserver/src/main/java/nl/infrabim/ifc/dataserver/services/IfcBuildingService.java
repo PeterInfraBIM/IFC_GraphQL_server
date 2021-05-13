@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcBuilding;
-import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.repositories.IfcBuildingRepository;
 
 @Service

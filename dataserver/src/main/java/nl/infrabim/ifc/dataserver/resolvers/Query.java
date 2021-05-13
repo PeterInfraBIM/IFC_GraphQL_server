@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 
 import nl.infrabim.ifc.dataserver.models.IfcArbitraryClosedProfileDef;
+import nl.infrabim.ifc.dataserver.models.IfcBooleanValue;
 import nl.infrabim.ifc.dataserver.models.IfcBuilding;
 import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
 import nl.infrabim.ifc.dataserver.models.IfcExtrudedAreaSolid;
@@ -16,19 +17,31 @@ import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcPolyline;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcProfileDef;
+import nl.infrabim.ifc.dataserver.models.IfcProperty;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySingleValue;
+import nl.infrabim.ifc.dataserver.models.IfcRealValue;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
+import nl.infrabim.ifc.dataserver.models.IfcRelAssociates;
+import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
+import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRepresentationItem;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.IfcSite;
 import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
+import nl.infrabim.ifc.dataserver.models.IfcValue;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
+import nl.infrabim.ifc.dataserver.services.IfcPropertySetService;
 import nl.infrabim.ifc.dataserver.services.IfcRelAggregatesService;
+import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesMaterialService;
+import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesService;
 import nl.infrabim.ifc.dataserver.services.IfcRelContainedInSpatialStructureService;
+import nl.infrabim.ifc.dataserver.services.IfcRelDefinesByPropertiesService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSiteService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
@@ -56,7 +69,15 @@ public class Query implements GraphQLQueryResolver {
 	@Autowired
 	private IfcRelContainedInSpatialStructureService relContainedInSpatialStructureService;
 	@Autowired
+	private IfcRelAssociatesService relAssociatesService;
+	@Autowired
+	private IfcRelAssociatesMaterialService relAssociatesMaterialService;
+	@Autowired
+	private IfcRelDefinesByPropertiesService relDefinesByPropertiesService;
+	@Autowired
 	private IfcWallStandardCaseService wallStandardCaseService;
+	@Autowired
+	private IfcPropertySetService propertySetService;
 
 	public List<IfcRoot> allRoots() throws IOException {
 		return rootService.getAllRoots();
@@ -102,8 +123,24 @@ public class Query implements GraphQLQueryResolver {
 		return relContainedInSpatialStructureService.getAllRelContainedInSpatialStructures();
 	}
 
+	public List<IfcRelAssociates> allRelAssociates() throws IOException {
+		return relAssociatesService.getAllRelAssociates();
+	}
+
+	public List<IfcRelAssociatesMaterial> allRelAssociatesMaterials() throws IOException {
+		return relAssociatesMaterialService.getAllRelAssociatesMaterials();
+	}
+
+	public List<IfcRelDefinesByProperties> allRelDefinesByProperties() throws IOException {
+		return relDefinesByPropertiesService.getAllRelDefinesByProperties();
+	}
+
 	public List<IfcWallStandardCase> allWallStandardCases() throws IOException {
 		return wallStandardCaseService.getAllWallStandardCases();
+	}
+
+	public List<IfcPropertySet> allPropertySets() throws IOException {
+		return propertySetService.getAllPropertySets();
 	}
 
 	public IfcRepresentationItem getTestRepresentationItem() {
@@ -121,9 +158,25 @@ public class Query implements GraphQLQueryResolver {
 	public IfcProfileDef getTestProfileDef() {
 		return new IfcProfileDef();
 	}
-	
+
 	public IfcArbitraryClosedProfileDef getTestArbitraryClosedProfileDef() {
 		return new IfcArbitraryClosedProfileDef();
+	}
+
+	public IfcPropertySingleValue getTestPropertySingleValue() {
+		return new IfcPropertySingleValue();
+	}
+
+	public IfcValue getTestValue() {
+		return new IfcValue();
+	}
+
+	public IfcBooleanValue getTestBooleanValue() {
+		return new IfcBooleanValue();
+	}
+
+	public IfcRealValue getTestRealValue() {
+		return new IfcRealValue();
 	}
 
 }
