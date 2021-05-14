@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
+import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.repositories.IfcElementRepository;
 
@@ -23,6 +24,8 @@ public class IfcElementService {
 	private IfcElementRepository elementRepository;
 	@Autowired
 	private IfcRelAssociatesMaterialService relAssociatesMaterialService;
+	@Autowired
+	private IfcRelVoidsElementService relVoidsElementService;
 
 	public List<IfcElement> getAllElements() {
 		List<IfcElement> allElements = new ArrayList<>();
@@ -53,6 +56,19 @@ public class IfcElementService {
 			}
 		}
 		return hasAssociations;
+	}
+
+	public List<IfcRelVoidsElement> getHasOpenings(IfcElement element) {
+		List<IfcRelVoidsElement> hasOpenings = null;
+		List<Ref> hasOpeningsRef = element.getHasOpeningsRef();
+		if (hasOpeningsRef != null) {
+			hasOpenings = new ArrayList<>();
+			for (Ref ref : hasOpeningsRef) {
+				IfcRelVoidsElement relVoidsElement = relVoidsElementService.getRelVoidsElementByGlobalId(ref.getRef());
+				hasOpenings.add(relVoidsElement);
+			}
+		}
+		return hasOpenings;
 	}
 
 }

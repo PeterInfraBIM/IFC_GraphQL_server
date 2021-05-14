@@ -9,13 +9,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import nl.infrabim.ifc.dataserver.models.IfcElement;
 import nl.infrabim.ifc.dataserver.models.IfcObject;
-import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
-import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcElementRepository;
 import nl.infrabim.ifc.dataserver.repositories.IfcObjectRepository;
 
 @Service
@@ -57,6 +53,10 @@ public class IfcObjectService {
 			}
 		}
 		return isDefinedBy;
+	}
+
+	public IfcObject getObjectByGlobalId(String globalId) {
+		return getOneObject(globalId);
 	}
 
 }

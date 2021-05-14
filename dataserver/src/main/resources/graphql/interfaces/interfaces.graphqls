@@ -1,0 +1,47 @@
+
+interface Addressable {
+	type: String!
+	globalId: ID!
+}
+
+interface IfcRoot {
+	name: String
+	description: String
+}
+
+interface IfcObjectDefinition {
+	isDecomposedByRef: [Ref!]
+	isDecomposedBy: [RelAggregates!]
+	isDecomposedByDir: [IfcObjectDefinition!]
+	decomposesRef: [Ref!]
+	decomposes: [RelAggregates!]
+	decomposesDir: [IfcObjectDefinition!]
+}
+
+interface IfcObject {
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+}
+
+interface IfcProduct {
+	objectPlacement: LocalPlacement
+	representation: ProductRepresentation
+}
+
+interface IfcElement {
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [IfcRelAssociates!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+}
+
+interface IfcRelAssociates {
+	relatedObjectsRef: [Ref!]
+}
+
+interface IfcSpatialStructureElement {
+	compositionType: IfcElementCompositionEnum
+	containsElementsRef: [Ref!]
+	containsElements: [RelContainedInSpatialStructure!]
+	containsElementsDir: [IfcProduct!]
+}

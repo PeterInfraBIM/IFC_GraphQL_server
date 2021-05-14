@@ -1,70 +1,3 @@
-enum IfcElementCompositionEnum {
-	COMPLEX
-	ELEMENT
-	PARTIAL
-}
-
-enum IfcDirectionSenseEnum {
-	POSITIVE
-	NEGATIVE
-}
-
-enum IfcLayerSetDirectionEnum {
-	AXIS1
-	AXIS2
-	AXIS3
-}
-
-enum IfcProfileTypeEnum {
-	CURVE
-	AREA
-}
-
-
-interface Addressable {
-	type: String!
-	globalId: ID!
-}
-
-interface IfcRoot {
-	name: String
-	description: String
-}
-
-interface IfcObjectDefinition {
-	isDecomposedByRef: [Ref!]
-	isDecomposedBy: [RelAggregates!]
-	isDecomposedByDir: [IfcObjectDefinition!]
-	decomposesRef: [Ref!]
-	decomposes: [RelAggregates!]
-	decomposesDir: [IfcObjectDefinition!]
-}
-
-interface IfcObject {
-	isDefinedByRef: [Ref!]
-	isDefinedBy: [RelDefinesByProperties!]
-}
-
-interface IfcProduct {
-	objectPlacement: LocalPlacement
-	representation: ProductRepresentation
-}
-
-interface IfcElement {
-	hasAssociationsRef: [Ref!]
-	hasAssociations: [IfcRelAssociates!]
-}
-
-interface IfcRelAssociates {
-	relatedObjectsRef: [Ref!]
-}
-
-interface IfcSpatialStructureElement {
-	compositionType: IfcElementCompositionEnum
-	containsElementsRef: [Ref!]
-	containsElements: [RelContainedInSpatialStructure!]
-	containsElementsDir: [IfcProduct!]
-}
 
 type Ref {
 	type: String!
@@ -95,6 +28,27 @@ type ObjectDefinition implements Addressable & IfcRoot & IfcObjectDefinition {
 	decomposes: [RelAggregates!]
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
+}
+
+type Object implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
 }
 
 type ProductRepresentation {
@@ -152,6 +106,31 @@ type Product implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
 	representation: ProductRepresentation
+}
+
+type Element implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	representation: ProductRepresentation
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
 }
 
 type SpatialStructureElement implements Addressable 
@@ -225,8 +204,21 @@ type RelDefinesByProperties implements Addressable & IfcRoot {
 	globalId: ID!
 	name: String
 	description: String
+	relatedObjectsRef: [Ref!]
+	relatedObjects: [Object!]
 	relatingPropertyDefinitionRef: Ref
 	relatingPropertyDefinition: PropertySet
+}
+
+type RelVoidsElement implements Addressable & IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	relatingBuildingElementRef: Ref
+	relatingBuildingElement: Element
+	relatedOpeningElementRef: Ref
+	relatedOpeningElement: OpeningElement
 }
 
 type PropertySet implements IfcRoot {
@@ -413,6 +405,36 @@ type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & I
 	representation: ProductRepresentation
 	hasAssociationsRef: [Ref!]
 	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+}
+
+# IfcOpeningElement
+type OpeningElement implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	representation: ProductRepresentation
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
 }
 
 type Query {
@@ -420,10 +442,14 @@ type Query {
 	allRoots: [Root]
 	# Get all ObjectDefinition objects
 	allObjectDefinitions: [ObjectDefinition]
+	# Get all Object objects
+	allObjects: [Object]
 	# Get all Product objects
 	allProducts: [Product]
 	# Get all SpatialStructureElement objects
 	allSpatialStructureElements: [SpatialStructureElement]
+	# Get all OpeningElement objects
+	allOpeningElements: [OpeningElement]
 	# Get all Site objects
 	allSites: [Site]	
 	# Get all Building objects
@@ -444,6 +470,8 @@ type Query {
 	allRelAssociatesMaterials: [RelAssociatesMaterial]
 	# Get all RelDefinesByProperties objects
 	allRelDefinesByProperties: [RelDefinesByProperties]
+	# Get all RelVoidsElement objects
+	allRelVoidsElements: [RelVoidsElement]
 	# Get all WallStandardCase objects
 	allWallStandardCases: [WallStandardCase]
 	# Get all PropertySetDefinition objects

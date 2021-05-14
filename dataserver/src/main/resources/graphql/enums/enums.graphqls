@@ -1,0 +1,21 @@
+enum IfcElementCompositionEnum {
+	COMPLEX
+	ELEMENT
+	PARTIAL
+}
+
+enum IfcDirectionSenseEnum {
+	POSITIVE
+	NEGATIVE
+}
+
+enum IfcLayerSetDirectionEnum {
+	AXIS1
+	AXIS2
+	AXIS3
+}
+
+enum IfcProfileTypeEnum {
+	CURVE
+	AREA
+}

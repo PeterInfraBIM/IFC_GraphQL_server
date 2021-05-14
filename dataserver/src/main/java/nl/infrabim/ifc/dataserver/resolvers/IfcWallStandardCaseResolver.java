@@ -12,6 +12,7 @@ import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
+import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
@@ -63,6 +64,10 @@ public class IfcWallStandardCaseResolver implements GraphQLResolver<IfcWallStand
 		return elementService.getHasAssociations(wallStandardCase);
 	}
 
+	public List<IfcRelVoidsElement> getHasOpenings(IfcWallStandardCase wallStandardCase) {
+		return elementService.getHasOpenings(wallStandardCase);
+	}
+	
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcWallStandardCase wallStandardCase) {
 		return objectService.getIsDefinedBy(wallStandardCase);
 	}

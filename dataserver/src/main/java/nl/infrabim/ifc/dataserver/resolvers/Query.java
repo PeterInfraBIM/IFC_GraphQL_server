@@ -13,11 +13,12 @@ import nl.infrabim.ifc.dataserver.models.IfcBooleanValue;
 import nl.infrabim.ifc.dataserver.models.IfcBuilding;
 import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
 import nl.infrabim.ifc.dataserver.models.IfcExtrudedAreaSolid;
+import nl.infrabim.ifc.dataserver.models.IfcObject;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcOpeningElement;
 import nl.infrabim.ifc.dataserver.models.IfcPolyline;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcProfileDef;
-import nl.infrabim.ifc.dataserver.models.IfcProperty;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySingleValue;
 import nl.infrabim.ifc.dataserver.models.IfcRealValue;
@@ -26,6 +27,7 @@ import nl.infrabim.ifc.dataserver.models.IfcRelAssociates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
+import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRepresentationItem;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.IfcSite;
@@ -35,6 +37,8 @@ import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
+import nl.infrabim.ifc.dataserver.services.IfcObjectService;
+import nl.infrabim.ifc.dataserver.services.IfcOpeningElementService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
 import nl.infrabim.ifc.dataserver.services.IfcPropertySetService;
 import nl.infrabim.ifc.dataserver.services.IfcRelAggregatesService;
@@ -42,6 +46,7 @@ import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesMaterialService;
 import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesService;
 import nl.infrabim.ifc.dataserver.services.IfcRelContainedInSpatialStructureService;
 import nl.infrabim.ifc.dataserver.services.IfcRelDefinesByPropertiesService;
+import nl.infrabim.ifc.dataserver.services.IfcRelVoidsElementService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSiteService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
@@ -54,6 +59,8 @@ public class Query implements GraphQLQueryResolver {
 	private IfcRootService rootService;
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
+	@Autowired
+	private IfcObjectService objectService;
 	@Autowired
 	private IfcProductService productService;
 	@Autowired
@@ -75,7 +82,11 @@ public class Query implements GraphQLQueryResolver {
 	@Autowired
 	private IfcRelDefinesByPropertiesService relDefinesByPropertiesService;
 	@Autowired
+	private IfcRelVoidsElementService relVoidsElementService;
+	@Autowired
 	private IfcWallStandardCaseService wallStandardCaseService;
+	@Autowired
+	private IfcOpeningElementService openingElementService;
 	@Autowired
 	private IfcPropertySetService propertySetService;
 
@@ -85,6 +96,10 @@ public class Query implements GraphQLQueryResolver {
 
 	public List<IfcObjectDefinition> allObjectDefinitions() throws IOException {
 		return objectDefinitionService.getAllObjectDefinitions();
+	}
+	
+	public List<IfcObject> allObjects() throws IOException {
+		return objectService.getAllObjects();
 	}
 
 	public List<IfcProduct> allProducts() throws IOException {
@@ -134,9 +149,17 @@ public class Query implements GraphQLQueryResolver {
 	public List<IfcRelDefinesByProperties> allRelDefinesByProperties() throws IOException {
 		return relDefinesByPropertiesService.getAllRelDefinesByProperties();
 	}
+	
+	public List<IfcRelVoidsElement> allRelVoidsElements()throws IOException {
+		return relVoidsElementService.getAllRelVoidsElements();
+	}
 
 	public List<IfcWallStandardCase> allWallStandardCases() throws IOException {
 		return wallStandardCaseService.getAllWallStandardCases();
+	}
+	
+	public List<IfcOpeningElement> allOpeningElements() throws IOException {
+		return openingElementService.getAllOpeningElements();
 	}
 
 	public List<IfcPropertySet> allPropertySets() throws IOException {
