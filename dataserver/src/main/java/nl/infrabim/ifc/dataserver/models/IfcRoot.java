@@ -2,34 +2,37 @@ package nl.infrabim.ifc.dataserver.models;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+import org.springframework.data.mongodb.core.mapping.Field;
 
 @Document(collection = "Ifc_json_2")
 public class IfcRoot {
 	@Id
-	private String id;
+	private String _id;
 	private String type;
 	private String globalId;
 	private String name;
 	private String description;
+	@Field("ownerHistory")
+	private Ref ownerHistoryRef;
 
 	public IfcRoot() {
 	}
 
-	public IfcRoot(String id, String type, String globalId, String name, String description) {
+	public IfcRoot(String _id, String type, String globalId, String name, String description) {
 		super();
-		this.id = id;
+		this._id = _id;
 		this.type = type;
 		this.globalId = globalId;
 		this.name = name;
 		this.description = description;
 	}
 
-	public String getId() {
-		return id;
+	public String get_Id() {
+		return _id;
 	}
 
-	public void setId(String id) {
-		this.id = id;
+	public void set_Id(String _id) {
+		this._id = _id;
 	}
 
 	public String getType() {
@@ -66,13 +69,21 @@ public class IfcRoot {
 
 	@Override
 	public String toString() {
-		return String.format("Root[id='%s', name='%s']", id, name);
+		return String.format("Root[id='%s', name='%s']", _id, name);
+	}
+
+	public Ref getOwnerHistoryRef() {
+		return ownerHistoryRef;
+	}
+
+	public void setOwnerHistoryRef(Ref ownerHistoryRef) {
+		this.ownerHistoryRef = ownerHistoryRef;
 	}
 
 	protected void copyRootValues(IfcRoot root) {
 		setDescription(root.getDescription());
 		setGlobalId(root.getGlobalId());
-		setId(root.getId());
+		set_Id(root.get_Id());
 		setName(root.getName());
 		setType(root.getType());
 	}

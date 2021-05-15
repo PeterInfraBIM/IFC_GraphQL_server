@@ -11,7 +11,6 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
-import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.repositories.IfcProductRepository;
 
@@ -23,7 +22,7 @@ public class IfcProductService {
 	private IfcProductRepository productRepository;
 
 	public IfcLocalPlacement getObjectPlacement(IfcProduct product) {
-		Optional<IfcProduct> findById = productRepository.findById(product.getId());
+		Optional<IfcProduct> findById = productRepository.findById(product.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getObjectPlacement();
 		}

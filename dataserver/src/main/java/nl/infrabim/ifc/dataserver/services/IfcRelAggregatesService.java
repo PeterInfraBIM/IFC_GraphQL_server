@@ -49,7 +49,7 @@ public class IfcRelAggregatesService {
 	}
 
 	public Ref getRelatingObjectRef(IfcRelAggregates relAggregates) {
-		Optional<IfcRelAggregates> findById = relAggregatesRepository.findById(relAggregates.getId());
+		Optional<IfcRelAggregates> findById = relAggregatesRepository.findById(relAggregates.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getRelatingObjectRef();
 		}
@@ -65,7 +65,7 @@ public class IfcRelAggregatesService {
 	}
 
 	public List<Ref> getRelatedObjectsRef(IfcRelAggregates relAggregates) {
-		Optional<IfcRelAggregates> findById = relAggregatesRepository.findById(relAggregates.getId());
+		Optional<IfcRelAggregates> findById = relAggregatesRepository.findById(relAggregates.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getRelatedObjectsRef();
 		}

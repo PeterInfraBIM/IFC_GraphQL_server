@@ -12,23 +12,21 @@ import org.springframework.stereotype.Service;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcRootRepository;
+import nl.infrabim.ifc.dataserver.repositories.IfcOwnerHistoryRepository;
 
 @Service
-public class IfcRootService {
+public class IfcOwnerHistoryService {
 
 	@Autowired
-	private IfcRootRepository rootRepository;
-	@Autowired
-	private IfcOwnerHistoryService ownerHistoryService;
+	private IfcOwnerHistoryRepository ownerHistoryRepository;
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	public List<IfcRoot> getAllRoots() {
-		List<IfcRoot> filteredList = null;
-		for (IfcRoot candidate : rootRepository.findAll()) {
-			if (candidate.getName() != null || candidate.getDescription() != null) {
+	public List<IfcOwnerHistory> getAllOwnerHistories() {
+		List<IfcOwnerHistory> filteredList = null;
+		for (IfcOwnerHistory candidate : ownerHistoryRepository.findAll()) {
+			if (candidate.getType().equals("IfcOwnerHistory")) {
 				if (filteredList == null)
 					filteredList = new ArrayList<>();
 				filteredList.add(candidate);
@@ -37,29 +35,17 @@ public class IfcRootService {
 		return filteredList;
 	}
 
-	public List<IfcRoot> filterRootsByType(String filterType) {
-		List<IfcRoot> filteredList = null;
-		for (IfcRoot root : getAllRoots()) {
-			if (root.getType().equals(filterType)) {
-				if (filteredList == null) {
-					filteredList = new ArrayList<>();
-				}
-				filteredList.add(root);
-			}
-		}
-		return filteredList;
-	}
-
-	public IfcRoot getRootByGlobalId(String globalId) {
+	public IfcOwnerHistory getOwnerHistoryByGlobalId(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
-		return mongoTemplate.findOne(query, IfcRoot.class);
+		IfcOwnerHistory findOne = mongoTemplate.findOne(query, IfcOwnerHistory.class);
+		return findOne;
 	}
 
 	public IfcOwnerHistory getOwnerHistory(IfcRoot root) {
 		Ref ownerHistoryRef = root.getOwnerHistoryRef();
 		if (ownerHistoryRef != null) {
-			return ownerHistoryService.getOwnerHistoryByGlobalId(ownerHistoryRef.getRef());
+			return getOwnerHistoryByGlobalId(ownerHistoryRef.getRef());
 		}
 		return null;
 	}

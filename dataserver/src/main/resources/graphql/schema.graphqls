@@ -9,6 +9,44 @@ type Root implements Addressable & IfcRoot {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+}
+
+type OwnerHistory implements Addressable {
+	type: String!
+	globalId: ID!
+	owningUser: PersonAndOrganization
+	owningApplication: Application
+	changeAction: IfcChangeActionEnum
+	creationDate: Int
+}
+
+type PersonAndOrganization {
+	type: String!
+	thePerson: Person
+	theOrganization: Organization
+}
+
+type Person {
+	type: String!
+	id: String
+	familyName: String
+	givenName: String
+}
+
+type Organization {
+	type: String!
+	name: String
+	description: String
+}
+
+type Application {
+	type: String!
+	applicationDeveloper: Organization
+	version: String
+	applicationFullName: String
+	applicationIdentifier: String
 }
 
 type ObjectDefinition implements Addressable & IfcRoot & IfcObjectDefinition {
@@ -16,6 +54,8 @@ type ObjectDefinition implements Addressable & IfcRoot & IfcObjectDefinition {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -35,6 +75,8 @@ type Object implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -84,7 +126,7 @@ type ExtrudedAreaSolid  {
 type ArbitraryClosedProfileDef {
 	type: String!
 	profileType: IfcProfileTypeEnum
-	outerCurve: Polyline;
+	outerCurve: Polyline
 }
 
 type Product implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct {
@@ -92,6 +134,8 @@ type Product implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -113,6 +157,8 @@ type Element implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -142,6 +188,8 @@ type SpatialStructureElement implements Addressable
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -167,6 +215,8 @@ type RelAggregates implements Addressable & IfcRoot {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	relatingObject: ObjectDefinition
 	relatingObjectRef: Ref
 	relatedObjects: [ObjectDefinition!]
@@ -178,6 +228,8 @@ type RelContainedInSpatialStructure implements Addressable & IfcRoot {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	relatedElements: [Ref]
 	relatingStructure: 	Ref
 }
@@ -186,6 +238,8 @@ type RelAssociates implements Addressable & IfcRoot & IfcRelAssociates {
 	type: String!
 	globalId: ID!
 	name: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	description: String
 	relatedObjectsRef: [Ref!]
 }
@@ -195,6 +249,8 @@ type RelAssociatesMaterial implements Addressable & IfcRoot & IfcRelAssociates {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	relatedObjectsRef: [Ref!]
 	relatingMaterial: MaterialLayerSetUsage
 }
@@ -204,6 +260,8 @@ type RelDefinesByProperties implements Addressable & IfcRoot {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	relatedObjectsRef: [Ref!]
 	relatedObjects: [Object!]
 	relatingPropertyDefinitionRef: Ref
@@ -215,6 +273,8 @@ type RelVoidsElement implements Addressable & IfcRoot {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	relatingBuildingElementRef: Ref
 	relatingBuildingElement: Element
 	relatedOpeningElementRef: Ref
@@ -226,6 +286,8 @@ type PropertySet implements IfcRoot {
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	hasProperties: [Property!]
 }
 
@@ -302,6 +364,8 @@ type Site implements Addressable &
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -333,6 +397,8 @@ type Building implements Addressable &
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -360,6 +426,8 @@ type BuildingStorey
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -387,6 +455,8 @@ type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & I
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]
@@ -415,6 +485,8 @@ type OpeningElement implements Addressable & IfcRoot & IfcObjectDefinition & Ifc
 	globalId: ID!
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 	# is decomposed by [reference]
 	isDecomposedByRef: [Ref!]
 	# is decomposed by [objectified relation]

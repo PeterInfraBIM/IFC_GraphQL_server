@@ -9,6 +9,7 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
@@ -19,6 +20,7 @@ import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
+import nl.infrabim.ifc.dataserver.services.IfcRootService;
 
 @Component
 public class IfcWallStandardCaseResolver implements GraphQLResolver<IfcWallStandardCase> {
@@ -31,6 +33,12 @@ public class IfcWallStandardCaseResolver implements GraphQLResolver<IfcWallStand
 	private IfcElementService elementService;
 	@Autowired
 	private IfcObjectService objectService;
+	@Autowired
+	private IfcRootService rootService;
+
+	public IfcOwnerHistory getOwnerHistory(IfcWallStandardCase wallStandardCase) {
+		return rootService.getOwnerHistory(wallStandardCase);
+	}
 
 	public List<Ref> getIsDecomposedByRef(IfcWallStandardCase wallStandardCase) {
 		return objectDefinitionService.getIsDecomposedByRef(wallStandardCase);

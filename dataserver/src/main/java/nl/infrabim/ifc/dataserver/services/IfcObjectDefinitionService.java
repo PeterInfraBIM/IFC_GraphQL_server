@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
-import nl.infrabim.ifc.dataserver.models.IfcRoot;
-import nl.infrabim.ifc.dataserver.models.IfcSite;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.repositories.IfcObjectDefinitionRepository;
 
@@ -24,8 +22,6 @@ public class IfcObjectDefinitionService {
 	private MongoTemplate mongoTemplate;
 	@Autowired
 	private IfcObjectDefinitionRepository objectDefinitionRepository;
-	@Autowired
-	private IfcRootService rootService;
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
@@ -44,7 +40,7 @@ public class IfcObjectDefinitionService {
 	}
 
 	public List<Ref> getIsDecomposedByRef(IfcObjectDefinition objectDefinition) {
-		Optional<IfcObjectDefinition> findById = objectDefinitionRepository.findById(objectDefinition.getId());
+		Optional<IfcObjectDefinition> findById = objectDefinitionRepository.findById(objectDefinition.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getIsDecomposedByRef();
 		}
@@ -52,7 +48,7 @@ public class IfcObjectDefinitionService {
 	}
 
 	public List<Ref> getDecomposesRef(IfcObjectDefinition objectDefinition) {
-		Optional<IfcObjectDefinition> findById = objectDefinitionRepository.findById(objectDefinition.getId());
+		Optional<IfcObjectDefinition> findById = objectDefinitionRepository.findById(objectDefinition.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getDecomposesRef();
 		}

@@ -8,11 +8,12 @@ import org.springframework.stereotype.Component;
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
-import nl.infrabim.ifc.dataserver.services.IfcProductService;
+import nl.infrabim.ifc.dataserver.services.IfcRootService;
 
 @Component
 public class IfcProductResolver implements GraphQLResolver<IfcProduct> {
@@ -20,7 +21,11 @@ public class IfcProductResolver implements GraphQLResolver<IfcProduct> {
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
-	private IfcProductService productService;
+	private IfcRootService rootService;
+
+	public IfcOwnerHistory getOwnerHistory(IfcProduct product) {
+		return rootService.getOwnerHistory(product);
+	}
 
 	public List<Ref> getIsDecomposedByRef(IfcProduct product) {
 		return objectDefinitionService.getIsDecomposedByRef(product);

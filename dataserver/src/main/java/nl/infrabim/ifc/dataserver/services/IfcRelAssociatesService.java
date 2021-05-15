@@ -9,7 +9,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociates;
+import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.repositories.IfcRelAssociatesRepository;
 
 @Service
@@ -19,6 +21,8 @@ public class IfcRelAssociatesService {
 	private MongoTemplate mongoTemplate;
 	@Autowired
 	private IfcRelAssociatesRepository relAssociatesRepository;
+	@Autowired
+	private IfcObjectDefinitionService objectDefinitionService;
 
 	public List<IfcRelAssociates> getAllRelAssociates() {
 		List<IfcRelAssociates> allRelAssociates = new ArrayList<>();
@@ -35,6 +39,18 @@ public class IfcRelAssociatesService {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcRelAssociates.class);
+	}
+
+	public List<IfcObjectDefinition> getRelatedObjects(IfcRelAssociates relAssociates) {
+		List<IfcObjectDefinition> relatedObjects = null;
+		List<Ref> relatedObjectsRef = relAssociates.getRelatedObjectsRef();
+		if (relatedObjectsRef != null) {
+			relatedObjects = new ArrayList<>();
+			for (Ref ref : relatedObjectsRef) {
+				relatedObjects.add(objectDefinitionService.getObjectDefinitionByGlobalId(ref.getRef()));
+			}
+		}
+		return relatedObjects;
 	}
 
 }

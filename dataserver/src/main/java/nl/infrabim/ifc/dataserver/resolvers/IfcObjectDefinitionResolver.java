@@ -7,23 +7,24 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
-import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
-import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
-import nl.infrabim.ifc.dataserver.models.IfcRoot;
-import nl.infrabim.ifc.dataserver.models.IfcSite;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
-import nl.infrabim.ifc.dataserver.services.IfcProductService;
-import nl.infrabim.ifc.dataserver.services.IfcSiteService;
-import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
+import nl.infrabim.ifc.dataserver.services.IfcRootService;
 
 @Component
 public class IfcObjectDefinitionResolver implements GraphQLResolver<IfcObjectDefinition> {
 
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
+	@Autowired
+	private IfcRootService rootService;
+
+	public IfcOwnerHistory getOwnerHistory(IfcObjectDefinition objectDefinition) {
+		return rootService.getOwnerHistory(objectDefinition);
+	}
 
 	public List<Ref> getIsDecomposedByRef(IfcObjectDefinition objectDefinition) {
 		return objectDefinitionService.getIsDecomposedByRef(objectDefinition);

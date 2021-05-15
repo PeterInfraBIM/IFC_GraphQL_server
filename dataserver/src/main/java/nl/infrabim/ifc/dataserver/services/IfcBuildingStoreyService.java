@@ -34,7 +34,7 @@ public class IfcBuildingStoreyService {
 
 	public Float getElevation(IfcBuildingStorey buildingStorey) {
 		Float elevation = null;
-		Optional<IfcBuildingStorey> findById = buildingStoreyRepository.findById(buildingStorey.getId());
+		Optional<IfcBuildingStorey> findById = buildingStoreyRepository.findById(buildingStorey.get_Id());
 		if (findById.isPresent()) {
 			elevation = findById.get().getElevation();
 		}

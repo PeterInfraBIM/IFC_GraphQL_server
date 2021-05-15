@@ -11,6 +11,7 @@ import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
 import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
@@ -18,6 +19,7 @@ import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
+import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
 
 @Component
@@ -31,6 +33,12 @@ public class IfcBuildingStoreyResolver implements GraphQLResolver<IfcBuildingSto
 	private IfcSpatialStructureElementService spatialStructureElementService;
 	@Autowired
 	private IfcProductService productService;
+	@Autowired
+	private IfcRootService rootService;
+
+	public IfcOwnerHistory getOwnerHistory(IfcBuildingStorey buildingStorey) {
+		return rootService.getOwnerHistory(buildingStorey);
+	}
 
 	public List<Ref> getIsDecomposedByRef(IfcBuildingStorey buildingStorey) {
 		return objectDefinitionService.getIsDecomposedByRef(buildingStorey);

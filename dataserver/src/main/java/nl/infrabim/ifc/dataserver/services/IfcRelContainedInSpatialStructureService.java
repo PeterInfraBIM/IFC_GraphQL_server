@@ -10,7 +10,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.Ref;
@@ -44,7 +43,7 @@ public class IfcRelContainedInSpatialStructureService {
 
 	public Ref getRelatingStructure(IfcRelContainedInSpatialStructure relContainedInSpatialStructure) {
 		Optional<IfcRelContainedInSpatialStructure> findById = relContainedInSpatialStructureRepository
-				.findById(relContainedInSpatialStructure.getId());
+				.findById(relContainedInSpatialStructure.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getRelatingStructure();
 		}
@@ -53,7 +52,7 @@ public class IfcRelContainedInSpatialStructureService {
 
 	public List<Ref> getRelatedElements(IfcRelContainedInSpatialStructure relContainedInSpatialStructure) {
 		Optional<IfcRelContainedInSpatialStructure> findById = relContainedInSpatialStructureRepository
-				.findById(relContainedInSpatialStructure.getId());
+				.findById(relContainedInSpatialStructure.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getRelatedElements();
 		}

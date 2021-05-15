@@ -10,16 +10,17 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOpeningElement;
+import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
-import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
+import nl.infrabim.ifc.dataserver.services.IfcRootService;
 
 @Component
 public class IfcOpeningElementResolver implements GraphQLResolver<IfcOpeningElement> {
@@ -32,6 +33,12 @@ public class IfcOpeningElementResolver implements GraphQLResolver<IfcOpeningElem
 	private IfcElementService elementService;
 	@Autowired
 	private IfcObjectService objectService;
+	@Autowired
+	private IfcRootService rootService;
+
+	public IfcOwnerHistory getOwnerHistory(IfcOpeningElement openingElement) {
+		return rootService.getOwnerHistory(openingElement);
+	}
 
 	public List<Ref> getIsDecomposedByRef(IfcOpeningElement openingElement) {
 		return objectDefinitionService.getIsDecomposedByRef(openingElement);
@@ -68,7 +75,7 @@ public class IfcOpeningElementResolver implements GraphQLResolver<IfcOpeningElem
 	public List<IfcRelVoidsElement> getHasOpenings(IfcOpeningElement openingElement) {
 		return elementService.getHasOpenings(openingElement);
 	}
-	
+
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcOpeningElement openingElement) {
 		return objectService.getIsDefinedBy(openingElement);
 	}

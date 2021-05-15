@@ -10,6 +10,7 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
@@ -17,6 +18,7 @@ import nl.infrabim.ifc.dataserver.models.IfcSite;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
+import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSiteService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
 
@@ -31,6 +33,12 @@ public class IfcSiteResolver implements GraphQLResolver<IfcSite> {
 	private IfcSpatialStructureElementService spatialStructureElementService;
 	@Autowired
 	private IfcProductService productService;
+	@Autowired
+	private IfcRootService rootService;
+
+	public IfcOwnerHistory getOwnerHistory(IfcSite site) {
+		return rootService.getOwnerHistory(site);
+	}
 
 	public List<Double> getRefLatitude(IfcSite site) {
 		return siteService.getRefLatitude(site);

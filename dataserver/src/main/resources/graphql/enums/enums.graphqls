@@ -1,12 +1,22 @@
-enum IfcElementCompositionEnum {
-	COMPLEX
-	ELEMENT
-	PARTIAL
+# Enumeration that defines the actions associated with changes made to the object.
+enum IfcChangeActionEnum  {
+	NOCHANGE
+	MODIFIED
+	ADDED
+	DELETED
+	MODIFIEDADDED
+	MODIFIEDDELETED
 }
 
 enum IfcDirectionSenseEnum {
 	POSITIVE
 	NEGATIVE
+}
+
+enum IfcElementCompositionEnum {
+	COMPLEX
+	ELEMENT
+	PARTIAL
 }
 
 enum IfcLayerSetDirectionEnum {

@@ -25,7 +25,7 @@ public class IfcSpatialStructureElementService {
 
 	public IfcElementCompositionEnum getCompositionType(IfcSpatialStructureElement spatialStructureElement) {
 		Optional<IfcSpatialStructureElement> findById = spatialStructureElementRepository
-				.findById(spatialStructureElement.getId());
+				.findById(spatialStructureElement.get_Id());
 		if (findById.isPresent()) {
 			String compositionType = findById.get().getCompositionType();
 			if (compositionType != null) {
@@ -49,7 +49,7 @@ public class IfcSpatialStructureElementService {
 
 	public List<Ref> getcontainsElementsRef(IfcSpatialStructureElement spatialStructureElement) {
 		Optional<IfcSpatialStructureElement> findById = spatialStructureElementRepository
-				.findById(spatialStructureElement.getId());
+				.findById(spatialStructureElement.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getContainsElementsRef();
 		}

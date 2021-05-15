@@ -7,6 +7,8 @@ interface Addressable {
 interface IfcRoot {
 	name: String
 	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
 }
 
 interface IfcObjectDefinition {

@@ -35,7 +35,7 @@ public class IfcSiteService {
 	}
 
 	public List<Double> getRefLatitude(IfcSite site) {
-		Optional<IfcSite> findById = siteRepository.findById(site.getId());
+		Optional<IfcSite> findById = siteRepository.findById(site.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getRefLatitude();
 		}
@@ -43,7 +43,7 @@ public class IfcSiteService {
 	}
 
 	public List<Double> getRefLongitude(IfcSite site) {
-		Optional<IfcSite> findById = siteRepository.findById(site.getId());
+		Optional<IfcSite> findById = siteRepository.findById(site.get_Id());
 		if (findById.isPresent()) {
 			return findById.get().getRefLongitude();
 		}

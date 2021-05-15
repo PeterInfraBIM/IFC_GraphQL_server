@@ -9,12 +9,14 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 
 import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
+import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
+import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
 
 @Component
@@ -24,6 +26,12 @@ public class IfcSpatialStructureElementResolver implements GraphQLResolver<IfcSp
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
 	private IfcSpatialStructureElementService spatialStructureElementService;
+	@Autowired
+	private IfcRootService rootService;
+
+	public IfcOwnerHistory getOwnerHistory(IfcSpatialStructureElement spatialStructureElement) {
+		return rootService.getOwnerHistory(spatialStructureElement);
+	}
 
 	public List<Ref> getIsDecomposedByRef(IfcSpatialStructureElement spatialStructureElement) {
 		return objectDefinitionService.getIsDecomposedByRef(spatialStructureElement);
