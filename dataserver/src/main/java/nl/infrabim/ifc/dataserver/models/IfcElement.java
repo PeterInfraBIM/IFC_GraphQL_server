@@ -9,6 +9,10 @@ public class IfcElement extends IfcProduct {
 	private List<Ref> hasAssociationsRef;
 	@Field("hasOpenings")
 	private List<Ref> hasOpeningsRef;
+	@Field("fillsVoids")
+	private List<Ref> fillsVoidsRef;
+	@Field("containedInStructure")
+	private List<Ref> containedInStructureRef;
 
 	public IfcElement() {
 		super();
@@ -32,6 +36,22 @@ public class IfcElement extends IfcProduct {
 
 	public void setHasOpeningsRef(List<Ref> hasOpeningsRef) {
 		this.hasOpeningsRef = hasOpeningsRef;
+	}
+
+	public List<Ref> getFillsVoidsRef() {
+		return fillsVoidsRef;
+	}
+
+	public void setFillsVoidsRef(List<Ref> fillsVoidsRef) {
+		this.fillsVoidsRef = fillsVoidsRef;
+	}
+
+	public List<Ref> getContainedInStructureRef() {
+		return containedInStructureRef;
+	}
+
+	public void setContainedInStructureRef(List<Ref> containedInStructureRef) {
+		this.containedInStructureRef = containedInStructureRef;
 	}
 
 }

@@ -10,7 +10,9 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcElement;
+import nl.infrabim.ifc.dataserver.models.IfcOpeningElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
+import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.repositories.IfcElementRepository;
@@ -26,6 +28,8 @@ public class IfcElementService {
 	private IfcRelAssociatesMaterialService relAssociatesMaterialService;
 	@Autowired
 	private IfcRelVoidsElementService relVoidsElementService;
+	@Autowired
+	private IfcRelFillsElementService relFillsElementService;
 
 	public List<IfcElement> getAllElements() {
 		List<IfcElement> allElements = new ArrayList<>();
@@ -69,6 +73,19 @@ public class IfcElementService {
 			}
 		}
 		return hasOpenings;
+	}
+
+	public List<IfcRelFillsElement> getFillsVoids(IfcElement element) {
+		List<IfcRelFillsElement> fillsVoids = null;
+		List<Ref> fillsVoidsRef = element.getFillsVoidsRef();
+		if (fillsVoidsRef != null) {
+			fillsVoids = new ArrayList<>();
+			for (Ref ref : fillsVoidsRef) {
+				IfcRelFillsElement relFillsElement = relFillsElementService.getRelFillsElementByGlobalId(ref.getRef());
+				fillsVoids.add(relFillsElement);
+			}
+		}
+		return fillsVoids;
 	}
 
 }

@@ -35,6 +35,9 @@ interface IfcElement {
 	hasAssociations: [IfcRelAssociates!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	containedInStructureRef: [Ref!]
 }
 
 interface IfcRelAssociates {

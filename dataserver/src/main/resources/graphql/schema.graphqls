@@ -177,6 +177,9 @@ type Element implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct
 	hasAssociations: [RelAssociatesMaterial!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	containedInStructureRef: [Ref!]
 }
 
 type SpatialStructureElement implements Addressable 
@@ -279,6 +282,19 @@ type RelVoidsElement implements Addressable & IfcRoot {
 	relatingBuildingElement: Element
 	relatedOpeningElementRef: Ref
 	relatedOpeningElement: OpeningElement
+}
+
+type RelFillsElement implements Addressable & IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	relatingOpeningElementRef: Ref
+	relatingOpeningElement: OpeningElement
+	relatedBuildingElementRef: Ref
+	relatedBuildingElement: Element
 }
 
 type PropertySet implements IfcRoot {
@@ -477,6 +493,9 @@ type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & I
 	hasAssociations: [RelAssociatesMaterial!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	containedInStructureRef: [Ref!]
 }
 
 # IfcOpeningElement
@@ -507,6 +526,44 @@ type OpeningElement implements Addressable & IfcRoot & IfcObjectDefinition & Ifc
 	hasAssociations: [RelAssociatesMaterial!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	containedInStructureRef: [Ref!]
+}
+
+# IfcDoor
+type Door implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	representation: ProductRepresentation
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	containedInStructureRef: [Ref!]
+	overallHeight: Float
+	overallWidth: Float
 }
 
 type Query {
@@ -544,8 +601,12 @@ type Query {
 	allRelDefinesByProperties: [RelDefinesByProperties]
 	# Get all RelVoidsElement objects
 	allRelVoidsElements: [RelVoidsElement]
+	# Get all RelFillsElement objects
+	allRelFillsElements: [RelFillsElement]
 	# Get all WallStandardCase objects
 	allWallStandardCases: [WallStandardCase]
+	# Get all Door objects
+	allDoors: [Door]
 	# Get all PropertySetDefinition objects
 	allPropertySets: [PropertySet]
 	getTestPolyline: Polyline

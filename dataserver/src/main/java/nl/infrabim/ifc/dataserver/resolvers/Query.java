@@ -12,6 +12,7 @@ import nl.infrabim.ifc.dataserver.models.IfcArbitraryClosedProfileDef;
 import nl.infrabim.ifc.dataserver.models.IfcBooleanValue;
 import nl.infrabim.ifc.dataserver.models.IfcBuilding;
 import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
+import nl.infrabim.ifc.dataserver.models.IfcDoor;
 import nl.infrabim.ifc.dataserver.models.IfcExtrudedAreaSolid;
 import nl.infrabim.ifc.dataserver.models.IfcObject;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
@@ -27,6 +28,7 @@ import nl.infrabim.ifc.dataserver.models.IfcRelAssociates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
+import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRepresentationItem;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
@@ -36,6 +38,7 @@ import nl.infrabim.ifc.dataserver.models.IfcValue;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
+import nl.infrabim.ifc.dataserver.services.IfcDoorService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectService;
 import nl.infrabim.ifc.dataserver.services.IfcOpeningElementService;
@@ -46,6 +49,7 @@ import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesMaterialService;
 import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesService;
 import nl.infrabim.ifc.dataserver.services.IfcRelContainedInSpatialStructureService;
 import nl.infrabim.ifc.dataserver.services.IfcRelDefinesByPropertiesService;
+import nl.infrabim.ifc.dataserver.services.IfcRelFillsElementService;
 import nl.infrabim.ifc.dataserver.services.IfcRelVoidsElementService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSiteService;
@@ -84,7 +88,11 @@ public class Query implements GraphQLQueryResolver {
 	@Autowired
 	private IfcRelVoidsElementService relVoidsElementService;
 	@Autowired
+	private IfcRelFillsElementService relFillsElementService;
+	@Autowired
 	private IfcWallStandardCaseService wallStandardCaseService;
+	@Autowired
+	private IfcDoorService doorService;
 	@Autowired
 	private IfcOpeningElementService openingElementService;
 	@Autowired
@@ -97,7 +105,7 @@ public class Query implements GraphQLQueryResolver {
 	public List<IfcObjectDefinition> allObjectDefinitions() throws IOException {
 		return objectDefinitionService.getAllObjectDefinitions();
 	}
-	
+
 	public List<IfcObject> allObjects() throws IOException {
 		return objectService.getAllObjects();
 	}
@@ -149,15 +157,23 @@ public class Query implements GraphQLQueryResolver {
 	public List<IfcRelDefinesByProperties> allRelDefinesByProperties() throws IOException {
 		return relDefinesByPropertiesService.getAllRelDefinesByProperties();
 	}
-	
-	public List<IfcRelVoidsElement> allRelVoidsElements()throws IOException {
+
+	public List<IfcRelVoidsElement> allRelVoidsElements() throws IOException {
 		return relVoidsElementService.getAllRelVoidsElements();
 	}
 
+	public List<IfcRelFillsElement> allRelFillsElements() throws IOException {
+		return relFillsElementService.getAllRelFillsElements();
+	}
+	
 	public List<IfcWallStandardCase> allWallStandardCases() throws IOException {
 		return wallStandardCaseService.getAllWallStandardCases();
 	}
-	
+
+	public List<IfcDoor> allDoors() throws IOException {
+		return doorService.getAllDoors();
+	}
+
 	public List<IfcOpeningElement> allOpeningElements() throws IOException {
 		return openingElementService.getAllOpeningElements();
 	}

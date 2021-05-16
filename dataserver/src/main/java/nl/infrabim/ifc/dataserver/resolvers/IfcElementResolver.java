@@ -7,11 +7,13 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
+import nl.infrabim.ifc.dataserver.models.IfcDoor;
 import nl.infrabim.ifc.dataserver.models.IfcElement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
+import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
@@ -63,4 +65,9 @@ public class IfcElementResolver implements GraphQLResolver<IfcElement> {
 	public List<IfcRelVoidsElement> getHasOpenings(IfcElement element) {
 		return elementService.getHasOpenings(element);
 	}
+
+	public List<IfcRelFillsElement> getFillsVoids(IfcElement element) {
+		return elementService.getFillsVoids(element);
+	}
+
 }
