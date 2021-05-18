@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document
+@Document(collection = "Ifc_json_2")
 public class IfcRepresentation implements Addressable {
 	private String globalId;
 	private String type;

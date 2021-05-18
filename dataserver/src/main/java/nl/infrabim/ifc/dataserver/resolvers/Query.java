@@ -20,6 +20,7 @@ import nl.infrabim.ifc.dataserver.models.IfcOpeningElement;
 import nl.infrabim.ifc.dataserver.models.IfcPolyline;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcProfileDef;
+import nl.infrabim.ifc.dataserver.models.IfcProject;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySingleValue;
 import nl.infrabim.ifc.dataserver.models.IfcRealValue;
@@ -43,6 +44,7 @@ import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectService;
 import nl.infrabim.ifc.dataserver.services.IfcOpeningElementService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
+import nl.infrabim.ifc.dataserver.services.IfcProjectService;
 import nl.infrabim.ifc.dataserver.services.IfcPropertySetService;
 import nl.infrabim.ifc.dataserver.services.IfcRelAggregatesService;
 import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesMaterialService;
@@ -69,6 +71,8 @@ public class Query implements GraphQLQueryResolver {
 	private IfcProductService productService;
 	@Autowired
 	private IfcSpatialStructureElementService spatialStructureElementService;
+	@Autowired
+	private IfcProjectService projectService;
 	@Autowired
 	private IfcSiteService siteService;
 	@Autowired
@@ -118,6 +122,10 @@ public class Query implements GraphQLQueryResolver {
 		return spatialStructureElementService.getAllSpatialStructureElements();
 	}
 
+	public List<IfcProject> allProjects() throws IOException {
+		return projectService.getAllProjects();
+	}
+	
 	public List<IfcSite> allSites() throws IOException {
 		return siteService.getAllSites();
 	}

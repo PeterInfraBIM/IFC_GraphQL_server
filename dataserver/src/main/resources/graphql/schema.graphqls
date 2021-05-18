@@ -371,6 +371,42 @@ type Direction {
 	directionRatios: [Float]
 }
 
+type GeometricRepresentationContext implements Addressable {
+	type: String!
+	globalId: ID!
+	contextType: String
+	coordinateSpaceDimension: Int
+	precision: Float
+	worldCoordinateSystem: Axis2Placement3D
+	representationsInContextRef: [Ref!]
+	representationsInContext: [ShapeRepresentation!]
+}
+
+type Project implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	representationContextsRef: [Ref!]
+	representationContexts: [GeometricRepresentationContext!]
+}
+
 type Site implements Addressable & 
 					 IfcRoot & 
 					 IfcObjectDefinition &
@@ -579,6 +615,8 @@ type Query {
 	allSpatialStructureElements: [SpatialStructureElement]
 	# Get all OpeningElement objects
 	allOpeningElements: [OpeningElement]
+	# Get all Project objects
+	allProjects: [Project]
 	# Get all Site objects
 	allSites: [Site]	
 	# Get all Building objects

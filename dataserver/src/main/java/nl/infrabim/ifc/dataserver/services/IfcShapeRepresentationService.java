@@ -9,7 +9,9 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import nl.infrabim.ifc.dataserver.models.IfcGeometricRepresentationContext;
 import nl.infrabim.ifc.dataserver.models.IfcShapeRepresentation;
+import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.repositories.IfcShapeRepresentationRepository;
 
 @Service
@@ -35,6 +37,19 @@ public class IfcShapeRepresentationService {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcShapeRepresentation.class);
+	}
+
+	public List<IfcShapeRepresentation> getRepresentationsInContext(
+			IfcGeometricRepresentationContext geometricRepresentationContext) {
+		List<IfcShapeRepresentation> representationsInContext = null;
+		List<Ref> representationsInContextRef = geometricRepresentationContext.getRepresentationsInContextRef();
+		if (representationsInContextRef != null) {
+			representationsInContext = new ArrayList<>();
+			for (Ref ref : representationsInContextRef) {
+				representationsInContext.add(getShapeRepresentationByGlobalId(ref.getRef()));
+			}
+		}
+		return representationsInContext;
 	}
 
 }
