@@ -64,8 +64,8 @@ public class IfcDoorResolver implements GraphQLResolver<IfcDoor> {
 		return objectDefinitionService.getDecomposesDir(door);
 	}
 
-	public IfcLocalPlacement getObjectPlacement(IfcDoor door) {
-		return productService.getObjectPlacement(door);
+	public List<IfcLocalPlacement> getObjectPlacements(IfcDoor door) {
+		return productService.getObjectPlacements(door);
 	}
 
 	public List<IfcRelAssociatesMaterial> getHasAssociations(IfcDoor door) {

@@ -76,8 +76,8 @@ public class IfcSiteResolver implements GraphQLResolver<IfcSite> {
 		return spatialStructureElementService.getCompositionType(site);
 	}
 
-	public IfcLocalPlacement getObjectPlacement(IfcSite site) {
-		return productService.getObjectPlacement(site);
+	public List<IfcLocalPlacement> getObjectPlacements(IfcSite site) {
+		return productService.getObjectPlacements(site);
 	}
 
 	public List<IfcRelContainedInSpatialStructure> getContainsElements(IfcSite site) {

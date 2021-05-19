@@ -65,8 +65,8 @@ public class IfcWallStandardCaseResolver implements GraphQLResolver<IfcWallStand
 		return objectDefinitionService.getDecomposesDir(wallStandardCase);
 	}
 
-	public IfcLocalPlacement getObjectPlacement(IfcWallStandardCase wallStandardCase) {
-		return productService.getObjectPlacement(wallStandardCase);
+	public List<IfcLocalPlacement> getObjectPlacements(IfcWallStandardCase wallStandardCase) {
+		return productService.getObjectPlacements(wallStandardCase);
 	}
 
 	public List<IfcRelAssociatesMaterial> getHasAssociations(IfcWallStandardCase wallStandardCase) {

@@ -27,6 +27,7 @@ interface IfcObject {
 
 interface IfcProduct {
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation
 }
 

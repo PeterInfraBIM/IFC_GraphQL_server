@@ -16,6 +16,7 @@ import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
+import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -83,6 +84,10 @@ public class IfcOpeningElementResolver implements GraphQLResolver<IfcOpeningElem
 
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcOpeningElement openingElement) {
 		return objectService.getIsDefinedBy(openingElement);
+	}
+	
+	public List<IfcLocalPlacement> getObjectPlacements(IfcOpeningElement openingElement) {
+		return productService.getObjectPlacements(openingElement);
 	}
 
 }

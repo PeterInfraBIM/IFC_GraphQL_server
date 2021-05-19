@@ -7,17 +7,21 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
+import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
+import nl.infrabim.ifc.dataserver.services.IfcProductService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 
 @Component
 public class IfcProductResolver implements GraphQLResolver<IfcProduct> {
 
+	@Autowired
+	private IfcProductService productService;
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
@@ -49,6 +53,10 @@ public class IfcProductResolver implements GraphQLResolver<IfcProduct> {
 
 	public List<IfcObjectDefinition> getDecomposesDir(IfcProduct product) {
 		return objectDefinitionService.getDecomposesDir(product);
+	}
+
+	public List<IfcLocalPlacement> getObjectPlacements(IfcProduct product) {
+		return productService.getObjectPlacements(product);
 	}
 
 }

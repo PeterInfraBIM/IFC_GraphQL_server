@@ -68,8 +68,8 @@ public class IfcBuildingStoreyResolver implements GraphQLResolver<IfcBuildingSto
 		return spatialStructureElementService.getCompositionType(buildingStorey);
 	}
 
-	public IfcLocalPlacement getObjectPlacement(IfcBuildingStorey buildingStorey) {
-		return productService.getObjectPlacement(buildingStorey);
+	public List<IfcLocalPlacement> getObjectPlacements(IfcBuildingStorey buildingStorey) {
+		return productService.getObjectPlacements(buildingStorey);
 	}
 
 	public List<IfcRelContainedInSpatialStructure> getContainsElements(IfcBuildingStorey buildingStorey) {

@@ -148,7 +148,11 @@ type Product implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct
 	decomposes: [RelAggregates!]
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
+	# Placement of the product in space
 	objectPlacement: LocalPlacement
+	# All Placements of the product in space 
+	objectPlacements: [LocalPlacement!]
+	# Reference to the representations of the product
 	representation: ProductRepresentation
 }
 
@@ -172,6 +176,7 @@ type Element implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation
 	hasAssociationsRef: [Ref!]
 	hasAssociations: [RelAssociatesMaterial!]
@@ -206,6 +211,7 @@ type SpatialStructureElement implements Addressable
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
@@ -431,6 +437,7 @@ type Site implements Addressable &
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation	
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
@@ -464,6 +471,7 @@ type Building implements Addressable &
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation	
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
@@ -493,6 +501,7 @@ type BuildingStorey
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation	
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
@@ -522,6 +531,7 @@ type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & I
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 	representation: ProductRepresentation
@@ -555,6 +565,7 @@ type OpeningElement implements Addressable & IfcRoot & IfcObjectDefinition & Ifc
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 	representation: ProductRepresentation
@@ -588,6 +599,7 @@ type Door implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & I
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 	representation: ProductRepresentation

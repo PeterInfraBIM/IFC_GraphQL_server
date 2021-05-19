@@ -7,7 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
+import nl.infrabim.ifc.dataserver.models.IfcDoor;
 import nl.infrabim.ifc.dataserver.models.IfcElement;
+import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
@@ -17,11 +19,14 @@ import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
+import nl.infrabim.ifc.dataserver.services.IfcProductService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 
 @Component
 public class IfcElementResolver implements GraphQLResolver<IfcElement> {
 
+	@Autowired
+	private IfcProductService productService;
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
@@ -55,6 +60,10 @@ public class IfcElementResolver implements GraphQLResolver<IfcElement> {
 
 	public List<IfcObjectDefinition> getDecomposesDir(IfcElement element) {
 		return objectDefinitionService.getDecomposesDir(element);
+	}
+
+	public List<IfcLocalPlacement> getObjectPlacements(IfcElement element) {
+		return productService.getObjectPlacements(element);
 	}
 
 	public List<IfcRelAssociatesMaterial> getHasAssociations(IfcElement element) {

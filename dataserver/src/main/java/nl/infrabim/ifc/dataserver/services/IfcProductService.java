@@ -47,4 +47,17 @@ public class IfcProductService {
 		return mongoTemplate.findOne(query, IfcProduct.class);
 	}
 
+	public List<IfcLocalPlacement> getObjectPlacements(IfcProduct product) {
+		List<IfcLocalPlacement> objectPlacements = null;
+		IfcLocalPlacement objectPlacement = product.getObjectPlacement();
+		while (objectPlacement != null) {
+			if (objectPlacements == null) {
+				objectPlacements = new ArrayList<>();
+			}
+			objectPlacements.add(objectPlacement);
+			objectPlacement = objectPlacement.getPlacementRelTo();
+		}
+		return objectPlacements;
+	}
+
 }

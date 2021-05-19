@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
 import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
+import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
@@ -16,12 +17,15 @@ import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
+import nl.infrabim.ifc.dataserver.services.IfcProductService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
 
 @Component
 public class IfcSpatialStructureElementResolver implements GraphQLResolver<IfcSpatialStructureElement> {
 
+	@Autowired
+	private IfcProductService productService;
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
@@ -71,6 +75,10 @@ public class IfcSpatialStructureElementResolver implements GraphQLResolver<IfcSp
 	
 	public List<IfcProduct> getContainsElementsDir(IfcSpatialStructureElement spatialStructureElement) {
 		return spatialStructureElementService.getcontainsElementsDir(spatialStructureElement);
+	}
+	
+	public List<IfcLocalPlacement> getObjectPlacements(IfcSpatialStructureElement spatialStructureElement) {
+		return productService.getObjectPlacements(spatialStructureElement);
 	}
 
 }
