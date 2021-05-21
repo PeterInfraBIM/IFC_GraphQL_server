@@ -14,15 +14,12 @@ import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcElementRepository;
 
 @Service
 public class IfcElementService {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	@Autowired
-	private IfcElementRepository elementRepository;
 	@Autowired
 	private IfcRelAssociatesMaterialService relAssociatesMaterialService;
 	@Autowired
@@ -31,14 +28,12 @@ public class IfcElementService {
 	private IfcRelFillsElementService relFillsElementService;
 
 	public List<IfcElement> getAllElements() {
-		List<IfcElement> allElements = new ArrayList<>();
-		List<IfcElement> findAll = elementRepository.findAll();
-		for (IfcElement candidate : findAll) {
-			if (candidate.getHasAssociationsRef() != null) {
-				allElements.add(candidate);
-			}
-		}
-		return allElements;
+		Criteria criteriaV1 = Criteria.where("hasAssociations").exists(true);
+		Criteria criteriaV2 = Criteria.where("hasOpenings").exists(true);
+		Criteria criteriaV3 = Criteria.where("fillsVoids").exists(true);
+		Criteria criteriaV4 = Criteria.where("containedInStructure").exists(true);
+		Query query = new Query(new Criteria().orOperator(criteriaV1, criteriaV2, criteriaV3, criteriaV4));
+		return mongoTemplate.find(query, IfcElement.class);
 	}
 
 	public IfcElement getOneElement(String globalId) {

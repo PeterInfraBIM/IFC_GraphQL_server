@@ -15,7 +15,6 @@ import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
@@ -24,8 +23,6 @@ import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
 @Component
 public class IfcBuildingStoreyResolver implements GraphQLResolver<IfcBuildingStorey> {
 
-	@Autowired
-	private IfcBuildingStoreyService buildingStoreyService;
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
@@ -75,7 +72,4 @@ public class IfcBuildingStoreyResolver implements GraphQLResolver<IfcBuildingSto
 		return spatialStructureElementService.getcontainsElementsDir(buildingStorey);
 	}
 
-	public Float getElevation(IfcBuildingStorey buildingStorey) {
-		return buildingStoreyService.getElevation(buildingStorey);
-	}
 }

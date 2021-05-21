@@ -721,6 +721,8 @@ type Query {
 	allObjects: [Object]
 	# Get all Product objects
 	allProducts: [Product]
+	# Get all Element objects
+	allElements: [Element]
 	# Get all SpatialStructureElement objects
 	allSpatialStructureElements: [SpatialStructureElement]
 	# Get all OpeningElement objects

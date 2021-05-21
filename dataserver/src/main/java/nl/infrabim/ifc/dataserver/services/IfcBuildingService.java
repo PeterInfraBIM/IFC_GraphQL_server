@@ -23,10 +23,6 @@ public class IfcBuildingService {
 	}
 
 	public IfcBuilding getOneBuilding(String globalId) {
-		return getBuildingByGlobalId(globalId);
-	}
-
-	public IfcBuilding getBuildingByGlobalId(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcBuilding.class);

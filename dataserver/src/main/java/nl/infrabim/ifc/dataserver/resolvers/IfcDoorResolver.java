@@ -16,7 +16,6 @@ import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
-import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectService;
@@ -40,20 +39,12 @@ public class IfcDoorResolver implements GraphQLResolver<IfcDoor> {
 		return rootService.getOwnerHistory(door);
 	}
 	
-	public List<Ref> getIsDecomposedByRef(IfcDoor door) {
-		return objectDefinitionService.getIsDecomposedByRef(door);
-	}
-
 	public List<IfcRelAggregates> getIsDecomposedBy(IfcDoor door) {
 		return objectDefinitionService.getIsDecomposedBy(door);
 	}
 
 	public List<IfcObjectDefinition> getIsDecomposedByDir(IfcDoor door) {
 		return objectDefinitionService.getIsDecomposedByDir(door);
-	}
-
-	public List<Ref> getDecomposesRef(IfcDoor door) {
-		return objectDefinitionService.getDecomposesRef(door);
 	}
 
 	public List<IfcRelAggregates> getDecomposes(IfcDoor door) {
