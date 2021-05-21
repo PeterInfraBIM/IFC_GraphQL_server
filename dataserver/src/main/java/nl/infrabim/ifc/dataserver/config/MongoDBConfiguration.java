@@ -14,6 +14,7 @@ import com.mongodb.MongoClientSettings;
 import com.mongodb.WriteConcern;
 import com.mongodb.client.MongoClient;
 import com.mongodb.client.MongoClients;
+import com.mongodb.client.MongoDatabase;
 
 @Configuration
 @Service
@@ -31,6 +32,8 @@ public class MongoDBConfiguration {
 		MongoClientSettings settings = MongoClientSettings.builder().applyConnectionString(this.connectionString)
 				.writeConcern(wc).build();
 		mongoClient = MongoClients.create(settings);
+		MongoDatabase database = mongoClient.getDatabase("building_smart");
+		database.getCollection("duplex");
 
 		return mongoClient;
 	}

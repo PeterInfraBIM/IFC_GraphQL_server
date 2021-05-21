@@ -19,6 +19,13 @@ enum IfcElementCompositionEnum {
 	PARTIAL
 }
 
+# This enumeration defines the different types of spaces or space boundaries in terms of either being inside the building or outside the building.
+enum IfcInternalOrExternalEnum {
+	INTERNAL
+	EXTERNAL
+	NOTDEFINED
+}
+
 enum IfcLayerSetDirectionEnum {
 	AXIS1
 	AXIS2

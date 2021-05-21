@@ -213,6 +213,7 @@ type SpatialStructureElement implements Addressable
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation
+	longName: String
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
 	containsElements: [RelContainedInSpatialStructure!]
@@ -299,6 +300,19 @@ type RelFillsElement implements Addressable & IfcRoot {
 	ownerHistory: OwnerHistory
 	relatingOpeningElementRef: Ref
 	relatingOpeningElement: OpeningElement
+	relatedBuildingElementRef: Ref
+	relatedBuildingElement: Element
+}
+
+type RelSpaceBoundary implements Addressable & IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	relatingSpaceRef: Ref
+	relatingSpace: Space
 	relatedBuildingElementRef: Ref
 	relatedBuildingElement: Element
 }
@@ -438,7 +452,8 @@ type Site implements Addressable &
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
-	representation: ProductRepresentation	
+	representation: ProductRepresentation
+	longName: String
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
 	containsElements: [RelContainedInSpatialStructure!]
@@ -472,7 +487,8 @@ type Building implements Addressable &
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
-	representation: ProductRepresentation	
+	representation: ProductRepresentation
+	longName: String
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
 	containsElements: [RelContainedInSpatialStructure!]
@@ -502,12 +518,46 @@ type BuildingStorey
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
-	representation: ProductRepresentation	
+	representation: ProductRepresentation
+	longName: String
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
 	containsElements: [RelContainedInSpatialStructure!]
 	containsElementsDir: [Product!]
 	elevation: Float
+}
+
+type Space implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct & IfcSpatialStructureElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	representation: ProductRepresentation
+	longName: String	
+	compositionType: IfcElementCompositionEnum
+	containsElementsRef: [Ref!]
+	containsElements: [RelContainedInSpatialStructure!]
+	containsElementsDir: [Product!]
+	interiorOrExteriorSpace: IfcInternalOrExternalEnum
+	boundedByRef: [Ref!]
+	boundedBy: [RelSpaceBoundary!]
+	boundedByDir: [Element!]
 }
 
 # IfcWallStandardCase
@@ -614,6 +664,39 @@ type Door implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & I
 	overallWidth: Float
 }
 
+type StairFlight implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	representation: ProductRepresentation
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	containedInStructureRef: [Ref!]
+}
+
 type Query {
 	# Get all Root objects
 	allRoots: [Root]
@@ -639,6 +722,10 @@ type Query {
 	allBuildingStoreys: [BuildingStorey]
 	# Get one BuildingStorey object
 	oneBuildingStorey(globalId: String!): BuildingStorey
+	# Get all Space objects
+	allSpaces: [Space]
+	# Get one Space object
+	oneSpace(globalId: String!): Space
 	# Get all RelAggregates objects
 	allRelAggregates: [RelAggregates]
 	# Get all RelContainedInSpatialStructure objects
@@ -653,12 +740,18 @@ type Query {
 	allRelVoidsElements: [RelVoidsElement]
 	# Get all RelFillsElement objects
 	allRelFillsElements: [RelFillsElement]
+	# Get all RelSpaceBoundary objects
+	allRelSpaceBoundaries: [RelSpaceBoundary]
+	# Get one RelSpaceBoundary object
+	oneRelSpaceBoundary(globalId: String!): RelSpaceBoundary
 	# Get all WallStandardCase objects
 	allWallStandardCases: [WallStandardCase]
 	# Get all Door objects
 	allDoors: [Door]
 	# Get all PropertySetDefinition objects
 	allPropertySets: [PropertySet]
+	# Get all StairFlight objects
+	allStairFlights: [StairFlight]
 	getTestPolyline: Polyline
 	getTestExtrudedAreaSolid: ExtrudedAreaSolid
 	getTestRepresentationItem: RepresentationItem

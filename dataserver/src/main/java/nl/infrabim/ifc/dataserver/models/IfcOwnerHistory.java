@@ -2,7 +2,7 @@ package nl.infrabim.ifc.dataserver.models;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 
-@Document(collection = "Ifc_json_2")
+@Document(collection = "duplex")
 public class IfcOwnerHistory implements Addressable {
 	private String globalId;
 	private String type;

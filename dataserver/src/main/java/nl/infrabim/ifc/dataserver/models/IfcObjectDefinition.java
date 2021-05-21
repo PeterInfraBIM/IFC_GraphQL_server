@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "Ifc_json_2")
+@Document(collection = "duplex")
 public class IfcObjectDefinition extends IfcRoot {
 	@Field("isDecomposedBy")
 	private List<Ref> isDecomposedByRef;
@@ -19,7 +19,7 @@ public class IfcObjectDefinition extends IfcRoot {
 	public IfcObjectDefinition(String id, String type, String globalId, String name, String description) {
 		super(id, type, globalId, name, description);
 	}
-	
+
 	public List<Ref> getIsDecomposedByRef() {
 		return isDecomposedByRef;
 	}

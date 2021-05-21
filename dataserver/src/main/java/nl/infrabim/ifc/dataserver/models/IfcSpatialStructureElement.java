@@ -5,8 +5,8 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Field;
 
 public class IfcSpatialStructureElement extends IfcProduct {
-
-	private String compositionType;
+	private String longName;
+	private IfcElementCompositionEnum compositionType;
 	@Field("containsElements")
 	private List<Ref> containsElementsRef;
 
@@ -18,11 +18,19 @@ public class IfcSpatialStructureElement extends IfcProduct {
 		super(id, type, globalId, name, description);
 	}
 
-	public String getCompositionType() {
+	public String getLongName() {
+		return longName;
+	}
+
+	public void setLongName(String longName) {
+		this.longName = longName;
+	}
+
+	public IfcElementCompositionEnum getCompositionType() {
 		return compositionType;
 	}
 
-	public void setCompositionType(String compositionType) {
+	public void setCompositionType(IfcElementCompositionEnum compositionType) {
 		this.compositionType = compositionType;
 	}
 

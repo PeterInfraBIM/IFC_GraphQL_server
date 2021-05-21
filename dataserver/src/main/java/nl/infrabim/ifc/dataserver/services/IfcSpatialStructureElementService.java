@@ -7,7 +7,6 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
@@ -23,22 +22,10 @@ public class IfcSpatialStructureElementService {
 	@Autowired
 	private IfcProductService productService;
 
-	public IfcElementCompositionEnum getCompositionType(IfcSpatialStructureElement spatialStructureElement) {
-		Optional<IfcSpatialStructureElement> findById = spatialStructureElementRepository
-				.findById(spatialStructureElement.get_Id());
-		if (findById.isPresent()) {
-			String compositionType = findById.get().getCompositionType();
-			if (compositionType != null) {
-				return IfcElementCompositionEnum.valueOf(compositionType);
-			}
-		}
-		return null;
-	}
-
 	public List<IfcSpatialStructureElement> getAllSpatialStructureElements() {
 		List<IfcSpatialStructureElement> filteredList = null;
 		for (IfcSpatialStructureElement candidate : spatialStructureElementRepository.findAll()) {
-			if (candidate.getCompositionType() != null) {
+			if (candidate.getCompositionType() != null || candidate.getLongName() != null) {
 				if (filteredList == null)
 					filteredList = new ArrayList<>();
 				filteredList.add(candidate);

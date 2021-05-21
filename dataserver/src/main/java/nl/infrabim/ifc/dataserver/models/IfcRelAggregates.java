@@ -5,7 +5,7 @@ import java.util.List;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "Ifc_json_2")
+@Document(collection = "duplex")
 public class IfcRelAggregates extends IfcRoot {
 	@Field("relatingObject")
 	private Ref relatingObjectRef;

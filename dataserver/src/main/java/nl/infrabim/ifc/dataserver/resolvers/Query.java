@@ -30,11 +30,14 @@ import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
+import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRepresentationItem;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.IfcSite;
+import nl.infrabim.ifc.dataserver.models.IfcSpace;
 import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
+import nl.infrabim.ifc.dataserver.models.IfcStairFlight;
 import nl.infrabim.ifc.dataserver.models.IfcValue;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
@@ -52,10 +55,13 @@ import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesService;
 import nl.infrabim.ifc.dataserver.services.IfcRelContainedInSpatialStructureService;
 import nl.infrabim.ifc.dataserver.services.IfcRelDefinesByPropertiesService;
 import nl.infrabim.ifc.dataserver.services.IfcRelFillsElementService;
+import nl.infrabim.ifc.dataserver.services.IfcRelSpaceBoundaryService;
 import nl.infrabim.ifc.dataserver.services.IfcRelVoidsElementService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSiteService;
+import nl.infrabim.ifc.dataserver.services.IfcSpaceService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
+import nl.infrabim.ifc.dataserver.services.IfcStairFlightService;
 import nl.infrabim.ifc.dataserver.services.IfcWallStandardCaseService;
 
 @Component
@@ -80,6 +86,8 @@ public class Query implements GraphQLQueryResolver {
 	@Autowired
 	private IfcBuildingStoreyService buildingStoreyService;
 	@Autowired
+	private IfcSpaceService spaceService;
+	@Autowired
 	private IfcRelAggregatesService relAggregatesService;
 	@Autowired
 	private IfcRelContainedInSpatialStructureService relContainedInSpatialStructureService;
@@ -94,6 +102,8 @@ public class Query implements GraphQLQueryResolver {
 	@Autowired
 	private IfcRelFillsElementService relFillsElementService;
 	@Autowired
+	private IfcRelSpaceBoundaryService relSpaceBoundaryService;
+	@Autowired
 	private IfcWallStandardCaseService wallStandardCaseService;
 	@Autowired
 	private IfcDoorService doorService;
@@ -101,6 +111,8 @@ public class Query implements GraphQLQueryResolver {
 	private IfcOpeningElementService openingElementService;
 	@Autowired
 	private IfcPropertySetService propertySetService;
+	@Autowired
+	private IfcStairFlightService stairFlightService;
 
 	public List<IfcRoot> allRoots() throws IOException {
 		return rootService.getAllRoots();
@@ -125,7 +137,7 @@ public class Query implements GraphQLQueryResolver {
 	public List<IfcProject> allProjects() throws IOException {
 		return projectService.getAllProjects();
 	}
-	
+
 	public List<IfcSite> allSites() throws IOException {
 		return siteService.getAllSites();
 	}
@@ -144,6 +156,14 @@ public class Query implements GraphQLQueryResolver {
 
 	public IfcBuildingStorey oneBuildingStorey(String globalId) throws IOException {
 		return buildingStoreyService.getOneBuildingStorey(globalId);
+	}
+
+	public List<IfcSpace> allSpaces() throws IOException {
+		return spaceService.getAllSpaces();
+	}
+
+	public IfcSpace oneSpace(String globalId) throws IOException {
+		return spaceService.getOneSpace(globalId);
 	}
 
 	public List<IfcRelAggregates> allRelAggregates() throws IOException {
@@ -174,6 +194,14 @@ public class Query implements GraphQLQueryResolver {
 		return relFillsElementService.getAllRelFillsElements();
 	}
 	
+	public List<IfcRelSpaceBoundary> allRelSpaceBoundaries() throws IOException {
+		return relSpaceBoundaryService.getAllRelSpaceBoundaries();
+	}
+	
+	public IfcRelSpaceBoundary oneRelSpaceBoundary(String globalId) throws IOException {
+		return relSpaceBoundaryService.getOneRelSpaceBoundary(globalId);
+	}
+
 	public List<IfcWallStandardCase> allWallStandardCases() throws IOException {
 		return wallStandardCaseService.getAllWallStandardCases();
 	}
@@ -188,6 +216,10 @@ public class Query implements GraphQLQueryResolver {
 
 	public List<IfcPropertySet> allPropertySets() throws IOException {
 		return propertySetService.getAllPropertySets();
+	}
+
+	public List<IfcStairFlight> allStairFlights() throws IOException {
+		return stairFlightService.getAllStairFlights();
 	}
 
 	public IfcRepresentationItem getTestRepresentationItem() {

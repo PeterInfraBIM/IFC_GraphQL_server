@@ -1,5 +1,8 @@
 package nl.infrabim.ifc.dataserver.models;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "duplex")
 public class IfcBuildingStorey extends IfcSpatialStructureElement {
 
 	private Float elevation;

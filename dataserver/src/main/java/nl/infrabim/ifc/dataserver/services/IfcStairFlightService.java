@@ -10,15 +10,16 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcDoor;
-import nl.infrabim.ifc.dataserver.repositories.IfcDoorRepository;
+import nl.infrabim.ifc.dataserver.models.IfcStairFlight;
+import nl.infrabim.ifc.dataserver.repositories.IfcStairFlightRepository;
 
 @Service
-public class IfcDoorService {
+public class IfcStairFlightService {
 
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	@Autowired
-	private IfcDoorRepository doorRepository;
+	private IfcStairFlightRepository stairFlightRepository;
 
 	public IfcDoor getOneDoor(String globalId) {
 		Query query = new Query();
@@ -26,15 +27,15 @@ public class IfcDoorService {
 		return mongoTemplate.findOne(query, IfcDoor.class);
 	}
 
-	public List<IfcDoor> getAllDoors() {
-		List<IfcDoor> allDoors = new ArrayList<>();
-		List<IfcDoor> findAll = doorRepository.findAll();
-		for (IfcDoor candidate : findAll) {
-			if (candidate.getType().equals("IfcDoor")) {
-				allDoors.add(candidate);
+	public List<IfcStairFlight> getAllStairFlights() {
+		List<IfcStairFlight> allStairFlights = new ArrayList<>();
+		List<IfcStairFlight> findAll = stairFlightRepository.findAll();
+		for (IfcStairFlight candidate : findAll) {
+			if (candidate.getType().equals("IfcStairFlight")) {
+				allStairFlights.add(candidate);
 			}
 		}
-		return allDoors;
+		return allStairFlights;
 	}
 
 }

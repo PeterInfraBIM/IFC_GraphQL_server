@@ -4,7 +4,7 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
 
-@Document(collection = "Ifc_json_2")
+@Document(collection = "duplex")
 public class IfcRoot {
 	@Id
 	private String _id;

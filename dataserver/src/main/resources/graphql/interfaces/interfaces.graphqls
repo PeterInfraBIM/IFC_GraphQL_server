@@ -46,6 +46,7 @@ interface IfcRelAssociates {
 }
 
 interface IfcSpatialStructureElement {
+	longName: String
 	compositionType: IfcElementCompositionEnum
 	containsElementsRef: [Ref!]
 	containsElements: [RelContainedInSpatialStructure!]

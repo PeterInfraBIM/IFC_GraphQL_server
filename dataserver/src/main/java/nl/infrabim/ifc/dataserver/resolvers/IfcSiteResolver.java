@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
-import nl.infrabim.ifc.dataserver.models.IfcElementCompositionEnum;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
@@ -70,10 +69,6 @@ public class IfcSiteResolver implements GraphQLResolver<IfcSite> {
 
 	public List<IfcObjectDefinition> getDecomposesDir(IfcSite site) {
 		return objectDefinitionService.getDecomposesDir(site);
-	}
-
-	public IfcElementCompositionEnum getCompositionType(IfcSite site) {
-		return spatialStructureElementService.getCompositionType(site);
 	}
 
 	public List<IfcLocalPlacement> getObjectPlacements(IfcSite site) {
