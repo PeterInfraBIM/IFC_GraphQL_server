@@ -14,9 +14,11 @@ import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
+import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcSpace;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
+import nl.infrabim.ifc.dataserver.services.IfcObjectService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcSpaceService;
@@ -33,6 +35,8 @@ public class IfcSpaceResolver implements GraphQLResolver<IfcSpace> {
 	private IfcSpatialStructureElementService spatialStructureElementService;
 	@Autowired
 	private IfcProductService productService;
+	@Autowired
+	private IfcObjectService objectService;
 	@Autowired
 	private IfcRootService rootService;
 
@@ -56,6 +60,10 @@ public class IfcSpaceResolver implements GraphQLResolver<IfcSpace> {
 		return objectDefinitionService.getDecomposesDir(space);
 	}
 
+	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcSpace space) {
+		return objectService.getIsDefinedBy(space);
+	}
+	
 	public List<IfcLocalPlacement> getObjectPlacements(IfcSpace space) {
 		return productService.getObjectPlacements(space);
 	}

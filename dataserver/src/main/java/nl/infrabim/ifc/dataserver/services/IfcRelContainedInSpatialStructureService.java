@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
+import nl.infrabim.ifc.dataserver.models.IfcRelAssociates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.Ref;
@@ -22,23 +23,12 @@ public class IfcRelContainedInSpatialStructureService {
 	private MongoTemplate mongoTemplate;
 
 	@Autowired
-	private IfcRootService rootService;
-
-	@Autowired
 	private IfcRelContainedInSpatialStructureRepository relContainedInSpatialStructureRepository;
 
 	public List<IfcRelContainedInSpatialStructure> getAllRelContainedInSpatialStructures() {
-		List<IfcRelContainedInSpatialStructure> allRelContainedInSpatialStructures = null;
-		List<IfcRoot> filterRootsByType = rootService.filterRootsByType("IfcRelContainedInSpatialStructure");
-		if (filterRootsByType != null) {
-			allRelContainedInSpatialStructures = new ArrayList<>();
-			for (IfcRoot r : filterRootsByType) {
-				IfcRelContainedInSpatialStructure s = new IfcRelContainedInSpatialStructure();
-				s.copyRootValues(r);
-				allRelContainedInSpatialStructures.add(s);
-			}
-		}
-		return allRelContainedInSpatialStructures;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is("IfcRelContainedInSpatialStructure"));
+		return mongoTemplate.find(query, IfcRelContainedInSpatialStructure.class);
 	}
 
 	public Ref getRelatingStructure(IfcRelContainedInSpatialStructure relContainedInSpatialStructure) {

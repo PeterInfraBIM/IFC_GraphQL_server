@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcBooleanValue;
+import nl.infrabim.ifc.dataserver.models.IfcProject;
 import nl.infrabim.ifc.dataserver.models.IfcProperty;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySingleValue;
@@ -31,15 +32,9 @@ public class IfcPropertySetService {
 	}
 
 	public List<IfcPropertySet> getAllPropertySets() {
-		List<IfcPropertySet> filteredList = null;
-		for (IfcPropertySet candidate : propertySetRepository.findAll()) {
-			if (candidate.getType().equals("IfcPropertySet")) {
-				if (filteredList == null)
-					filteredList = new ArrayList<>();
-				filteredList.add(candidate);
-			}
-		}
-		return filteredList;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is("IfcPropertySet"));
+		return mongoTemplate.find(query, IfcPropertySet.class);
 	}
 
 	public List<IfcProperty> getHasProperties(IfcPropertySet propertySet) {

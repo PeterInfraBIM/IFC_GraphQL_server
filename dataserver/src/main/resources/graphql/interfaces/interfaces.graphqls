@@ -21,6 +21,7 @@ interface IfcObjectDefinition {
 }
 
 interface IfcObject {
+	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 }

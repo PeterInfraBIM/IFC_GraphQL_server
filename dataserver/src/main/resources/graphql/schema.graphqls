@@ -89,6 +89,7 @@ type Object implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject {
 	decomposes: [RelAggregates!]
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
+	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 }
@@ -421,6 +422,7 @@ type Project implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject 
 	decomposes: [RelAggregates!]
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
+	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 	representationContextsRef: [Ref!]
@@ -527,7 +529,13 @@ type BuildingStorey
 	elevation: Float
 }
 
-type Space implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct & IfcSpatialStructureElement {
+type Space implements 
+		Addressable & 
+		IfcRoot & 
+		IfcObjectDefinition & 
+		IfcObject & 
+		IfcProduct & 
+		IfcSpatialStructureElement {
 	type: String!
 	globalId: ID!
 	name: String
@@ -546,6 +554,9 @@ type Space implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct &
 	decomposes: [RelAggregates!]
 	# decomposes [directly linked]
 	decomposesDir: [ObjectDefinition!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation
@@ -582,6 +593,7 @@ type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & I
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
+	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 	representation: ProductRepresentation
@@ -616,6 +628,7 @@ type OpeningElement implements Addressable & IfcRoot & IfcObjectDefinition & Ifc
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
+	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 	representation: ProductRepresentation
@@ -650,6 +663,7 @@ type Door implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & I
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
+	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 	representation: ProductRepresentation
@@ -685,6 +699,7 @@ type StairFlight implements Addressable & IfcRoot & IfcObjectDefinition & IfcObj
 	decomposesDir: [ObjectDefinition!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
+	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
 	representation: ProductRepresentation

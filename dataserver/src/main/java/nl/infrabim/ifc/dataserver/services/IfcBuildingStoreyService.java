@@ -11,6 +11,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
+import nl.infrabim.ifc.dataserver.models.IfcSpace;
 import nl.infrabim.ifc.dataserver.repositories.IfcBuildingStoreyRepository;
 
 @Service
@@ -22,14 +23,9 @@ public class IfcBuildingStoreyService {
 	private IfcBuildingStoreyRepository buildingStoreyRepository;
 
 	public List<IfcBuildingStorey> getAllBuildingStoreys() {
-		List<IfcBuildingStorey> allBuildingStoreys = new ArrayList<>();
-		List<IfcBuildingStorey> findAll = buildingStoreyRepository.findAll();
-		for (IfcBuildingStorey candidate : findAll) {
-			if (candidate.getType().equals("IfcBuildingStorey")) {
-				allBuildingStoreys.add(candidate);
-			}
-		}
-		return allBuildingStoreys;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is("IfcBuildingStorey"));
+		return mongoTemplate.find(query, IfcBuildingStorey.class);
 	}
 
 	public Float getElevation(IfcBuildingStorey buildingStorey) {

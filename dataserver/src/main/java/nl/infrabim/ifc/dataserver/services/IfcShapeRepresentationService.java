@@ -12,25 +12,16 @@ import org.springframework.stereotype.Service;
 import nl.infrabim.ifc.dataserver.models.IfcGeometricRepresentationContext;
 import nl.infrabim.ifc.dataserver.models.IfcShapeRepresentation;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcShapeRepresentationRepository;
 
 @Service
 public class IfcShapeRepresentationService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	@Autowired
-	private IfcShapeRepresentationRepository shapeRepresentationRepository;
 
 	public List<IfcShapeRepresentation> getAllShapeRepresentations() {
-		List<IfcShapeRepresentation> filteredList = null;
-		for (IfcShapeRepresentation candidate : shapeRepresentationRepository.findAll()) {
-			if (candidate.getType().equals("IfcShapeRepresentation")) {
-				if (filteredList == null)
-					filteredList = new ArrayList<>();
-				filteredList.add(candidate);
-			}
-		}
-		return filteredList;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is("IfcShapeRepresentation"));
+		return mongoTemplate.find(query, IfcShapeRepresentation.class);
 	}
 
 	public IfcShapeRepresentation getShapeRepresentationByGlobalId(String globalId) {

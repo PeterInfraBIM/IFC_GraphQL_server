@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociates;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcRelAssociatesRepository;
 
 @Service
 public class IfcRelAssociatesService {
@@ -20,19 +19,12 @@ public class IfcRelAssociatesService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	@Autowired
-	private IfcRelAssociatesRepository relAssociatesRepository;
-	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 
 	public List<IfcRelAssociates> getAllRelAssociates() {
-		List<IfcRelAssociates> allRelAssociates = new ArrayList<>();
-		List<IfcRelAssociates> findAll = relAssociatesRepository.findAll();
-		for (IfcRelAssociates candidate : findAll) {
-			if (candidate.getRelatedObjectsRef() != null) {
-				allRelAssociates.add(candidate);
-			}
-		}
-		return allRelAssociates;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is("IfcRelAssociates"));
+		return mongoTemplate.find(query, IfcRelAssociates.class);
 	}
 
 	public IfcRelAssociates getRelAssociatesByGlobalId(String globalId) {

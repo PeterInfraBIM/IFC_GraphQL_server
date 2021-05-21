@@ -18,14 +18,11 @@ import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
-import nl.infrabim.ifc.dataserver.services.IfcSiteService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
 
 @Component
 public class IfcSiteResolver implements GraphQLResolver<IfcSite> {
 
-	@Autowired
-	private IfcSiteService siteService;
 	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
@@ -37,14 +34,6 @@ public class IfcSiteResolver implements GraphQLResolver<IfcSite> {
 
 	public IfcOwnerHistory getOwnerHistory(IfcSite site) {
 		return rootService.getOwnerHistory(site);
-	}
-
-	public List<Double> getRefLatitude(IfcSite site) {
-		return siteService.getRefLatitude(site);
-	}
-
-	public List<Double> getRefLongitude(IfcSite site) {
-		return siteService.getRefLongitude(site);
 	}
 
 	public List<Ref> getIsDecomposedByRef(IfcSite site) {

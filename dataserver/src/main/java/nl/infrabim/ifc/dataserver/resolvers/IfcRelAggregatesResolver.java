@@ -25,16 +25,8 @@ public class IfcRelAggregatesResolver implements GraphQLResolver<IfcRelAggregate
 		return rootService.getOwnerHistory(relAggregates);
 	}
 
-	public Ref getRelatingObjectRef(IfcRelAggregates relAggregates) {
-		return ifcRelAggregatesService.getRelatingObjectRef(relAggregates);
-	}
-
 	public IfcObjectDefinition getRelatingObject(IfcRelAggregates relAggregates) {
 		return ifcRelAggregatesService.getRelatingObject(relAggregates);
-	}
-
-	public List<Ref> getRelatedObjectsRef(IfcRelAggregates relAggregates) {
-		return ifcRelAggregatesService.getRelatedObjectsRef(relAggregates);
 	}
 
 	public List<IfcObjectDefinition> getRelatedObjects(IfcRelAggregates relAggregates) {

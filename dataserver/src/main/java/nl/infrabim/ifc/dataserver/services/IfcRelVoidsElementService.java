@@ -1,6 +1,5 @@
 package nl.infrabim.ifc.dataserver.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.stereotype.Service;
 import nl.infrabim.ifc.dataserver.models.IfcElement;
 import nl.infrabim.ifc.dataserver.models.IfcOpeningElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
-import nl.infrabim.ifc.dataserver.repositories.IfcRelVoidsElementRepository;
 
 @Service
 public class IfcRelVoidsElementService {
@@ -20,21 +18,14 @@ public class IfcRelVoidsElementService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	@Autowired
-	private IfcRelVoidsElementRepository relVoidsElementRepository;
-	@Autowired
 	private IfcElementService elementService;
 	@Autowired
 	private IfcOpeningElementService openingElementService;
 
 	public List<IfcRelVoidsElement> getAllRelVoidsElements() {
-		List<IfcRelVoidsElement> allRelVoidsElement = new ArrayList<>();
-		List<IfcRelVoidsElement> findAll = relVoidsElementRepository.findAll();
-		for (IfcRelVoidsElement candidate : findAll) {
-			if (candidate.getType().equals("IfcRelVoidsElement")) {
-				allRelVoidsElement.add(candidate);
-			}
-		}
-		return allRelVoidsElement;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is("IfcRelVoidsElement"));
+		return mongoTemplate.find(query, IfcRelVoidsElement.class);
 	}
 
 	public IfcRelVoidsElement getRelVoidsElementByGlobalId(String globalId) {

@@ -2,7 +2,6 @@ package nl.infrabim.ifc.dataserver.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -12,9 +11,7 @@ import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
-import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcRelAggregatesRepository;
 
 @Service
 public class IfcRelAggregatesService {
@@ -22,24 +19,12 @@ public class IfcRelAggregatesService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	@Autowired
-	private IfcRootService rootService;
-	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
-	@Autowired
-	private IfcRelAggregatesRepository relAggregatesRepository;
 
 	public List<IfcRelAggregates> getAllRelAggregates() {
-		List<IfcRelAggregates> allRelAggregates = null;
-		List<IfcRoot> filterRootsByType = rootService.filterRootsByType("IfcRelAggregates");
-		if (filterRootsByType != null) {
-			allRelAggregates = new ArrayList<>();
-			for (IfcRoot r : filterRootsByType) {
-				IfcRelAggregates s = new IfcRelAggregates();
-				s.copyRootValues(r);
-				allRelAggregates.add(s);
-			}
-		}
-		return allRelAggregates;
+		Query query = new Query();
+		query.addCriteria(Criteria.where("type").is("IfcRelAggregates"));
+		return mongoTemplate.find(query, IfcRelAggregates.class);
 	}
 
 	public IfcRelAggregates getRelAggregatesByGlobalId(String globalId) {
@@ -48,36 +33,18 @@ public class IfcRelAggregatesService {
 		return mongoTemplate.findOne(query, IfcRelAggregates.class);
 	}
 
-	public Ref getRelatingObjectRef(IfcRelAggregates relAggregates) {
-		Optional<IfcRelAggregates> findById = relAggregatesRepository.findById(relAggregates.get_Id());
-		if (findById.isPresent()) {
-			return findById.get().getRelatingObjectRef();
-		}
-		return null;
-	}
-
 	public IfcObjectDefinition getRelatingObject(IfcRelAggregates relAggregates) {
-		Optional<Ref> ref = Optional.ofNullable(getRelatingObjectRef(relAggregates));
-		if (ref.isPresent()) {
-			return objectDefinitionService.getObjectDefinitionByGlobalId(ref.get().getRef());
-		}
-		return null;
-	}
-
-	public List<Ref> getRelatedObjectsRef(IfcRelAggregates relAggregates) {
-		Optional<IfcRelAggregates> findById = relAggregatesRepository.findById(relAggregates.get_Id());
-		if (findById.isPresent()) {
-			return findById.get().getRelatedObjectsRef();
-		}
-		return null;
+		Ref relatingObjectRef = relAggregates.getRelatingObjectRef();
+		return relatingObjectRef != null
+				? objectDefinitionService.getObjectDefinitionByGlobalId(relatingObjectRef.getRef())
+				: null;
 	}
 
 	public List<IfcObjectDefinition> getRelatedObjects(IfcRelAggregates relAggregates) {
 		List<IfcObjectDefinition> relatedObjects = null;
-		Optional<List<Ref>> refList = Optional.ofNullable(getRelatedObjectsRef(relAggregates));
-		if (refList.isPresent()) {
+		List<Ref> relatedObjectsRef = relAggregates.getRelatedObjectsRef();
+		if (relatedObjectsRef != null) {
 			relatedObjects = new ArrayList<>();
-			List<Ref> relatedObjectsRef = refList.get();
 			for (Ref ref : relatedObjectsRef) {
 				relatedObjects.add(objectDefinitionService.getObjectDefinitionByGlobalId(ref.getRef()));
 			}
