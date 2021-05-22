@@ -30,18 +30,13 @@ public class IfcProductService {
 	}
 
 	public List<IfcProduct> getAllProducts() {
-		List<IfcProduct> filteredList = null;
-		for (IfcProduct candidate : productRepository.findAll()) {
-			if (candidate.getObjectPlacement() != null) {
-				if (filteredList == null)
-					filteredList = new ArrayList<>();
-				filteredList.add(candidate);
-			}
-		}
-		return filteredList;
+		Criteria criteriaV1 = Criteria.where("objectPlacement").exists(true);
+		Criteria criteriaV2 = Criteria.where("representation").exists(true);
+		Query query = new Query(new Criteria().orOperator(criteriaV1, criteriaV2));
+		return mongoTemplate.find(query, IfcProduct.class);
 	}
 
-	public IfcProduct getProductByGlobalId(String globalId) {
+	public IfcProduct getOneProduct(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcProduct.class);

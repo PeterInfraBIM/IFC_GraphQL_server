@@ -39,7 +39,7 @@ public class IfcRelAssociatesService {
 		if (relatedObjectsRef != null) {
 			relatedObjects = new ArrayList<>();
 			for (Ref ref : relatedObjectsRef) {
-				relatedObjects.add(objectDefinitionService.getObjectDefinitionByGlobalId(ref.getRef()));
+				relatedObjects.add(objectDefinitionService.getOneObjectDefinition(ref.getRef()));
 			}
 		}
 		return relatedObjects;

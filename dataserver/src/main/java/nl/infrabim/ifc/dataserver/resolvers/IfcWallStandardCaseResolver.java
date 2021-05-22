@@ -16,7 +16,6 @@ import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
-import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectService;
@@ -41,20 +40,12 @@ public class IfcWallStandardCaseResolver implements GraphQLResolver<IfcWallStand
 		return rootService.getOwnerHistory(wallStandardCase);
 	}
 
-	public List<Ref> getIsDecomposedByRef(IfcWallStandardCase wallStandardCase) {
-		return objectDefinitionService.getIsDecomposedByRef(wallStandardCase);
-	}
-
 	public List<IfcRelAggregates> getIsDecomposedBy(IfcWallStandardCase wallStandardCase) {
 		return objectDefinitionService.getIsDecomposedBy(wallStandardCase);
 	}
 
 	public List<IfcObjectDefinition> getIsDecomposedByDir(IfcWallStandardCase wallStandardCase) {
 		return objectDefinitionService.getIsDecomposedByDir(wallStandardCase);
-	}
-
-	public List<Ref> getDecomposesRef(IfcWallStandardCase wallStandardCase) {
-		return objectDefinitionService.getDecomposesRef(wallStandardCase);
 	}
 
 	public List<IfcRelAggregates> getDecomposes(IfcWallStandardCase wallStandardCase) {
@@ -76,8 +67,8 @@ public class IfcWallStandardCaseResolver implements GraphQLResolver<IfcWallStand
 	public List<IfcRelVoidsElement> getHasOpenings(IfcWallStandardCase wallStandardCase) {
 		return elementService.getHasOpenings(wallStandardCase);
 	}
-	
-	public List<IfcRelFillsElement> getFillsVoids(IfcWallStandardCase wallStandardCase){
+
+	public List<IfcRelFillsElement> getFillsVoids(IfcWallStandardCase wallStandardCase) {
 		return elementService.getFillsVoids(wallStandardCase);
 	}
 

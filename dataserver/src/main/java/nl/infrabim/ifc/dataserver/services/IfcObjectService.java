@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import nl.infrabim.ifc.dataserver.models.IfcObject;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcObjectRepository;
 
 @Service
 public class IfcObjectService {
@@ -20,19 +19,12 @@ public class IfcObjectService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	@Autowired
-	private IfcObjectRepository objectRepository;
-	@Autowired
 	private IfcRelDefinesByPropertiesService relDefinesByPropertiesService;
 
 	public List<IfcObject> getAllObjects() {
-		List<IfcObject> allObjects = new ArrayList<>();
-		List<IfcObject> findAll = objectRepository.findAll();
-		for (IfcObject candidate : findAll) {
-			if (candidate.getIsDefinedByRef() != null) {
-				allObjects.add(candidate);
-			}
-		}
-		return allObjects;
+		Criteria criteriaV1 = Criteria.where("isDefinedBy").exists(true);
+		Query query = new Query(new Criteria().orOperator(criteriaV1));
+		return mongoTemplate.find(query, IfcObject.class);
 	}
 
 	public IfcObject getOneObject(String globalId) {
@@ -48,15 +40,11 @@ public class IfcObjectService {
 			isDefinedBy = new ArrayList<>();
 			for (Ref ref : isDefinedByRef) {
 				IfcRelDefinesByProperties relDefinesByProperties = relDefinesByPropertiesService
-						.getRelDefinesByPropertiesByGlobalId(ref.getRef());
+						.getOneRelDefinesByProperties(ref.getRef());
 				isDefinedBy.add(relDefinesByProperties);
 			}
 		}
 		return isDefinedBy;
-	}
-
-	public IfcObject getObjectByGlobalId(String globalId) {
-		return getOneObject(globalId);
 	}
 
 }

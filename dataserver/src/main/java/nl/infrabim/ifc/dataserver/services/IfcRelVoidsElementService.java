@@ -28,7 +28,7 @@ public class IfcRelVoidsElementService {
 		return mongoTemplate.find(query, IfcRelVoidsElement.class);
 	}
 
-	public IfcRelVoidsElement getRelVoidsElementByGlobalId(String globalId) {
+	public IfcRelVoidsElement getOneRelVoidsElement(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcRelVoidsElement.class);

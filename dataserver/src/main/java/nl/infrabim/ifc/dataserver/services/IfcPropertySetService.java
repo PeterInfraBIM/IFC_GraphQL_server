@@ -10,22 +10,18 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcBooleanValue;
-import nl.infrabim.ifc.dataserver.models.IfcProject;
 import nl.infrabim.ifc.dataserver.models.IfcProperty;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySingleValue;
 import nl.infrabim.ifc.dataserver.models.IfcRealValue;
 import nl.infrabim.ifc.dataserver.models.IfcValue;
-import nl.infrabim.ifc.dataserver.repositories.IfcPropertySetRepository;
 
 @Service
 public class IfcPropertySetService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
-	@Autowired
-	private IfcPropertySetRepository propertySetRepository;
 
-	public IfcPropertySet getPropertySetDefinitionByGlobalId(String globalId) {
+	public IfcPropertySet getOnePropertySetDefinition(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcPropertySet.class);

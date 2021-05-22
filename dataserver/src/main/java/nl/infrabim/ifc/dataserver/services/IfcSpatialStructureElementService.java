@@ -2,57 +2,43 @@ package nl.infrabim.ifc.dataserver.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcSpatialStructureElementRepository;
 
 @Service
 public class IfcSpatialStructureElementService {
 	@Autowired
-	private IfcSpatialStructureElementRepository spatialStructureElementRepository;
+	private MongoTemplate mongoTemplate;
 	@Autowired
 	private IfcRelContainedInSpatialStructureService relContainedInSpatialStructureService;
 	@Autowired
 	private IfcProductService productService;
 
 	public List<IfcSpatialStructureElement> getAllSpatialStructureElements() {
-		List<IfcSpatialStructureElement> filteredList = null;
-		for (IfcSpatialStructureElement candidate : spatialStructureElementRepository.findAll()) {
-			if (candidate.getCompositionType() != null || candidate.getLongName() != null) {
-				if (filteredList == null)
-					filteredList = new ArrayList<>();
-				filteredList.add(candidate);
-			}
-		}
-		return filteredList;
-	}
-
-	public List<Ref> getcontainsElementsRef(IfcSpatialStructureElement spatialStructureElement) {
-		Optional<IfcSpatialStructureElement> findById = spatialStructureElementRepository
-				.findById(spatialStructureElement.get_Id());
-		if (findById.isPresent()) {
-			return findById.get().getContainsElementsRef();
-		}
-		return null;
+		Criteria criteriaV1 = Criteria.where("longName").exists(true);
+		Criteria criteriaV2 = Criteria.where("containsElements").exists(true);
+		Query query = new Query(new Criteria().orOperator(criteriaV1, criteriaV2));
+		return mongoTemplate.find(query, IfcSpatialStructureElement.class);
 	}
 
 	public List<IfcRelContainedInSpatialStructure> getContainsElements(
 			IfcSpatialStructureElement spatialStructureElement) {
 		List<IfcRelContainedInSpatialStructure> containsElements = null;
-		Optional<List<Ref>> refList = Optional.ofNullable(getcontainsElementsRef(spatialStructureElement));
-		if (refList.isPresent()) {
+		List<Ref> containsElementsRef = spatialStructureElement.getContainsElementsRef();
+		if (containsElementsRef != null) {
 			containsElements = new ArrayList<>();
-			List<Ref> relatingObjectRef = refList.get();
-			for (Ref ref : relatingObjectRef) {
-				containsElements.add(relContainedInSpatialStructureService
-						.getRelContainedInSpatialStructureByGlobalId(ref.getRef()));
+			for (Ref ref : containsElementsRef) {
+				containsElements
+						.add(relContainedInSpatialStructureService.getOneRelContainedInSpatialStructure(ref.getRef()));
 			}
 		}
 		return containsElements;
@@ -64,9 +50,9 @@ public class IfcSpatialStructureElementService {
 		if (containsElements != null) {
 			containsElementsDir = new ArrayList<>();
 			for (IfcRelContainedInSpatialStructure rel : containsElements) {
-				List<Ref> relatedElementRefs = rel.getRelatedElements();
+				List<Ref> relatedElementRefs = rel.getRelatedElementsRef();
 				for (Ref relatedElementRef : relatedElementRefs) {
-					containsElementsDir.add(productService.getProductByGlobalId(relatedElementRef.getRef()));
+					containsElementsDir.add(productService.getOneProduct(relatedElementRef.getRef()));
 				}
 			}
 		}

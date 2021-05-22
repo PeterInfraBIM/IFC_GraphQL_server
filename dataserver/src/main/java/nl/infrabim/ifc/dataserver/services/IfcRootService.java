@@ -12,13 +12,10 @@ import org.springframework.stereotype.Service;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcRootRepository;
 
 @Service
 public class IfcRootService {
 
-	@Autowired
-	private IfcRootRepository rootRepository;
 	@Autowired
 	private IfcOwnerHistoryService ownerHistoryService;
 
@@ -26,15 +23,11 @@ public class IfcRootService {
 	private MongoTemplate mongoTemplate;
 
 	public List<IfcRoot> getAllRoots() {
-		List<IfcRoot> filteredList = null;
-		for (IfcRoot candidate : rootRepository.findAll()) {
-			if (candidate.getName() != null || candidate.getDescription() != null) {
-				if (filteredList == null)
-					filteredList = new ArrayList<>();
-				filteredList.add(candidate);
-			}
-		}
-		return filteredList;
+		Criteria criteriaV1 = Criteria.where("ownerHistory").exists(true);
+		Criteria criteriaV2 = Criteria.where("name").exists(true);
+		Criteria criteriaV3 = Criteria.where("description").exists(true);
+		Query query = new Query(new Criteria().orOperator(criteriaV1, criteriaV2, criteriaV3));
+		return mongoTemplate.find(query, IfcRoot.class);
 	}
 
 	public List<IfcRoot> filterRootsByType(String filterType) {
@@ -50,7 +43,7 @@ public class IfcRootService {
 		return filteredList;
 	}
 
-	public IfcRoot getRootByGlobalId(String globalId) {
+	public IfcRoot getOneRoot(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcRoot.class);
@@ -59,7 +52,7 @@ public class IfcRootService {
 	public IfcOwnerHistory getOwnerHistory(IfcRoot root) {
 		Ref ownerHistoryRef = root.getOwnerHistoryRef();
 		if (ownerHistoryRef != null) {
-			return ownerHistoryService.getOwnerHistoryByGlobalId(ownerHistoryRef.getRef());
+			return ownerHistoryService.getOneOwnerHistory(ownerHistoryRef.getRef());
 		}
 		return null;
 	}

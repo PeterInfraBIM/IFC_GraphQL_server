@@ -49,7 +49,7 @@ public class IfcElementService {
 			hasAssociations = new ArrayList<>();
 			for (Ref ref : hasAssociationsRef) {
 				IfcRelAssociatesMaterial relAssociatesMaterial = relAssociatesMaterialService
-						.getRelAssociatesMateriaByGlobalId(ref.getRef());
+						.getOneRelAssociatesMaterial(ref.getRef());
 				hasAssociations.add(relAssociatesMaterial);
 			}
 		}
@@ -62,7 +62,7 @@ public class IfcElementService {
 		if (hasOpeningsRef != null) {
 			hasOpenings = new ArrayList<>();
 			for (Ref ref : hasOpeningsRef) {
-				IfcRelVoidsElement relVoidsElement = relVoidsElementService.getRelVoidsElementByGlobalId(ref.getRef());
+				IfcRelVoidsElement relVoidsElement = relVoidsElementService.getOneRelVoidsElement(ref.getRef());
 				hasOpenings.add(relVoidsElement);
 			}
 		}
@@ -75,7 +75,7 @@ public class IfcElementService {
 		if (fillsVoidsRef != null) {
 			fillsVoids = new ArrayList<>();
 			for (Ref ref : fillsVoidsRef) {
-				IfcRelFillsElement relFillsElement = relFillsElementService.getRelFillsElementByGlobalId(ref.getRef());
+				IfcRelFillsElement relFillsElement = relFillsElementService.getOneRelFillsElement(ref.getRef());
 				fillsVoids.add(relFillsElement);
 			}
 		}

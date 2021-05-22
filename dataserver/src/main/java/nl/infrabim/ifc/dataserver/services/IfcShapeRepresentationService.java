@@ -24,7 +24,7 @@ public class IfcShapeRepresentationService {
 		return mongoTemplate.find(query, IfcShapeRepresentation.class);
 	}
 
-	public IfcShapeRepresentation getShapeRepresentationByGlobalId(String globalId) {
+	public IfcShapeRepresentation getOneShapeRepresentation(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcShapeRepresentation.class);
@@ -37,7 +37,7 @@ public class IfcShapeRepresentationService {
 		if (representationsInContextRef != null) {
 			representationsInContext = new ArrayList<>();
 			for (Ref ref : representationsInContextRef) {
-				representationsInContext.add(getShapeRepresentationByGlobalId(ref.getRef()));
+				representationsInContext.add(getOneShapeRepresentation(ref.getRef()));
 			}
 		}
 		return representationsInContext;

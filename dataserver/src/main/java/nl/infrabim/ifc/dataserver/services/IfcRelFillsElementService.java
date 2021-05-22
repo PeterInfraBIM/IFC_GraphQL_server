@@ -22,7 +22,7 @@ public class IfcRelFillsElementService {
 	@Autowired
 	private IfcOpeningElementService openingElementService;
 
-	public IfcRelFillsElement getRelFillsElementByGlobalId(String globalId) {
+	public IfcRelFillsElement getOneRelFillsElement(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcRelFillsElement.class);

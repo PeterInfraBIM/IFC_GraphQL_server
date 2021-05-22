@@ -2,9 +2,13 @@ package nl.infrabim.ifc.dataserver.models;
 
 import java.util.List;
 
+import org.springframework.data.mongodb.core.mapping.Field;
+
 public class IfcRelContainedInSpatialStructure extends IfcRoot {
-	private List<Ref> relatedElements;
-	private Ref relatingStructure;
+	@Field("relatedElements")
+	private List<Ref> relatedElementsRef;
+	@Field("relatingStructure")
+	private Ref relatingStructureRef;
 
 	public IfcRelContainedInSpatialStructure() {
 		super();
@@ -14,20 +18,20 @@ public class IfcRelContainedInSpatialStructure extends IfcRoot {
 		super(id, type, globalId, name, description);
 	}
 
-	public List<Ref> getRelatedElements() {
-		return relatedElements;
+	public List<Ref> getRelatedElementsRef() {
+		return relatedElementsRef;
 	}
 
-	public void setRelatedElements(List<Ref> relatedElements) {
-		this.relatedElements = relatedElements;
+	public void setRelatedElementsRef(List<Ref> relatedElements) {
+		this.relatedElementsRef = relatedElements;
 	}
 
-	public Ref getRelatingStructure() {
-		return relatingStructure;
+	public Ref getRelatingStructureRef() {
+		return relatingStructureRef;
 	}
 
-	public void setRelatingStructure(Ref relatingStructure) {
-		this.relatingStructure = relatingStructure;
+	public void setRelatingStructureRef(Ref relatingStructureRef) {
+		this.relatingStructureRef = relatingStructureRef;
 	}
 	
 	public void copyRootValues(IfcRoot root) {

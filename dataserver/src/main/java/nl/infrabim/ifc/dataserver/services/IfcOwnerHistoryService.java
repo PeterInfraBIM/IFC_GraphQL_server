@@ -24,7 +24,7 @@ public class IfcOwnerHistoryService {
 		return mongoTemplate.find(query, IfcOwnerHistory.class);
 	}
 
-	public IfcOwnerHistory getOwnerHistoryByGlobalId(String globalId) {
+	public IfcOwnerHistory getOneOwnerHistory(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		IfcOwnerHistory findOne = mongoTemplate.findOne(query, IfcOwnerHistory.class);
@@ -34,7 +34,7 @@ public class IfcOwnerHistoryService {
 	public IfcOwnerHistory getOwnerHistory(IfcRoot root) {
 		Ref ownerHistoryRef = root.getOwnerHistoryRef();
 		if (ownerHistoryRef != null) {
-			return getOwnerHistoryByGlobalId(ownerHistoryRef.getRef());
+			return getOneOwnerHistory(ownerHistoryRef.getRef());
 		}
 		return null;
 	}

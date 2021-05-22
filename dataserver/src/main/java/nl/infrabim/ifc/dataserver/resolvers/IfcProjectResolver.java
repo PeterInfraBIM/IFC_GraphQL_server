@@ -13,7 +13,6 @@ import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProject;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
-import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectService;
 import nl.infrabim.ifc.dataserver.services.IfcProjectService;
@@ -35,20 +34,12 @@ public class IfcProjectResolver implements GraphQLResolver<IfcProject> {
 		return rootService.getOwnerHistory(project);
 	}
 
-	public List<Ref> getIsDecomposedByRef(IfcProject project) {
-		return objectDefinitionService.getIsDecomposedByRef(project);
-	}
-
 	public List<IfcRelAggregates> getIsDecomposedBy(IfcProject project) {
 		return objectDefinitionService.getIsDecomposedBy(project);
 	}
 
 	public List<IfcObjectDefinition> getIsDecomposedByDir(IfcProject project) {
 		return objectDefinitionService.getIsDecomposedByDir(project);
-	}
-
-	public List<Ref> getDecomposesRef(IfcProject project) {
-		return objectDefinitionService.getDecomposesRef(project);
 	}
 
 	public List<IfcRelAggregates> getDecomposes(IfcProject project) {

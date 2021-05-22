@@ -22,7 +22,7 @@ public class IfcRelDefinesByPropertiesService {
 		return mongoTemplate.find(query, IfcRelDefinesByProperties.class);
 	}
 
-	public IfcRelDefinesByProperties getRelDefinesByPropertiesByGlobalId(String globalId) {
+	public IfcRelDefinesByProperties getOneRelDefinesByProperties(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcRelDefinesByProperties.class);

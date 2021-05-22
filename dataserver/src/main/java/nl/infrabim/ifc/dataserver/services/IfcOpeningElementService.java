@@ -28,8 +28,4 @@ public class IfcOpeningElementService {
 		return mongoTemplate.find(query, IfcOpeningElement.class);
 	}
 
-	public IfcOpeningElement getOpeningElementById(String globalId) {
-		return getOneOpeningElement(globalId);
-	}
-
 }

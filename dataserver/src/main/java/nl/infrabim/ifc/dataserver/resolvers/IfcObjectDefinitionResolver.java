@@ -10,7 +10,6 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
-import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 
@@ -26,20 +25,12 @@ public class IfcObjectDefinitionResolver implements GraphQLResolver<IfcObjectDef
 		return rootService.getOwnerHistory(objectDefinition);
 	}
 
-	public List<Ref> getIsDecomposedByRef(IfcObjectDefinition objectDefinition) {
-		return objectDefinitionService.getIsDecomposedByRef(objectDefinition);
-	}
-
 	public List<IfcRelAggregates> getIsDecomposedBy(IfcObjectDefinition objectDefinition) {
 		return objectDefinitionService.getIsDecomposedBy(objectDefinition);
 	}
 
 	public List<IfcObjectDefinition> getIsDecomposedByDir(IfcObjectDefinition objectDefinition) {
 		return objectDefinitionService.getIsDecomposedByDir(objectDefinition);
-	}
-
-	public List<Ref> getDecomposesRef(IfcObjectDefinition objectDefinition) {
-		return objectDefinitionService.getDecomposesRef(objectDefinition);
 	}
 
 	public List<IfcRelAggregates> getDecomposes(IfcObjectDefinition objectDefinition) {

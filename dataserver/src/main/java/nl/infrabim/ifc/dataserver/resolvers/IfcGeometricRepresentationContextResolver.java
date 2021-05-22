@@ -32,7 +32,7 @@ public class IfcGeometricRepresentationContextResolver implements GraphQLResolve
 				representations = new ArrayList<>();
 			}
 			IfcShapeRepresentation shapeRepresentation = shapeRepresentationService
-					.getShapeRepresentationByGlobalId(ref.getRef());
+					.getOneShapeRepresentation(ref.getRef());
 			List<IfcRepresentationItem> returnedItems = new ArrayList<>();
 			for (IfcRepresentationItem item : shapeRepresentation.getItems()) {
 				switch (item.getType()) {

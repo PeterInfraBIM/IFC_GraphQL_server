@@ -241,8 +241,8 @@ type RelContainedInSpatialStructure implements Addressable & IfcRoot {
 	description: String
 	ownerHistoryRef: Ref
 	ownerHistory: OwnerHistory
-	relatedElements: [Ref]
-	relatingStructure: 	Ref
+	relatedElementsRef: [Ref!]
+	relatingStructureRef: 	Ref
 }
 
 type RelAssociates implements Addressable & IfcRoot & IfcRelAssociates {

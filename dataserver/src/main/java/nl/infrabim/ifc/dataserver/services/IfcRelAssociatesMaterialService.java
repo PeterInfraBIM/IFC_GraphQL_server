@@ -22,7 +22,7 @@ public class IfcRelAssociatesMaterialService {
 		return mongoTemplate.find(query, IfcRelAssociatesMaterial.class);
 	}
 
-	public IfcRelAssociatesMaterial getRelAssociatesMateriaByGlobalId(String globalId) {
+	public IfcRelAssociatesMaterial getOneRelAssociatesMaterial(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcRelAssociatesMaterial.class);

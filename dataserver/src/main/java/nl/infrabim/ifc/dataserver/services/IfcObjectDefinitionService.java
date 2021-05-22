@@ -2,7 +2,6 @@ package nl.infrabim.ifc.dataserver.services;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoTemplate;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.Ref;
-import nl.infrabim.ifc.dataserver.repositories.IfcObjectDefinitionRepository;
 
 @Service
 public class IfcObjectDefinitionService {
@@ -21,48 +19,24 @@ public class IfcObjectDefinitionService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 	@Autowired
-	private IfcObjectDefinitionRepository objectDefinitionRepository;
-	@Autowired
 	private IfcObjectDefinitionService objectDefinitionService;
 	@Autowired
 	private IfcRelAggregatesService relAggregatesService;
 
 	public List<IfcObjectDefinition> getAllObjectDefinitions() {
-		List<IfcObjectDefinition> filteredList = null;
-		for (IfcObjectDefinition candidate : objectDefinitionRepository.findAll()) {
-			if (candidate.getDecomposesRef() != null || candidate.getIsDecomposedByRef() != null) {
-				if (filteredList == null)
-					filteredList = new ArrayList<>();
-				filteredList.add(candidate);
-			}
-		}
-		return filteredList;
-	}
-
-	public List<Ref> getIsDecomposedByRef(IfcObjectDefinition objectDefinition) {
-		Optional<IfcObjectDefinition> findById = objectDefinitionRepository.findById(objectDefinition.get_Id());
-		if (findById.isPresent()) {
-			return findById.get().getIsDecomposedByRef();
-		}
-		return null;
-	}
-
-	public List<Ref> getDecomposesRef(IfcObjectDefinition objectDefinition) {
-		Optional<IfcObjectDefinition> findById = objectDefinitionRepository.findById(objectDefinition.get_Id());
-		if (findById.isPresent()) {
-			return findById.get().getDecomposesRef();
-		}
-		return null;
+		Criteria criteriaV1 = Criteria.where("isDecomposedBy").exists(true);
+		Criteria criteriaV2 = Criteria.where("decomposes").exists(true);
+		Query query = new Query(new Criteria().orOperator(criteriaV1, criteriaV2));
+		return mongoTemplate.find(query, IfcObjectDefinition.class);
 	}
 
 	public List<IfcRelAggregates> getIsDecomposedBy(IfcObjectDefinition objectDefinition) {
 		List<IfcRelAggregates> isDecomposedBy = null;
-		Optional<List<Ref>> refList = Optional.ofNullable(getIsDecomposedByRef(objectDefinition));
-		if (refList.isPresent()) {
+		List<Ref> isDecomposedByRef = objectDefinition.getIsDecomposedByRef();
+		if (isDecomposedByRef != null) {
 			isDecomposedBy = new ArrayList<>();
-			List<Ref> relatedObjectsRef = refList.get();
-			for (Ref ref : relatedObjectsRef) {
-				isDecomposedBy.add(relAggregatesService.getRelAggregatesByGlobalId(ref.getRef()));
+			for (Ref ref : isDecomposedByRef) {
+				isDecomposedBy.add(relAggregatesService.getOneRelAggregates(ref.getRef()));
 			}
 		}
 		return isDecomposedBy;
@@ -70,12 +44,11 @@ public class IfcObjectDefinitionService {
 
 	public List<IfcRelAggregates> getDecomposes(IfcObjectDefinition objectDefinition) {
 		List<IfcRelAggregates> decomposes = null;
-		Optional<List<Ref>> refList = Optional.ofNullable(getDecomposesRef(objectDefinition));
-		if (refList.isPresent()) {
+		List<Ref> decomposesRef = objectDefinition.getDecomposesRef();
+		if (decomposesRef != null) {
 			decomposes = new ArrayList<>();
-			List<Ref> relatingObjectRef = refList.get();
-			for (Ref ref : relatingObjectRef) {
-				decomposes.add(relAggregatesService.getRelAggregatesByGlobalId(ref.getRef()));
+			for (Ref ref : decomposesRef) {
+				decomposes.add(relAggregatesService.getOneRelAggregates(ref.getRef()));
 			}
 		}
 		return decomposes;
@@ -89,14 +62,14 @@ public class IfcObjectDefinitionService {
 			for (IfcRelAggregates rel : isDecomposedBy) {
 				List<Ref> relatedObjectsRef = rel.getRelatedObjectsRef();
 				for (Ref ref : relatedObjectsRef) {
-					isDecomposedByDir.add(objectDefinitionService.getObjectDefinitionByGlobalId(ref.getRef()));
+					isDecomposedByDir.add(objectDefinitionService.getOneObjectDefinition(ref.getRef()));
 				}
 			}
 		}
 		return isDecomposedByDir;
 	}
 
-	public IfcObjectDefinition getObjectDefinitionByGlobalId(String globalId) {
+	public IfcObjectDefinition getOneObjectDefinition(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcObjectDefinition.class);
@@ -109,7 +82,7 @@ public class IfcObjectDefinitionService {
 			decomposesDir = new ArrayList<>();
 			for (IfcRelAggregates rel : decomposes) {
 				Ref relatedObjectsRef = rel.getRelatingObjectRef();
-				decomposesDir.add(getObjectDefinitionByGlobalId(relatedObjectsRef.getRef()));
+				decomposesDir.add(getOneObjectDefinition(relatedObjectsRef.getRef()));
 			}
 		}
 		return decomposesDir;

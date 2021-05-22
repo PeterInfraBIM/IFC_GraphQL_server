@@ -14,7 +14,6 @@ import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProduct;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
-import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
@@ -36,20 +35,12 @@ public class IfcBuildingStoreyResolver implements GraphQLResolver<IfcBuildingSto
 		return rootService.getOwnerHistory(buildingStorey);
 	}
 
-	public List<Ref> getIsDecomposedByRef(IfcBuildingStorey buildingStorey) {
-		return objectDefinitionService.getIsDecomposedByRef(buildingStorey);
-	}
-
 	public List<IfcRelAggregates> getIsDecomposedBy(IfcBuildingStorey buildingStorey) {
 		return objectDefinitionService.getIsDecomposedBy(buildingStorey);
 	}
 
 	public List<IfcObjectDefinition> getIsDecomposedByDir(IfcBuildingStorey buildingStorey) {
 		return objectDefinitionService.getIsDecomposedByDir(buildingStorey);
-	}
-
-	public List<Ref> getDecomposesRef(IfcBuildingStorey buildingStorey) {
-		return objectDefinitionService.getDecomposesRef(buildingStorey);
 	}
 
 	public List<IfcRelAggregates> getDecomposes(IfcBuildingStorey buildingStorey) {

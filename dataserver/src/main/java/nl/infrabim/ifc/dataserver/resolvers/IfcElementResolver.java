@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
-import nl.infrabim.ifc.dataserver.models.IfcDoor;
 import nl.infrabim.ifc.dataserver.models.IfcElement;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
@@ -16,7 +15,6 @@ import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
-import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcProductService;
@@ -38,20 +36,12 @@ public class IfcElementResolver implements GraphQLResolver<IfcElement> {
 		return rootService.getOwnerHistory(element);
 	}
 
-	public List<Ref> getIsDecomposedByRef(IfcElement element) {
-		return objectDefinitionService.getIsDecomposedByRef(element);
-	}
-
 	public List<IfcRelAggregates> getIsDecomposedBy(IfcElement element) {
 		return objectDefinitionService.getIsDecomposedBy(element);
 	}
 
 	public List<IfcObjectDefinition> getIsDecomposedByDir(IfcElement element) {
 		return objectDefinitionService.getIsDecomposedByDir(element);
-	}
-
-	public List<Ref> getDecomposesRef(IfcElement element) {
-		return objectDefinitionService.getDecomposesRef(element);
 	}
 
 	public List<IfcRelAggregates> getDecomposes(IfcElement element) {

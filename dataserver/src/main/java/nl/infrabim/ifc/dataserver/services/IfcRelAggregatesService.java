@@ -27,7 +27,7 @@ public class IfcRelAggregatesService {
 		return mongoTemplate.find(query, IfcRelAggregates.class);
 	}
 
-	public IfcRelAggregates getRelAggregatesByGlobalId(String globalId) {
+	public IfcRelAggregates getOneRelAggregates(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcRelAggregates.class);
@@ -36,7 +36,7 @@ public class IfcRelAggregatesService {
 	public IfcObjectDefinition getRelatingObject(IfcRelAggregates relAggregates) {
 		Ref relatingObjectRef = relAggregates.getRelatingObjectRef();
 		return relatingObjectRef != null
-				? objectDefinitionService.getObjectDefinitionByGlobalId(relatingObjectRef.getRef())
+				? objectDefinitionService.getOneObjectDefinition(relatingObjectRef.getRef())
 				: null;
 	}
 
@@ -46,7 +46,7 @@ public class IfcRelAggregatesService {
 		if (relatedObjectsRef != null) {
 			relatedObjects = new ArrayList<>();
 			for (Ref ref : relatedObjectsRef) {
-				relatedObjects.add(objectDefinitionService.getObjectDefinitionByGlobalId(ref.getRef()));
+				relatedObjects.add(objectDefinitionService.getOneObjectDefinition(ref.getRef()));
 			}
 		}
 		return relatedObjects;
