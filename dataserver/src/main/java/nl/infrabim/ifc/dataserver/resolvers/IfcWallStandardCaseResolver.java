@@ -10,10 +10,12 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
+import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
@@ -71,9 +73,17 @@ public class IfcWallStandardCaseResolver implements GraphQLResolver<IfcWallStand
 	public List<IfcRelFillsElement> getFillsVoids(IfcWallStandardCase wallStandardCase) {
 		return elementService.getFillsVoids(wallStandardCase);
 	}
+	
+	public List<IfcRelSpaceBoundary> getProvidesBoundaries(IfcWallStandardCase wallStandardCase) {
+		return elementService.getProvidesBoundaries(wallStandardCase);
+	}
 
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcWallStandardCase wallStandardCase) {
 		return objectService.getIsDefinedBy(wallStandardCase);
+	}
+	
+	public List<IfcPropertySet> getIsDefinedByDir(IfcWallStandardCase wallStandardCase) {
+		return objectService.getIsDefinedByDir(wallStandardCase);
 	}
 
 }

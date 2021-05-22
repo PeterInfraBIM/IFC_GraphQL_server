@@ -24,6 +24,7 @@ interface IfcObject {
 	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
 }
 
 interface IfcProduct {
@@ -33,12 +34,17 @@ interface IfcProduct {
 }
 
 interface IfcElement {
-	hasAssociationsRef: [Ref!]
-	hasAssociations: [IfcRelAssociates!]
-	hasOpeningsRef: [Ref!]
-	hasOpenings: [RelVoidsElement!]
+	tag: String
 	fillsVoidsRef: [Ref!]
 	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [IfcRelAssociates!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
 	containedInStructureRef: [Ref!]
 }
 

@@ -10,6 +10,8 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcBooleanValue;
+import nl.infrabim.ifc.dataserver.models.IfcIntegerValue;
+import nl.infrabim.ifc.dataserver.models.IfcLabel;
 import nl.infrabim.ifc.dataserver.models.IfcProperty;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcPropertySingleValue;
@@ -60,6 +62,18 @@ public class IfcPropertySetService {
 			booleanValue.setValue(nominalValue.getValue());
 			booleanValue.setBooleanValue((Boolean) nominalValue.getValue());
 			return booleanValue;
+		} else if (nominalValue.getType().equals("IfcInteger")) {
+			IfcIntegerValue integerValue = new IfcIntegerValue();
+			integerValue.setType(nominalValue.getType());
+			integerValue.setValue(nominalValue.getValue());
+			integerValue.setIntegerValue((Integer) nominalValue.getValue());
+			return integerValue;
+		} else if (nominalValue.getType().equals("IfcLabel")) {
+			IfcLabel label = new IfcLabel();
+			label.setType(nominalValue.getType());
+			label.setValue(nominalValue.getValue());
+			label.setLabelValue((String) nominalValue.getValue());
+			return label;
 		} else if (nominalValue.getType().equals("IfcReal")) {
 			IfcRealValue realValue = new IfcRealValue();
 			realValue.setType(nominalValue.getType());

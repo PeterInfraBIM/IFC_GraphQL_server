@@ -92,6 +92,7 @@ type Object implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject {
 	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
 }
 
 type ProductRepresentation {
@@ -179,12 +180,17 @@ type Element implements Addressable & IfcRoot & IfcObjectDefinition & IfcProduct
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation
+	tag: String
 	hasAssociationsRef: [Ref!]
 	hasAssociations: [RelAssociatesMaterial!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
 	fillsVoidsRef: [Ref!]
 	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
 	containedInStructureRef: [Ref!]
 }
 
@@ -318,6 +324,21 @@ type RelSpaceBoundary implements Addressable & IfcRoot {
 	relatedBuildingElement: Element
 }
 
+type RelConnectsPathElements implements Addressable & IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	relatingElementRef: Ref
+	relatingElement: Element
+	relatedElementRef: Ref
+	relatedElement: Element
+	relatingConnectionType: IfcConnectionTypeEnum
+	relatedConnectionType: IfcConnectionTypeEnum
+}
+
 type PropertySet implements IfcRoot {
 	type: String!
 	globalId: ID!
@@ -330,11 +351,21 @@ type PropertySet implements IfcRoot {
 
 union Property = PropertySingleValue
 
-union Value = RealValue | BooleanValue
+union Value = BooleanValue | IntegerValue | Label | RealValue
 
 type BooleanValue {
 	type: String!
 	booleanValue: Boolean
+}
+
+type IntegerValue {
+	type: String!
+	integerValue: Int
+}
+
+type Label {
+	type: String!
+	labelValue: String
 }
 
 type RealValue {
@@ -425,8 +456,11 @@ type Project implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject 
 	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
 	representationContextsRef: [Ref!]
 	representationContexts: [GeometricRepresentationContext!]
+	longName: String
+	phase: String
 }
 
 type Site implements Addressable & 
@@ -462,6 +496,7 @@ type Site implements Addressable &
 	containsElementsDir: [Product!]
 	refLatitude: [Float]
 	refLongitude: [Float]
+	refElevation: Float
 }
 
 type Building implements Addressable & 
@@ -557,6 +592,7 @@ type Space implements
 	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
 	objectPlacement: LocalPlacement
 	objectPlacements: [LocalPlacement!]
 	representation: ProductRepresentation
@@ -596,13 +632,19 @@ type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & I
 	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
 	representation: ProductRepresentation
+	tag: String
 	hasAssociationsRef: [Ref!]
 	hasAssociations: [RelAssociatesMaterial!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
 	fillsVoidsRef: [Ref!]
 	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
 	containedInStructureRef: [Ref!]
 }
 
@@ -631,13 +673,19 @@ type OpeningElement implements Addressable & IfcRoot & IfcObjectDefinition & Ifc
 	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
 	representation: ProductRepresentation
+	tag: String
 	hasAssociationsRef: [Ref!]
 	hasAssociations: [RelAssociatesMaterial!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
 	fillsVoidsRef: [Ref!]
 	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
 	containedInStructureRef: [Ref!]
 }
 
@@ -666,16 +714,63 @@ type Door implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & I
 	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
 	representation: ProductRepresentation
+	tag: String
 	hasAssociationsRef: [Ref!]
 	hasAssociations: [RelAssociatesMaterial!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
 	fillsVoidsRef: [Ref!]
 	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
 	containedInStructureRef: [Ref!]
 	overallHeight: Float
 	overallWidth: Float
+}
+
+type Slab implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+	predefinedType: IfcSlabTypeEnum
 }
 
 type StairFlight implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
@@ -702,13 +797,19 @@ type StairFlight implements Addressable & IfcRoot & IfcObjectDefinition & IfcObj
 	objectType: String
 	isDefinedByRef: [Ref!]
 	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
 	representation: ProductRepresentation
+	tag: String
 	hasAssociationsRef: [Ref!]
 	hasAssociations: [RelAssociatesMaterial!]
 	hasOpeningsRef: [Ref!]
 	hasOpenings: [RelVoidsElement!]
 	fillsVoidsRef: [Ref!]
 	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
 	containedInStructureRef: [Ref!]
 }
 
@@ -761,12 +862,16 @@ type Query {
 	allRelSpaceBoundaries: [RelSpaceBoundary]
 	# Get one RelSpaceBoundary object
 	oneRelSpaceBoundary(globalId: String!): RelSpaceBoundary
+	# Get all RelConnectsPathElements objects
+	allRelConnectsPathElements: [RelConnectsPathElements]
 	# Get all WallStandardCase objects
 	allWallStandardCases: [WallStandardCase]
 	# Get all Door objects
 	allDoors: [Door]
 	# Get all PropertySetDefinition objects
 	allPropertySets: [PropertySet]
+	# Get all Slab objects
+	allSlabs: [Slab]
 	# Get all StairFlight objects
 	allStairFlights: [StairFlight]
 	getTestPolyline: Polyline
@@ -776,6 +881,8 @@ type Query {
 	getTestPropertySingleValue: PropertySingleValue
 	getTestValue: Value
 	getTestBooleanValue: BooleanValue
+	getTestIntegerValue: IntegerValue
+	getTestLabel: Label
 	getTestRealValue: RealValue
 }
 

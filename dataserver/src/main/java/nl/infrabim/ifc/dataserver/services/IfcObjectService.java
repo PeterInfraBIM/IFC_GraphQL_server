@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcObject;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.Ref;
 
@@ -20,6 +21,8 @@ public class IfcObjectService {
 	private MongoTemplate mongoTemplate;
 	@Autowired
 	private IfcRelDefinesByPropertiesService relDefinesByPropertiesService;
+	@Autowired
+	private IfcPropertySetService propertySetService;
 
 	public List<IfcObject> getAllObjects() {
 		Criteria criteriaV1 = Criteria.where("isDefinedBy").exists(true);
@@ -45,6 +48,22 @@ public class IfcObjectService {
 			}
 		}
 		return isDefinedBy;
+	}
+
+	public List<IfcPropertySet> getIsDefinedByDir(IfcObject object) {
+		List<IfcPropertySet> isDefinedByDir = null;
+		List<IfcRelDefinesByProperties> isDefinedBy = getIsDefinedBy(object);
+		if (isDefinedBy != null) {
+			isDefinedByDir = new ArrayList<>();
+			for (IfcRelDefinesByProperties relDefinesByProperties : isDefinedBy) {
+				Ref relatingPropertyDefinitionRef = relDefinesByProperties.getRelatingPropertyDefinitionRef();
+				if (relatingPropertyDefinitionRef != null) {
+					isDefinedByDir.add(
+							propertySetService.getOnePropertySetDefinition(relatingPropertyDefinitionRef.getRef()));
+				}
+			}
+		}
+		return isDefinedByDir;
 	}
 
 }

@@ -11,6 +11,7 @@ import nl.infrabim.ifc.dataserver.models.IfcGeometricRepresentationContext;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcProject;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -52,6 +53,10 @@ public class IfcProjectResolver implements GraphQLResolver<IfcProject> {
 
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcProject project) {
 		return objectService.getIsDefinedBy(project);
+	}
+	
+	public List<IfcPropertySet> getIsDefinedByDir(IfcProject project) {
+		return objectService.getIsDefinedByDir(project);
 	}
 
 	public List<IfcGeometricRepresentationContext> getRepresentationContexts(IfcProject project) {

@@ -14,6 +14,7 @@ import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
+import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -66,6 +67,10 @@ public class IfcElementResolver implements GraphQLResolver<IfcElement> {
 
 	public List<IfcRelFillsElement> getFillsVoids(IfcElement element) {
 		return elementService.getFillsVoids(element);
+	}
+
+	public List<IfcRelSpaceBoundary> getProvidesBoundaries(IfcElement element) {
+		return elementService.getProvidesBoundaries(element);
 	}
 
 }

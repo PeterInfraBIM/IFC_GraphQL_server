@@ -11,10 +11,12 @@ import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOpeningElement;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
+import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -56,10 +58,6 @@ public class IfcOpeningElementResolver implements GraphQLResolver<IfcOpeningElem
 		return objectDefinitionService.getDecomposesDir(openingElement);
 	}
 
-	public IfcLocalPlacement getObjectPlacement(IfcOpeningElement openingElement) {
-		return productService.getObjectPlacement(openingElement);
-	}
-
 	public List<IfcRelAssociatesMaterial> getHasAssociations(IfcOpeningElement openingElement) {
 		return elementService.getHasAssociations(openingElement);
 	}
@@ -67,15 +65,23 @@ public class IfcOpeningElementResolver implements GraphQLResolver<IfcOpeningElem
 	public List<IfcRelVoidsElement> getHasOpenings(IfcOpeningElement openingElement) {
 		return elementService.getHasOpenings(openingElement);
 	}
-	
-	public List<IfcRelFillsElement> getFillsVoids(IfcOpeningElement openingElement){
+
+	public List<IfcRelFillsElement> getFillsVoids(IfcOpeningElement openingElement) {
 		return elementService.getFillsVoids(openingElement);
+	}
+
+	public List<IfcRelSpaceBoundary> getProvidesBoundaries(IfcOpeningElement openingElement) {
+		return elementService.getProvidesBoundaries(openingElement);
 	}
 
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcOpeningElement openingElement) {
 		return objectService.getIsDefinedBy(openingElement);
 	}
-	
+
+	public List<IfcPropertySet> getIsDefinedByDir(IfcOpeningElement openingElement) {
+		return objectService.getIsDefinedByDir(openingElement);
+	}
+
 	public List<IfcLocalPlacement> getObjectPlacements(IfcOpeningElement openingElement) {
 		return productService.getObjectPlacements(openingElement);
 	}

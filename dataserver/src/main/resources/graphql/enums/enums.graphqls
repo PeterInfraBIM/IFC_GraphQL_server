@@ -8,6 +8,13 @@ enum IfcChangeActionEnum  {
 	MODIFIEDDELETED
 }
 
+enum IfcConnectionTypeEnum {
+	ATPATH
+	ATSTART
+	ATEND
+	NOTDEFINED
+}
+
 enum IfcDirectionSenseEnum {
 	POSITIVE
 	NEGATIVE
@@ -35,4 +42,13 @@ enum IfcLayerSetDirectionEnum {
 enum IfcProfileTypeEnum {
 	CURVE
 	AREA
+}
+
+enum IfcSlabTypeEnum {
+	FLOOR
+	ROOF
+	LANDING
+	BASESLAB
+	USERDEFINED
+	NOTDEFINED
 }

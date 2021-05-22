@@ -10,6 +10,7 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nl.infrabim.ifc.dataserver.models.IfcObject;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -48,5 +49,9 @@ public class IfcObjectResolver implements GraphQLResolver<IfcObject> {
 	
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcObject object){
 		return objectService.getIsDefinedBy(object);
+	}
+	
+	public List<IfcPropertySet> getIsDefinedByDir(IfcObject object){
+		return objectService.getIsDefinedByDir(object);
 	}
 }

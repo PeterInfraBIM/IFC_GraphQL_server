@@ -11,10 +11,12 @@ import nl.infrabim.ifc.dataserver.models.IfcDoor;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
+import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -70,9 +72,17 @@ public class IfcDoorResolver implements GraphQLResolver<IfcDoor> {
 	public List<IfcRelFillsElement> getFillsVoids(IfcDoor door){
 		return elementService.getFillsVoids(door);
 	}
+	
+	public List<IfcRelSpaceBoundary> getProvidesBoundaries(IfcDoor door) {
+		return elementService.getProvidesBoundaries(door);
+	}
 
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcDoor door) {
 		return objectService.getIsDefinedBy(door);
+	}
+	
+	public List<IfcPropertySet> getIsDefinedByDir(IfcDoor door) {
+		return objectService.getIsDefinedByDir(door);
 	}
 
 }

@@ -8,6 +8,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class IfcSite extends IfcSpatialStructureElement {
 	private List<Double> refLatitude;
 	private List<Double> refLongitude;
+	private Double refElevation;
 
 	public IfcSite() {
 		super();
@@ -27,6 +28,14 @@ public class IfcSite extends IfcSpatialStructureElement {
 
 	public void setRefLongitude(List<Double> refLongitude) {
 		this.refLongitude = refLongitude;
+	}
+
+	public Double getRefElevation() {
+		return refElevation;
+	}
+
+	public void setRefElevation(Double refElevation) {
+		this.refElevation = refElevation;
 	}
 
 	public IfcSite(String id, String type, String globalId, String name, String description) {

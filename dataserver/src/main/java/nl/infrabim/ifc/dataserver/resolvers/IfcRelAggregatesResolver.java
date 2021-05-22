@@ -10,7 +10,6 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
-import nl.infrabim.ifc.dataserver.models.Ref;
 import nl.infrabim.ifc.dataserver.services.IfcRelAggregatesService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 

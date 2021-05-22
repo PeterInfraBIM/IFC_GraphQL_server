@@ -10,10 +10,12 @@ import com.coxautodev.graphql.tools.GraphQLResolver;
 import nl.infrabim.ifc.dataserver.models.IfcLocalPlacement;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySet;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
+import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
 import nl.infrabim.ifc.dataserver.models.IfcStairFlight;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
@@ -70,9 +72,17 @@ public class IfcStairFlightResolver implements GraphQLResolver<IfcStairFlight> {
 	public List<IfcRelFillsElement> getFillsVoids(IfcStairFlight stairFlight){
 		return elementService.getFillsVoids(stairFlight);
 	}
+	
+	public List<IfcRelSpaceBoundary> getProvidesBoundaries(IfcStairFlight stairFlight) {
+		return elementService.getProvidesBoundaries(stairFlight);
+	}
 
 	public List<IfcRelDefinesByProperties> getIsDefinedBy(IfcStairFlight stairFlight) {
 		return objectService.getIsDefinedBy(stairFlight);
+	}
+	
+	public List<IfcPropertySet> getIsDefinedByDir(IfcStairFlight stairFlight) {
+		return objectService.getIsDefinedByDir(stairFlight);
 	}
 
 }
