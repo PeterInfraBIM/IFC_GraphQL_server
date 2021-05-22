@@ -45,6 +45,7 @@ import nl.infrabim.ifc.dataserver.models.IfcSpatialStructureElement;
 import nl.infrabim.ifc.dataserver.models.IfcStairFlight;
 import nl.infrabim.ifc.dataserver.models.IfcValue;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
+import nl.infrabim.ifc.dataserver.models.IfcWindow;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcDoorService;
@@ -71,6 +72,7 @@ import nl.infrabim.ifc.dataserver.services.IfcSpaceService;
 import nl.infrabim.ifc.dataserver.services.IfcSpatialStructureElementService;
 import nl.infrabim.ifc.dataserver.services.IfcStairFlightService;
 import nl.infrabim.ifc.dataserver.services.IfcWallStandardCaseService;
+import nl.infrabim.ifc.dataserver.services.IfcWindowService;
 
 @Component
 public class Query implements GraphQLQueryResolver {
@@ -119,6 +121,8 @@ public class Query implements GraphQLQueryResolver {
 	private IfcWallStandardCaseService wallStandardCaseService;
 	@Autowired
 	private IfcDoorService doorService;
+	@Autowired
+	private IfcWindowService windowService;
 	@Autowired
 	private IfcOpeningElementService openingElementService;
 	@Autowired
@@ -219,7 +223,7 @@ public class Query implements GraphQLQueryResolver {
 	public IfcRelSpaceBoundary oneRelSpaceBoundary(String globalId) throws IOException {
 		return relSpaceBoundaryService.getOneRelSpaceBoundary(globalId);
 	}
-	
+
 	public List<IfcRelConnectsPathElements> allRelConnectsPathElements() throws IOException {
 		return relConnectsPathElementsService.getAllRelConnectsPathElements();
 	}
@@ -230,6 +234,18 @@ public class Query implements GraphQLQueryResolver {
 
 	public List<IfcDoor> allDoors() throws IOException {
 		return doorService.getAllDoors();
+	}
+	
+	public IfcDoor oneDoor(String globalId) throws IOException {
+		return doorService.getOneDoor(globalId);
+	}
+
+	public List<IfcWindow> allWindows() throws IOException {
+		return windowService.getAllWindows();
+	}
+	
+	public IfcWindow oneWindow(String globalId) throws IOException {
+		return windowService.getOneWindow(globalId);
 	}
 
 	public List<IfcOpeningElement> allOpeningElements() throws IOException {

@@ -732,6 +732,49 @@ type Door implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & I
 	overallWidth: Float
 }
 
+# IfcWindow
+type Window implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+	overallHeight: Float
+	overallWidth: Float
+}
+
 type Slab implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
 	type: String!
 	globalId: ID!
@@ -868,6 +911,12 @@ type Query {
 	allWallStandardCases: [WallStandardCase]
 	# Get all Door objects
 	allDoors: [Door]
+	# Get one Door object
+	oneDoor(globalId: String!): Door
+	# Get all Window objects
+	allWindows: [Window]
+	# Get one Window object
+	oneWindow(globalId: String!): Window
 	# Get all PropertySetDefinition objects
 	allPropertySets: [PropertySet]
 	# Get all Slab objects
