@@ -3,13 +3,13 @@ package nl.infrabim.ifc.dataserver.models;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 @Document(collection = "duplex")
-public class IfcWallStandardCase extends IfcWall {
+public class IfcFurnishingElement extends IfcElement {
 
-	public IfcWallStandardCase() {
+	public IfcFurnishingElement() {
 		super();
 	}
 
-	public IfcWallStandardCase(String id, String type, String globalId, String name, String description) {
+	public IfcFurnishingElement(String id, String type, String globalId, String name, String description) {
 		super(id, type, globalId, name, description);
 	}
 	

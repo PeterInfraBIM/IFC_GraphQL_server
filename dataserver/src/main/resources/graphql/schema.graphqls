@@ -607,6 +607,47 @@ type Space implements
 	boundedByDir: [Element!]
 }
 
+# IfcWall
+type Wall implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+}
+
 # IfcWallStandardCase
 type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
 	type: String!
@@ -775,6 +816,166 @@ type Window implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject &
 	overallWidth: Float
 }
 
+type Beam implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+}
+
+type Covering implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+}
+
+type Footing implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+}
+
+type FurnishingElement implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+}
+
 type Slab implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
 	type: String!
 	globalId: ID!
@@ -814,6 +1015,128 @@ type Slab implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & I
 	providesBoundaries: [RelSpaceBoundary]
 	containedInStructureRef: [Ref!]
 	predefinedType: IfcSlabTypeEnum
+}
+
+type Railing implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+	predefinedType: IfcRailingTypeEnum
+}
+
+type Roof implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
+	shapeType: 	IfcRoofTypeEnum
+}
+
+type Stair implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	objectPlacement: LocalPlacement
+	objectPlacements: [LocalPlacement!]
+	objectType: String
+	isDefinedByRef: [Ref!]
+	isDefinedBy: [RelDefinesByProperties!]
+	isDefinedByDir: [PropertySet!]
+	representation: ProductRepresentation
+	tag: String
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociatesMaterial!]
+	hasOpeningsRef: [Ref!]
+	hasOpenings: [RelVoidsElement!]
+	fillsVoidsRef: [Ref!]
+	fillsVoids: [RelFillsElement!]
+	connectedToRef: [Ref!]
+	connectedFromRef: [Ref!]
+	providesBoundariesRef: [Ref!]
+	providesBoundaries: [RelSpaceBoundary]
+	containedInStructureRef: [Ref!]
 }
 
 type StairFlight implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
@@ -907,6 +1230,8 @@ type Query {
 	oneRelSpaceBoundary(globalId: String!): RelSpaceBoundary
 	# Get all RelConnectsPathElements objects
 	allRelConnectsPathElements: [RelConnectsPathElements]
+	# Get all Wall objects
+	allWalls: [Wall]
 	# Get all WallStandardCase objects
 	allWallStandardCases: [WallStandardCase]
 	# Get all Door objects
@@ -919,8 +1244,22 @@ type Query {
 	oneWindow(globalId: String!): Window
 	# Get all PropertySetDefinition objects
 	allPropertySets: [PropertySet]
+	# Get all Beam objects
+	allBeams: [Beam]
+	# Get all Covering objects
+	allCoverings: [Covering]
+	# Get all Footing objects
+	allFootings: [Footing]
+	# Get all FurnishingElement objects
+	allFurnishingElements: [FurnishingElement]
 	# Get all Slab objects
 	allSlabs: [Slab]
+	# Get all Railing objects
+	allRailings: [Railing]
+	# Get all Roof objects
+	allRoofs: [Roof]
+	# Get all Stair objects
+	allStairs: [Stair]
 	# Get all StairFlight objects
 	allStairFlights: [StairFlight]
 	getTestPolyline: Polyline
