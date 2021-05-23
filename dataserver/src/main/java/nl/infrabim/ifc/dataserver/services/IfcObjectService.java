@@ -59,7 +59,7 @@ public class IfcObjectService {
 				Ref relatingPropertyDefinitionRef = relDefinesByProperties.getRelatingPropertyDefinitionRef();
 				if (relatingPropertyDefinitionRef != null) {
 					isDefinedByDir.add(
-							propertySetService.getOnePropertySetDefinition(relatingPropertyDefinitionRef.getRef()));
+							propertySetService.getOnePropertySet(relatingPropertyDefinitionRef.getRef()));
 				}
 			}
 		}

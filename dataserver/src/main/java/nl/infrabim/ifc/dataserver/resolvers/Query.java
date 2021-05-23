@@ -192,8 +192,16 @@ public class Query implements GraphQLQueryResolver {
 		return projectService.getAllProjects();
 	}
 
+	public IfcProject oneProject(String globalId) throws IOException {
+		return projectService.getOneProject(globalId);
+	}
+
 	public List<IfcSite> allSites() throws IOException {
 		return siteService.getAllSites();
+	}
+
+	public IfcSite oneSite(String globalId) throws IOException {
+		return siteService.getOneSite(globalId);
 	}
 
 	public List<IfcBuilding> allBuildings() throws IOException {
@@ -224,28 +232,56 @@ public class Query implements GraphQLQueryResolver {
 		return relAggregatesService.getAllRelAggregates();
 	}
 
+	public IfcRelAggregates oneRelAggregates(String globalId) throws IOException {
+		return relAggregatesService.getOneRelAggregates(globalId);
+	}
+
 	public List<IfcRelContainedInSpatialStructure> allRelContainedInSpatialStructures() throws IOException {
 		return relContainedInSpatialStructureService.getAllRelContainedInSpatialStructures();
+	}
+
+	public IfcRelContainedInSpatialStructure oneRelContainedInSpatialStructure(String globalId) throws IOException {
+		return relContainedInSpatialStructureService.getOneRelContainedInSpatialStructure(globalId);
 	}
 
 	public List<IfcRelAssociates> allRelAssociates() throws IOException {
 		return relAssociatesService.getAllRelAssociates();
 	}
 
+	public IfcRelAssociates oneRelAssociates(String globalId) throws IOException {
+		return relAssociatesService.getOneRelAssociates(globalId);
+	}
+
 	public List<IfcRelAssociatesMaterial> allRelAssociatesMaterials() throws IOException {
 		return relAssociatesMaterialService.getAllRelAssociatesMaterials();
+	}
+
+	public IfcRelAssociatesMaterial oneRelAssociatesMaterial(String globalId) throws IOException {
+		return relAssociatesMaterialService.getOneRelAssociatesMaterial(globalId);
 	}
 
 	public List<IfcRelDefinesByProperties> allRelDefinesByProperties() throws IOException {
 		return relDefinesByPropertiesService.getAllRelDefinesByProperties();
 	}
 
+	public IfcRelDefinesByProperties oneRelDefinesByProperties(String globalId) throws IOException {
+		return relDefinesByPropertiesService.getOneRelDefinesByProperties(globalId);
+	}
+
 	public List<IfcRelVoidsElement> allRelVoidsElements() throws IOException {
 		return relVoidsElementService.getAllRelVoidsElements();
 	}
 
+	public IfcRelVoidsElement oneRelVoidsElement(String globalId) throws IOException {
+		return relVoidsElementService.getOneRelVoidsElement(globalId);
+	}
+
 	public List<IfcRelFillsElement> allRelFillsElements() throws IOException {
 		return relFillsElementService.getAllRelFillsElements();
+	}
+
+	public IfcRelFillsElement oneRelFillsElement(String globalId) throws IOException {
+		return relFillsElementService.getOneRelFillsElement(globalId);
 	}
 
 	public List<IfcRelSpaceBoundary> allRelSpaceBoundaries() throws IOException {
@@ -260,12 +296,20 @@ public class Query implements GraphQLQueryResolver {
 		return relConnectsPathElementsService.getAllRelConnectsPathElements();
 	}
 
+	public IfcRelConnectsPathElements oneRelConnectsPathElements(String globalId) throws IOException {
+		return relConnectsPathElementsService.getOneRelConnectsPathElements(globalId);
+	}
+
 	public List<IfcWall> allWalls() throws IOException {
 		return wallService.getAllWalls();
 	}
 
 	public List<IfcWallStandardCase> allWallStandardCases() throws IOException {
 		return wallStandardCaseService.getAllWallStandardCases();
+	}
+
+	public IfcWallStandardCase oneWallStandardCase(String globalId) throws IOException {
+		return wallStandardCaseService.getOneWallStandardCase(globalId);
 	}
 
 	public List<IfcDoor> allDoors() throws IOException {
@@ -288,43 +332,88 @@ public class Query implements GraphQLQueryResolver {
 		return openingElementService.getAllOpeningElements();
 	}
 
+	public IfcOpeningElement oneOpeningElement(String globalId) throws IOException {
+		return openingElementService.getOneOpeningElement(globalId);
+	}
+
 	public List<IfcPropertySet> allPropertySets() throws IOException {
 		return propertySetService.getAllPropertySets();
 	}
-	
+
+	public IfcPropertySet onePropertySet(String globalId) throws IOException {
+		return propertySetService.getOnePropertySet(globalId);
+	}
+
 	public List<IfcBeam> allBeams() throws IOException {
 		return beamService.getAllBeams();
 	}
-	
+
+	public IfcBeam oneBeam(String globalId) throws IOException {
+		return beamService.getOneBeam(globalId);
+	}
+
 	public List<IfcCovering> allCoverings() throws IOException {
 		return coveringService.getAllCoverings();
+	}
+
+	public IfcCovering oneCovering(String globalId) throws IOException {
+		return coveringService.getOneCovering(globalId);
 	}
 
 	public List<IfcFooting> allFootings() throws IOException {
 		return footingService.getAllFootings();
 	}
-	
+
+	public IfcFooting oneFooting(String globalId) throws IOException {
+		return footingService.getOneFooting(globalId);
+	}
+
 	public List<IfcFurnishingElement> allFurnishingElements() throws IOException {
 		return furnishingElementService.getAllFurnishingElements();
+	}
+
+	public IfcFurnishingElement oneFurnishingElement(String globalId) throws IOException {
+		return furnishingElementService.getOneFurnishingElement(globalId);
 	}
 
 	public List<IfcSlab> allSlabs() throws IOException {
 		return slabService.getAllSlabs();
 	}
-	
+
+	public IfcSlab oneSlab(String globalId) throws IOException {
+		return slabService.getOneSlab(globalId);
+	}
+
 	public List<IfcRailing> allRailings() throws IOException {
 		return railingService.getAllRailings();
 	}
-	
+
+	public IfcRailing oneRailing(String globalId) throws IOException {
+		return railingService.getOneRailing(globalId);
+	}
+
 	public List<IfcRoof> allRoofs() throws IOException {
 		return roofService.getAllRoofs();
+	}
+
+	public IfcRoof oneRoof(String globalId) throws IOException {
+		return roofService.getOneRoof(globalId);
 	}
 
 	public List<IfcStair> allStairs() throws IOException {
 		return stairService.getAllStairs();
 	}
+
+	public IfcStair oneStair(String globalId) throws IOException {
+		return stairService.getOneStair(globalId);
+	}
+
 	public List<IfcStairFlight> allStairFlights() throws IOException {
 		return stairFlightService.getAllStairFlights();
+	}
+
+	public IfcStairFlight oneStairFlight(String globalId) throws IOException {
+		return stairFlightService.getOneStairFlight(globalId);
 	}
 
 	public IfcRepresentationItem getTestRepresentationItem() {

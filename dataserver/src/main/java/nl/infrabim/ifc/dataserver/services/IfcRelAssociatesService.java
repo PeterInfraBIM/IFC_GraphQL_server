@@ -27,12 +27,6 @@ public class IfcRelAssociatesService {
 		return mongoTemplate.find(query, IfcRelAssociates.class);
 	}
 
-	public IfcRelAssociates getRelAssociatesByGlobalId(String globalId) {
-		Query query = new Query();
-		query.addCriteria(Criteria.where("globalId").is(globalId));
-		return mongoTemplate.findOne(query, IfcRelAssociates.class);
-	}
-
 	public List<IfcObjectDefinition> getRelatedObjects(IfcRelAssociates relAssociates) {
 		List<IfcObjectDefinition> relatedObjects = null;
 		List<Ref> relatedObjectsRef = relAssociates.getRelatedObjectsRef();
@@ -43,6 +37,12 @@ public class IfcRelAssociatesService {
 			}
 		}
 		return relatedObjects;
+	}
+
+	public IfcRelAssociates getOneRelAssociates(String globalId) {
+		Query query = new Query();
+		query.addCriteria(Criteria.where("globalId").is(globalId));
+		return mongoTemplate.findOne(query, IfcRelAssociates.class);
 	}
 
 }

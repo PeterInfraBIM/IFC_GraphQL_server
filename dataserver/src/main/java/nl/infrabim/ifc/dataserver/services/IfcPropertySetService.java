@@ -23,7 +23,7 @@ public class IfcPropertySetService {
 	@Autowired
 	private MongoTemplate mongoTemplate;
 
-	public IfcPropertySet getOnePropertySetDefinition(String globalId) {
+	public IfcPropertySet getOnePropertySet(String globalId) {
 		Query query = new Query();
 		query.addCriteria(Criteria.where("globalId").is(globalId));
 		return mongoTemplate.findOne(query, IfcPropertySet.class);

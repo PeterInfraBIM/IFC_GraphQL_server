@@ -33,7 +33,7 @@ public class IfcRelDefinesByPropertiesResolver implements GraphQLResolver<IfcRel
 	public IfcPropertySet getRelatingPropertyDefinition(IfcRelDefinesByProperties relDefinesByProperties) {
 		Ref relatingPropertyDefinitionRef = relDefinesByProperties.getRelatingPropertyDefinitionRef();
 		if (relatingPropertyDefinitionRef != null) {
-			return propertySetService.getOnePropertySetDefinition(relatingPropertyDefinitionRef.getRef());
+			return propertySetService.getOnePropertySet(relatingPropertyDefinitionRef.getRef());
 		}
 		return null;
 	}

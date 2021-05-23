@@ -1196,8 +1196,12 @@ type Query {
 	allOpeningElements: [OpeningElement]
 	# Get all Project objects
 	allProjects: [Project]
+	# Get one Project object
+	oneProject(globalId: String!): Project
 	# Get all Site objects
 	allSites: [Site]	
+	# Get one Site object
+	oneSite(globalId: String!): Site
 	# Get all Building objects
 	allBuildings: [Building]	
 	# Get one Building object
@@ -1212,28 +1216,46 @@ type Query {
 	oneSpace(globalId: String!): Space
 	# Get all RelAggregates objects
 	allRelAggregates: [RelAggregates]
+	# Get one RelAggregates object
+	oneRelAggregates(globalId: String!): RelAggregates
 	# Get all RelContainedInSpatialStructure objects
 	allRelContainedInSpatialStructures: [RelContainedInSpatialStructure]
+	# Get one RelContainedInSpatialStructure object
+	oneRelContainedInSpatialStructure(globalId: String!): RelContainedInSpatialStructure
 	# Get all RelAssociates objects
 	allRelAssociates: [RelAssociates]
+	# Get one RelAssociates object
+	oneRelAssociates(globalId: String!): RelAssociates
 	# Get all RelAssociatesMaterial objects
 	allRelAssociatesMaterials: [RelAssociatesMaterial]
+	# Get one RelAssociatesMaterial object
+	oneRelAssociatesMaterial(globalId: String!): RelAssociatesMaterial
 	# Get all RelDefinesByProperties objects
 	allRelDefinesByProperties: [RelDefinesByProperties]
+	# Get one RelDefinesByProperties object
+	oneRelDefinesByProperties(globalId: String!): RelDefinesByProperties
 	# Get all RelVoidsElement objects
 	allRelVoidsElements: [RelVoidsElement]
+	# Get one RelVoidsElement object
+	oneRelVoidsElement(globalId: String!): RelVoidsElement
 	# Get all RelFillsElement objects
 	allRelFillsElements: [RelFillsElement]
+	# Get one RelFillsElement object
+	oneRelFillsElement(globalId: String!): RelFillsElement
 	# Get all RelSpaceBoundary objects
 	allRelSpaceBoundaries: [RelSpaceBoundary]
 	# Get one RelSpaceBoundary object
 	oneRelSpaceBoundary(globalId: String!): RelSpaceBoundary
 	# Get all RelConnectsPathElements objects
 	allRelConnectsPathElements: [RelConnectsPathElements]
+	# Get one RelConnectsPathElements object
+	oneRelConnectsPathElements(globalId: String!): RelConnectsPathElements
 	# Get all Wall objects
 	allWalls: [Wall]
 	# Get all WallStandardCase objects
 	allWallStandardCases: [WallStandardCase]
+	# Get one WallStandardCase object
+	oneWallStandardCase(globalId: String!): WallStandardCase
 	# Get all Door objects
 	allDoors: [Door]
 	# Get one Door object
@@ -1242,26 +1264,46 @@ type Query {
 	allWindows: [Window]
 	# Get one Window object
 	oneWindow(globalId: String!): Window
-	# Get all PropertySetDefinition objects
+	# Get all PropertySet objects
 	allPropertySets: [PropertySet]
+	# Get one PropertySet object
+	onePropertySet(globalId: String!): PropertySet
 	# Get all Beam objects
 	allBeams: [Beam]
+	# Get one Beam object
+	oneBeam(globalId: String!): Beam
 	# Get all Covering objects
 	allCoverings: [Covering]
+	# Get one Covering object
+	oneCovering(globalId: String!): Covering
 	# Get all Footing objects
 	allFootings: [Footing]
+	# Get one Footing object
+	oneFooting(globalId: String!): Footing
 	# Get all FurnishingElement objects
 	allFurnishingElements: [FurnishingElement]
+	# Get one FurnishingElement object
+	oneFurnishingElement(globalId: String!): FurnishingElement
 	# Get all Slab objects
 	allSlabs: [Slab]
+	# Get one Slab object
+	oneSlab(globalId: String!): Slab
 	# Get all Railing objects
 	allRailings: [Railing]
+	# Get one Railing object
+	oneRailing(globalId: String!): Railing
 	# Get all Roof objects
 	allRoofs: [Roof]
+	# Get one Roof object
+	oneRoof(globalId: String!): Roof
 	# Get all Stair objects
 	allStairs: [Stair]
+	# Get one Stair object
+	oneStair(globalId: String!): Stair
 	# Get all StairFlight objects
 	allStairFlights: [StairFlight]
+	# Get one StairFlight object
+	oneStairFlight(globalId: String!): StairFlight
 	getTestPolyline: Polyline
 	getTestExtrudedAreaSolid: ExtrudedAreaSolid
 	getTestRepresentationItem: RepresentationItem
