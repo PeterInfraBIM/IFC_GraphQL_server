@@ -15,6 +15,7 @@ import nl.infrabim.ifc.dataserver.models.IfcBuilding;
 import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
 import nl.infrabim.ifc.dataserver.models.IfcCovering;
 import nl.infrabim.ifc.dataserver.models.IfcDoor;
+import nl.infrabim.ifc.dataserver.models.IfcDoorStyle;
 import nl.infrabim.ifc.dataserver.models.IfcElement;
 import nl.infrabim.ifc.dataserver.models.IfcExtrudedAreaSolid;
 import nl.infrabim.ifc.dataserver.models.IfcFooting;
@@ -38,9 +39,11 @@ import nl.infrabim.ifc.dataserver.models.IfcRelAssociatesMaterial;
 import nl.infrabim.ifc.dataserver.models.IfcRelConnectsPathElements;
 import nl.infrabim.ifc.dataserver.models.IfcRelContainedInSpatialStructure;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByProperties;
+import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByType;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
+import nl.infrabim.ifc.dataserver.models.IfcRepresentation;
 import nl.infrabim.ifc.dataserver.models.IfcRepresentationItem;
 import nl.infrabim.ifc.dataserver.models.IfcRoof;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
@@ -59,6 +62,7 @@ import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcCoveringService;
 import nl.infrabim.ifc.dataserver.services.IfcDoorService;
+import nl.infrabim.ifc.dataserver.services.IfcDoorStyleService;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcFootingService;
 import nl.infrabim.ifc.dataserver.services.IfcFurnishingElementService;
@@ -75,6 +79,7 @@ import nl.infrabim.ifc.dataserver.services.IfcRelAssociatesService;
 import nl.infrabim.ifc.dataserver.services.IfcRelConnectsPathElementsService;
 import nl.infrabim.ifc.dataserver.services.IfcRelContainedInSpatialStructureService;
 import nl.infrabim.ifc.dataserver.services.IfcRelDefinesByPropertiesService;
+import nl.infrabim.ifc.dataserver.services.IfcRelDefinesByTypeService;
 import nl.infrabim.ifc.dataserver.services.IfcRelFillsElementService;
 import nl.infrabim.ifc.dataserver.services.IfcRelSpaceBoundaryService;
 import nl.infrabim.ifc.dataserver.services.IfcRelVoidsElementService;
@@ -126,6 +131,8 @@ public class Query implements GraphQLQueryResolver {
 	@Autowired
 	private IfcRelDefinesByPropertiesService relDefinesByPropertiesService;
 	@Autowired
+	private IfcRelDefinesByTypeService relDefinesByTypeService;
+	@Autowired
 	private IfcRelVoidsElementService relVoidsElementService;
 	@Autowired
 	private IfcRelFillsElementService relFillsElementService;
@@ -139,6 +146,8 @@ public class Query implements GraphQLQueryResolver {
 	private IfcWallStandardCaseService wallStandardCaseService;
 	@Autowired
 	private IfcDoorService doorService;
+	@Autowired
+	private IfcDoorStyleService doorStyleService;
 	@Autowired
 	private IfcWindowService windowService;
 	@Autowired
@@ -267,6 +276,14 @@ public class Query implements GraphQLQueryResolver {
 	public IfcRelDefinesByProperties oneRelDefinesByProperties(String globalId) throws IOException {
 		return relDefinesByPropertiesService.getOneRelDefinesByProperties(globalId);
 	}
+	
+	public List<IfcRelDefinesByType> allRelDefinesByTypes() throws IOException {
+		return relDefinesByTypeService.getAllRelDefinesByTypes();
+	}
+
+	public IfcRelDefinesByType oneRelDefinesByType(String globalId) throws IOException {
+		return relDefinesByTypeService.getOneRelDefinesByType(globalId);
+	}
 
 	public List<IfcRelVoidsElement> allRelVoidsElements() throws IOException {
 		return relVoidsElementService.getAllRelVoidsElements();
@@ -318,6 +335,14 @@ public class Query implements GraphQLQueryResolver {
 
 	public IfcDoor oneDoor(String globalId) throws IOException {
 		return doorService.getOneDoor(globalId);
+	}
+
+	public List<IfcDoorStyle> allDoorStyles() throws IOException {
+		return doorStyleService.getAllDoorStyles();
+	}
+
+	public IfcDoorStyle oneDoorStyle(String globalId) throws IOException {
+		return doorStyleService.getOneDoorStyle(globalId);
 	}
 
 	public List<IfcWindow> allWindows() throws IOException {

@@ -227,6 +227,43 @@ type SpatialStructureElement implements Addressable
 	containsElementsDir: [Product!]
 }
 
+type RepresentationMap {
+	mappingOrigin: Axis2Placement3D
+	mappedRepresentationRef: Ref
+}
+
+type DoorStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeObject & IfcTypeProduct {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	applicableOccurrence: String
+	hasPropertySetsRef: [Ref!]
+	objectTypeOfRef: [Ref!]
+	objectTypeOf: [RelDefinesByType]
+	objectTypeOfDir: [Object]
+	representationMaps: [RepresentationMap!]
+	tag: String
+	operationType: IfcDoorStyleOperationEnum
+	constructionType: IfcDoorStyleConstructionEnum
+	parameterTakesPrecedence: Boolean
+	sizeable: Boolean
+}
+
 type RelAggregates implements Addressable & IfcRoot {
 	type: String!
 	globalId: ID!
@@ -283,6 +320,17 @@ type RelDefinesByProperties implements Addressable & IfcRoot {
 	relatedObjects: [Object!]
 	relatingPropertyDefinitionRef: Ref
 	relatingPropertyDefinition: PropertySet
+}
+
+type RelDefinesByType implements Addressable & IfcRoot {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	relatedObjectsRef: [Ref!]
+	relatingTypeRef: Ref
 }
 
 type RelVoidsElement implements Addressable & IfcRoot {
@@ -1234,6 +1282,10 @@ type Query {
 	allRelDefinesByProperties: [RelDefinesByProperties]
 	# Get one RelDefinesByProperties object
 	oneRelDefinesByProperties(globalId: String!): RelDefinesByProperties
+	# Get all RelDefinesByType objects
+	allRelDefinesByTypes: [RelDefinesByType]
+	# Get one RelDefinesByType object
+	oneRelDefinesByType(globalId: String!): RelDefinesByType
 	# Get all RelVoidsElement objects
 	allRelVoidsElements: [RelVoidsElement]
 	# Get one RelVoidsElement object
@@ -1258,6 +1310,10 @@ type Query {
 	oneWallStandardCase(globalId: String!): WallStandardCase
 	# Get all Door objects
 	allDoors: [Door]
+	# Get all DoorStyle objects
+	allDoorStyles: [DoorStyle]
+	# Get one DoorStyle object
+	oneDoorStyle(globalId: String!): DoorStyle
 	# Get one Door object
 	oneDoor(globalId: String!): Door
 	# Get all Window objects
