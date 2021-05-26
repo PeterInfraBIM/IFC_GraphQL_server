@@ -72,3 +72,12 @@ interface IfcTypeProduct {
 	representationMaps: [RepresentationMap!]
 	tag: String
 }
+
+interface IfcPropertyDefinition {
+	hasAssociationsRef: [Ref!]
+}
+
+interface IfcPropertySetDefinition {
+	propertyDefinitionOfRef: [Ref!]
+	definesTypeRef: [Ref!]
+}

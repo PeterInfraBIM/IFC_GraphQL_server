@@ -15,6 +15,7 @@ import nl.infrabim.ifc.dataserver.models.IfcBuilding;
 import nl.infrabim.ifc.dataserver.models.IfcBuildingStorey;
 import nl.infrabim.ifc.dataserver.models.IfcCovering;
 import nl.infrabim.ifc.dataserver.models.IfcDoor;
+import nl.infrabim.ifc.dataserver.models.IfcDoorLiningProperties;
 import nl.infrabim.ifc.dataserver.models.IfcDoorStyle;
 import nl.infrabim.ifc.dataserver.models.IfcElement;
 import nl.infrabim.ifc.dataserver.models.IfcExtrudedAreaSolid;
@@ -56,11 +57,13 @@ import nl.infrabim.ifc.dataserver.models.IfcValue;
 import nl.infrabim.ifc.dataserver.models.IfcWall;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.models.IfcWindow;
+import nl.infrabim.ifc.dataserver.models.IfcWindowLiningProperties;
 import nl.infrabim.ifc.dataserver.models.IfcWindowStyle;
 import nl.infrabim.ifc.dataserver.services.IfcBeamService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
 import nl.infrabim.ifc.dataserver.services.IfcCoveringService;
+import nl.infrabim.ifc.dataserver.services.IfcDoorLiningPropertiesService;
 import nl.infrabim.ifc.dataserver.services.IfcDoorService;
 import nl.infrabim.ifc.dataserver.services.IfcDoorStyleService;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
@@ -93,6 +96,7 @@ import nl.infrabim.ifc.dataserver.services.IfcStairFlightService;
 import nl.infrabim.ifc.dataserver.services.IfcStairService;
 import nl.infrabim.ifc.dataserver.services.IfcWallService;
 import nl.infrabim.ifc.dataserver.services.IfcWallStandardCaseService;
+import nl.infrabim.ifc.dataserver.services.IfcWindowLiningPropertiesService;
 import nl.infrabim.ifc.dataserver.services.IfcWindowService;
 import nl.infrabim.ifc.dataserver.services.IfcWindowStyleService;
 
@@ -148,9 +152,13 @@ public class Query implements GraphQLQueryResolver {
 	@Autowired
 	private IfcDoorService doorService;
 	@Autowired
+	private IfcDoorLiningPropertiesService doorLiningPropertiesService;
+	@Autowired
 	private IfcDoorStyleService doorStyleService;
 	@Autowired
 	private IfcWindowService windowService;
+	@Autowired
+	private IfcWindowLiningPropertiesService windowLiningPropertiesService;
 	@Autowired
 	private IfcWindowStyleService windowStyleService;
 	@Autowired
@@ -279,7 +287,7 @@ public class Query implements GraphQLQueryResolver {
 	public IfcRelDefinesByProperties oneRelDefinesByProperties(String globalId) throws IOException {
 		return relDefinesByPropertiesService.getOneRelDefinesByProperties(globalId);
 	}
-	
+
 	public List<IfcRelDefinesByType> allRelDefinesByTypes() throws IOException {
 		return relDefinesByTypeService.getAllRelDefinesByTypes();
 	}
@@ -340,6 +348,14 @@ public class Query implements GraphQLQueryResolver {
 		return doorService.getOneDoor(globalId);
 	}
 
+	public List<IfcDoorLiningProperties> allDoorLiningProperties() throws IOException {
+		return doorLiningPropertiesService.getAllDoorLiningProperties();
+	}
+
+	public IfcDoorLiningProperties oneDoorLiningProperties(String globalId) throws IOException {
+		return doorLiningPropertiesService.getOneDoorLiningProperties(globalId);
+	}
+
 	public List<IfcDoorStyle> allDoorStyles() throws IOException {
 		return doorStyleService.getAllDoorStyles();
 	}
@@ -354,6 +370,14 @@ public class Query implements GraphQLQueryResolver {
 
 	public IfcWindow oneWindow(String globalId) throws IOException {
 		return windowService.getOneWindow(globalId);
+	}
+
+	public List<IfcWindowLiningProperties> allWindowLiningProperties() throws IOException {
+		return windowLiningPropertiesService.getAllWindowLiningProperties();
+	}
+
+	public IfcWindowLiningProperties oneWindowLiningProperties(String globalId) throws IOException {
+		return windowLiningPropertiesService.getOneWindowLiningProperties(globalId);
 	}
 
 	public List<IfcWindowStyle> allWindowStyles() throws IOException {

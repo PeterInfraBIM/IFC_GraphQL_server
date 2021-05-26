@@ -264,6 +264,18 @@ type DoorStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeO
 	sizeable: Boolean
 }
 
+type DoorLiningProperties implements Addressable & IfcRoot & IfcPropertyDefinition & IfcPropertySetDefinition {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	hasAssociationsRef: [Ref!]
+	propertyDefinitionOfRef: [Ref!]
+	definesTypeRef: [Ref!]
+}
+
 type WindowStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeObject & IfcTypeProduct {
 	type: String!
 	globalId: ID!
@@ -294,6 +306,18 @@ type WindowStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTyp
 	constructionType: IfcWindowStyleConstructionEnum
 	parameterTakesPrecedence: Boolean
 	sizeable: Boolean
+}
+
+type WindowLiningProperties implements Addressable & IfcRoot & IfcPropertyDefinition & IfcPropertySetDefinition {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	hasAssociationsRef: [Ref!]
+	propertyDefinitionOfRef: [Ref!]
+	definesTypeRef: [Ref!]
 }
 
 type RelAggregates implements Addressable & IfcRoot {
@@ -1280,6 +1304,10 @@ type Query {
 	allDoors: [Door]
 	# Get one Door object
 	oneDoor(globalId: String!): Door
+	# Get all DoorLiningProperties objects
+	allDoorLiningProperties: [DoorLiningProperties]
+	# Get one DoorLiningProperties object
+	oneDoorLiningProperties(globalId: String!): DoorLiningProperties
 	# Get all DoorStyle objects
 	allDoorStyles: [DoorStyle]
 	# Get one DoorStyle object
@@ -1392,6 +1420,10 @@ type Query {
 	allWindows: [Window]
 	# Get one Window object
 	oneWindow(globalId: String!): Window
+	# Get all WindowLiningProperties objects
+	allWindowLiningProperties: [WindowLiningProperties]
+	# Get one WindowLiningProperties object
+	oneWindowLiningProperties(globalId: String!): WindowLiningProperties
 	# Get all WindowStyle objects
 	allWindowStyles: [WindowStyle]
 	# Get one WindowStyle object
