@@ -264,6 +264,38 @@ type DoorStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeO
 	sizeable: Boolean
 }
 
+type WindowStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeObject & IfcTypeProduct {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	applicableOccurrence: String
+	hasPropertySetsRef: [Ref!]
+	objectTypeOfRef: [Ref!]
+	objectTypeOf: [RelDefinesByType]
+	objectTypeOfDir: [Object]
+	representationMaps: [RepresentationMap!]
+	tag: String
+	operationType: IfcWindowStyleOperationEnum
+	constructionType: IfcWindowStyleConstructionEnum
+	parameterTakesPrecedence: Boolean
+	sizeable: Boolean
+}
+
 type RelAggregates implements Addressable & IfcRoot {
 	type: String!
 	globalId: ID!
@@ -1228,28 +1260,10 @@ type StairFlight implements Addressable & IfcRoot & IfcObjectDefinition & IfcObj
 }
 
 type Query {
-	# Get all Root objects
-	allRoots: [Root]
-	# Get all ObjectDefinition objects
-	allObjectDefinitions: [ObjectDefinition]
-	# Get all Object objects
-	allObjects: [Object]
-	# Get all Product objects
-	allProducts: [Product]
-	# Get all Element objects
-	allElements: [Element]
-	# Get all SpatialStructureElement objects
-	allSpatialStructureElements: [SpatialStructureElement]
-	# Get all OpeningElement objects
-	allOpeningElements: [OpeningElement]
-	# Get all Project objects
-	allProjects: [Project]
-	# Get one Project object
-	oneProject(globalId: String!): Project
-	# Get all Site objects
-	allSites: [Site]	
-	# Get one Site object
-	oneSite(globalId: String!): Site
+	# Get all Beam objects
+	allBeams: [Beam]
+	# Get one Beam object
+	oneBeam(globalId: String!): Beam
 	# Get all Building objects
 	allBuildings: [Building]	
 	# Get one Building object
@@ -1258,80 +1272,20 @@ type Query {
 	allBuildingStoreys: [BuildingStorey]
 	# Get one BuildingStorey object
 	oneBuildingStorey(globalId: String!): BuildingStorey
-	# Get all Space objects
-	allSpaces: [Space]
-	# Get one Space object
-	oneSpace(globalId: String!): Space
-	# Get all RelAggregates objects
-	allRelAggregates: [RelAggregates]
-	# Get one RelAggregates object
-	oneRelAggregates(globalId: String!): RelAggregates
-	# Get all RelContainedInSpatialStructure objects
-	allRelContainedInSpatialStructures: [RelContainedInSpatialStructure]
-	# Get one RelContainedInSpatialStructure object
-	oneRelContainedInSpatialStructure(globalId: String!): RelContainedInSpatialStructure
-	# Get all RelAssociates objects
-	allRelAssociates: [RelAssociates]
-	# Get one RelAssociates object
-	oneRelAssociates(globalId: String!): RelAssociates
-	# Get all RelAssociatesMaterial objects
-	allRelAssociatesMaterials: [RelAssociatesMaterial]
-	# Get one RelAssociatesMaterial object
-	oneRelAssociatesMaterial(globalId: String!): RelAssociatesMaterial
-	# Get all RelDefinesByProperties objects
-	allRelDefinesByProperties: [RelDefinesByProperties]
-	# Get one RelDefinesByProperties object
-	oneRelDefinesByProperties(globalId: String!): RelDefinesByProperties
-	# Get all RelDefinesByType objects
-	allRelDefinesByTypes: [RelDefinesByType]
-	# Get one RelDefinesByType object
-	oneRelDefinesByType(globalId: String!): RelDefinesByType
-	# Get all RelVoidsElement objects
-	allRelVoidsElements: [RelVoidsElement]
-	# Get one RelVoidsElement object
-	oneRelVoidsElement(globalId: String!): RelVoidsElement
-	# Get all RelFillsElement objects
-	allRelFillsElements: [RelFillsElement]
-	# Get one RelFillsElement object
-	oneRelFillsElement(globalId: String!): RelFillsElement
-	# Get all RelSpaceBoundary objects
-	allRelSpaceBoundaries: [RelSpaceBoundary]
-	# Get one RelSpaceBoundary object
-	oneRelSpaceBoundary(globalId: String!): RelSpaceBoundary
-	# Get all RelConnectsPathElements objects
-	allRelConnectsPathElements: [RelConnectsPathElements]
-	# Get one RelConnectsPathElements object
-	oneRelConnectsPathElements(globalId: String!): RelConnectsPathElements
-	# Get all Wall objects
-	allWalls: [Wall]
-	# Get all WallStandardCase objects
-	allWallStandardCases: [WallStandardCase]
-	# Get one WallStandardCase object
-	oneWallStandardCase(globalId: String!): WallStandardCase
-	# Get all Door objects
-	allDoors: [Door]
-	# Get all DoorStyle objects
-	allDoorStyles: [DoorStyle]
-	# Get one DoorStyle object
-	oneDoorStyle(globalId: String!): DoorStyle
-	# Get one Door object
-	oneDoor(globalId: String!): Door
-	# Get all Window objects
-	allWindows: [Window]
-	# Get one Window object
-	oneWindow(globalId: String!): Window
-	# Get all PropertySet objects
-	allPropertySets: [PropertySet]
-	# Get one PropertySet object
-	onePropertySet(globalId: String!): PropertySet
-	# Get all Beam objects
-	allBeams: [Beam]
-	# Get one Beam object
-	oneBeam(globalId: String!): Beam
 	# Get all Covering objects
 	allCoverings: [Covering]
 	# Get one Covering object
 	oneCovering(globalId: String!): Covering
+	# Get all Door objects
+	allDoors: [Door]
+	# Get one Door object
+	oneDoor(globalId: String!): Door
+	# Get all DoorStyle objects
+	allDoorStyles: [DoorStyle]
+	# Get one DoorStyle object
+	oneDoorStyle(globalId: String!): DoorStyle
+	# Get all Element objects
+	allElements: [Element]
 	# Get all Footing objects
 	allFootings: [Footing]
 	# Get one Footing object
@@ -1340,18 +1294,86 @@ type Query {
 	allFurnishingElements: [FurnishingElement]
 	# Get one FurnishingElement object
 	oneFurnishingElement(globalId: String!): FurnishingElement
-	# Get all Slab objects
-	allSlabs: [Slab]
-	# Get one Slab object
-	oneSlab(globalId: String!): Slab
+	# Get all ObjectDefinition objects
+	allObjectDefinitions: [ObjectDefinition]
+	# Get all Object objects
+	allObjects: [Object]
+	# Get all OpeningElement objects
+	allOpeningElements: [OpeningElement]
+	# Get all Product objects
+	allProducts: [Product]
+	# Get all Project objects
+	allProjects: [Project]
+	# Get one Project object
+	oneProject(globalId: String!): Project
+	# Get all PropertySet objects
+	allPropertySets: [PropertySet]
+	# Get one PropertySet object
+	onePropertySet(globalId: String!): PropertySet
 	# Get all Railing objects
 	allRailings: [Railing]
 	# Get one Railing object
 	oneRailing(globalId: String!): Railing
+	# Get all RelAggregates objects
+	allRelAggregates: [RelAggregates]
+	# Get one RelAggregates object
+	oneRelAggregates(globalId: String!): RelAggregates
+	# Get all RelAssociates objects
+	allRelAssociates: [RelAssociates]
+	# Get one RelAssociates object
+	oneRelAssociates(globalId: String!): RelAssociates
+	# Get all RelAssociatesMaterial objects
+	allRelAssociatesMaterials: [RelAssociatesMaterial]
+	# Get one RelAssociatesMaterial object
+	oneRelAssociatesMaterial(globalId: String!): RelAssociatesMaterial
+	# Get all RelConnectsPathElements objects
+	allRelConnectsPathElements: [RelConnectsPathElements]
+	# Get one RelConnectsPathElements object
+	oneRelConnectsPathElements(globalId: String!): RelConnectsPathElements
+	# Get all RelContainedInSpatialStructure objects
+	allRelContainedInSpatialStructures: [RelContainedInSpatialStructure]
+	# Get one RelContainedInSpatialStructure object
+	oneRelContainedInSpatialStructure(globalId: String!): RelContainedInSpatialStructure
+	# Get all RelDefinesByProperties objects
+	allRelDefinesByProperties: [RelDefinesByProperties]
+	# Get one RelDefinesByProperties object
+	oneRelDefinesByProperties(globalId: String!): RelDefinesByProperties
+	# Get all RelDefinesByType objects
+	allRelDefinesByTypes: [RelDefinesByType]
+	# Get one RelDefinesByType object
+	oneRelDefinesByType(globalId: String!): RelDefinesByType
+	# Get all RelFillsElement objects
+	allRelFillsElements: [RelFillsElement]
+	# Get one RelFillsElement object
+	oneRelFillsElement(globalId: String!): RelFillsElement
+	# Get all RelSpaceBoundary objects
+	allRelSpaceBoundaries: [RelSpaceBoundary]
+	# Get one RelSpaceBoundary object
+	oneRelSpaceBoundary(globalId: String!): RelSpaceBoundary
+	# Get all RelVoidsElement objects
+	allRelVoidsElements: [RelVoidsElement]
+	# Get one RelVoidsElement object
+	oneRelVoidsElement(globalId: String!): RelVoidsElement
 	# Get all Roof objects
 	allRoofs: [Roof]
 	# Get one Roof object
 	oneRoof(globalId: String!): Roof
+	# Get all Root objects
+	allRoots: [Root]
+	# Get all Site objects
+	allSites: [Site]	
+	# Get one Site object
+	oneSite(globalId: String!): Site
+	# Get all Slab objects
+	allSlabs: [Slab]
+	# Get one Slab object
+	oneSlab(globalId: String!): Slab
+	# Get all Space objects
+	allSpaces: [Space]
+	# Get one Space object
+	oneSpace(globalId: String!): Space
+	# Get all SpatialStructureElement objects
+	allSpatialStructureElements: [SpatialStructureElement]
 	# Get all Stair objects
 	allStairs: [Stair]
 	# Get one Stair object
@@ -1360,6 +1382,21 @@ type Query {
 	allStairFlights: [StairFlight]
 	# Get one StairFlight object
 	oneStairFlight(globalId: String!): StairFlight
+	# Get all Wall objects
+	allWalls: [Wall]
+	# Get all WallStandardCase objects
+	allWallStandardCases: [WallStandardCase]
+	# Get one WallStandardCase object
+	oneWallStandardCase(globalId: String!): WallStandardCase
+	# Get all Window objects
+	allWindows: [Window]
+	# Get one Window object
+	oneWindow(globalId: String!): Window
+	# Get all WindowStyle objects
+	allWindowStyles: [WindowStyle]
+	# Get one WindowStyle object
+	oneWindowStyle(globalId: String!): WindowStyle
+	
 	getTestPolyline: Polyline
 	getTestExtrudedAreaSolid: ExtrudedAreaSolid
 	getTestRepresentationItem: RepresentationItem

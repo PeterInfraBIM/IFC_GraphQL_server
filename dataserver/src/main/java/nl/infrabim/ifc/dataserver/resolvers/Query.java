@@ -43,7 +43,6 @@ import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByType;
 import nl.infrabim.ifc.dataserver.models.IfcRelFillsElement;
 import nl.infrabim.ifc.dataserver.models.IfcRelSpaceBoundary;
 import nl.infrabim.ifc.dataserver.models.IfcRelVoidsElement;
-import nl.infrabim.ifc.dataserver.models.IfcRepresentation;
 import nl.infrabim.ifc.dataserver.models.IfcRepresentationItem;
 import nl.infrabim.ifc.dataserver.models.IfcRoof;
 import nl.infrabim.ifc.dataserver.models.IfcRoot;
@@ -57,6 +56,7 @@ import nl.infrabim.ifc.dataserver.models.IfcValue;
 import nl.infrabim.ifc.dataserver.models.IfcWall;
 import nl.infrabim.ifc.dataserver.models.IfcWallStandardCase;
 import nl.infrabim.ifc.dataserver.models.IfcWindow;
+import nl.infrabim.ifc.dataserver.models.IfcWindowStyle;
 import nl.infrabim.ifc.dataserver.services.IfcBeamService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingService;
 import nl.infrabim.ifc.dataserver.services.IfcBuildingStoreyService;
@@ -94,6 +94,7 @@ import nl.infrabim.ifc.dataserver.services.IfcStairService;
 import nl.infrabim.ifc.dataserver.services.IfcWallService;
 import nl.infrabim.ifc.dataserver.services.IfcWallStandardCaseService;
 import nl.infrabim.ifc.dataserver.services.IfcWindowService;
+import nl.infrabim.ifc.dataserver.services.IfcWindowStyleService;
 
 @Component
 public class Query implements GraphQLQueryResolver {
@@ -150,6 +151,8 @@ public class Query implements GraphQLQueryResolver {
 	private IfcDoorStyleService doorStyleService;
 	@Autowired
 	private IfcWindowService windowService;
+	@Autowired
+	private IfcWindowStyleService windowStyleService;
 	@Autowired
 	private IfcOpeningElementService openingElementService;
 	@Autowired
@@ -351,6 +354,14 @@ public class Query implements GraphQLQueryResolver {
 
 	public IfcWindow oneWindow(String globalId) throws IOException {
 		return windowService.getOneWindow(globalId);
+	}
+
+	public List<IfcWindowStyle> allWindowStyles() throws IOException {
+		return windowStyleService.getAllWindowStyles();
+	}
+
+	public IfcWindowStyle oneWindowStyle(String globalId) throws IOException {
+		return windowStyleService.getOneWindowStyle(globalId);
 	}
 
 	public List<IfcOpeningElement> allOpeningElements() throws IOException {

@@ -9,7 +9,6 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
-import nl.infrabim.ifc.dataserver.models.IfcDoorStyle;
 import nl.infrabim.ifc.dataserver.models.IfcObject;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByType;
 import nl.infrabim.ifc.dataserver.models.IfcTypeObject;
@@ -37,9 +36,9 @@ public class IfcTypeObjectService {
 		return mongoTemplate.findOne(query, IfcTypeObject.class);
 	}
 
-	public List<IfcRelDefinesByType> getObjectTypeOf(IfcDoorStyle doorStyle) {
+	public List<IfcRelDefinesByType> getObjectTypeOf(IfcTypeObject objectStyle) {
 		List<IfcRelDefinesByType> objectTypeOf = null;
-		List<Ref> objectTypeOfRef = doorStyle.getObjectTypeOfRef();
+		List<Ref> objectTypeOfRef = objectStyle.getObjectTypeOfRef();
 		if (objectTypeOfRef != null) {
 			objectTypeOf = new ArrayList<>();
 			for (Ref ref : objectTypeOfRef) {
@@ -50,9 +49,9 @@ public class IfcTypeObjectService {
 		return objectTypeOf;
 	}
 	
-	public List<IfcObject> getObjectTypeOfDir(IfcDoorStyle doorStyle) {
+	public List<IfcObject> getObjectTypeOfDir(IfcTypeObject objectStyle) {
 		List<IfcObject> objects = null;
-		List<IfcRelDefinesByType> objectTypeOf = getObjectTypeOf(doorStyle);
+		List<IfcRelDefinesByType> objectTypeOf = getObjectTypeOf(objectStyle);
 		if (objectTypeOf != null) {
 			objects = new ArrayList<>();
 			for (IfcRelDefinesByType relDefinesByType : objectTypeOf) {
