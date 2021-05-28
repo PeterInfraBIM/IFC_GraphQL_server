@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import nl.infrabim.ifc.dataserver.models.IfcObject;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySetDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByType;
 import nl.infrabim.ifc.dataserver.models.IfcTypeObject;
 import nl.infrabim.ifc.dataserver.models.Ref;
@@ -21,6 +22,8 @@ public class IfcTypeObjectService {
 	private MongoTemplate mongoTemplate;
 	@Autowired
 	private IfcRelDefinesByTypeService relDefinesByTypeService;
+	@Autowired
+	private IfcPropertySetDefinitionService propertySetDefinitionService;
 
 	public List<IfcTypeObject> getAllTypeObjects() {
 		Criteria criteriaV1 = Criteria.where("hasPropertySets").exists(true);
@@ -48,7 +51,7 @@ public class IfcTypeObjectService {
 		}
 		return objectTypeOf;
 	}
-	
+
 	public List<IfcObject> getObjectTypeOfDir(IfcTypeObject objectStyle) {
 		List<IfcObject> objects = null;
 		List<IfcRelDefinesByType> objectTypeOf = getObjectTypeOf(objectStyle);
@@ -60,6 +63,18 @@ public class IfcTypeObjectService {
 			}
 		}
 		return objects;
+	}
+
+	public List<IfcPropertySetDefinition> getHasPropertySets(IfcTypeObject objectStyle) {
+		List<IfcPropertySetDefinition> hasPropertySets = null;
+		List<Ref> hasPropertySetsRef = objectStyle.getHasPropertySetsRef();
+		if (hasPropertySetsRef != null) {
+			hasPropertySets = new ArrayList<>();
+			for (Ref ref : hasPropertySetsRef) {
+				hasPropertySets.add(propertySetDefinitionService.getOnePropertySetDefinition(ref.getRef()));
+			}
+		}
+		return hasPropertySets;
 	}
 
 }

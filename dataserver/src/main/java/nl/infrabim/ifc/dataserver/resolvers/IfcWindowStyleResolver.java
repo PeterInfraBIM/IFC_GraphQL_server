@@ -7,12 +7,13 @@ import org.springframework.stereotype.Component;
 
 import com.coxautodev.graphql.tools.GraphQLResolver;
 
-import nl.infrabim.ifc.dataserver.models.IfcWindowStyle;
 import nl.infrabim.ifc.dataserver.models.IfcObject;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySetDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByType;
+import nl.infrabim.ifc.dataserver.models.IfcWindowStyle;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcRootService;
 import nl.infrabim.ifc.dataserver.services.IfcTypeObjectService;
@@ -49,10 +50,12 @@ public class IfcWindowStyleResolver implements GraphQLResolver<IfcWindowStyle> {
 	public List<IfcRelDefinesByType> getObjectTypeOf(IfcWindowStyle windowStyle) {
 		return typeObjectService.getObjectTypeOf(windowStyle);
 	}
-	
+
 	public List<IfcObject> getObjectTypeOfDir(IfcWindowStyle windowStyle) {
 		return typeObjectService.getObjectTypeOfDir(windowStyle);
 	}
 
-
+	public List<IfcPropertySetDefinition> getHasPropertySets(IfcWindowStyle windowStyle) {
+		return typeObjectService.getHasPropertySets(windowStyle);
+	}
 }

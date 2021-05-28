@@ -11,6 +11,7 @@ import nl.infrabim.ifc.dataserver.models.IfcDoorStyle;
 import nl.infrabim.ifc.dataserver.models.IfcObject;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOwnerHistory;
+import nl.infrabim.ifc.dataserver.models.IfcPropertySetDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcRelAggregates;
 import nl.infrabim.ifc.dataserver.models.IfcRelDefinesByType;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
@@ -49,10 +50,13 @@ public class IfcDoorStyleResolver implements GraphQLResolver<IfcDoorStyle> {
 	public List<IfcRelDefinesByType> getObjectTypeOf(IfcDoorStyle doorStyle) {
 		return typeObjectService.getObjectTypeOf(doorStyle);
 	}
-	
+
 	public List<IfcObject> getObjectTypeOfDir(IfcDoorStyle doorStyle) {
 		return typeObjectService.getObjectTypeOfDir(doorStyle);
 	}
 
+	public List<IfcPropertySetDefinition> getHasPropertySets(IfcDoorStyle doorStyle) {
+		return typeObjectService.getHasPropertySets(doorStyle);
+	}
 
 }

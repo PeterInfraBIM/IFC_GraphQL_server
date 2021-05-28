@@ -232,6 +232,33 @@ type RepresentationMap {
 	mappedRepresentationRef: Ref
 }
 
+type TypeObject implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeObject {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	# is decomposed by [reference]
+	isDecomposedByRef: [Ref!]
+	# is decomposed by [objectified relation]
+	isDecomposedBy: [RelAggregates!]
+	# is decomposed by [directly linked]
+	isDecomposedByDir: [ObjectDefinition!]
+	# decomposes [reference]
+	decomposesRef: [Ref!]
+	# decomposes [objectified relation]
+	decomposes: [RelAggregates!]
+	# decomposes [directly linked]
+	decomposesDir: [ObjectDefinition!]
+	applicableOccurrence: String
+	hasPropertySetsRef: [Ref!]
+	hasPropertySets: [PropertySetDefinition]
+	objectTypeOfRef: [Ref!]
+	objectTypeOf: [RelDefinesByType]
+	objectTypeOfDir: [Object]
+}
+
 type DoorStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeObject & IfcTypeProduct {
 	type: String!
 	globalId: ID!
@@ -253,6 +280,7 @@ type DoorStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeO
 	decomposesDir: [ObjectDefinition!]
 	applicableOccurrence: String
 	hasPropertySetsRef: [Ref!]
+	hasPropertySets: [PropertySetDefinition]
 	objectTypeOfRef: [Ref!]
 	objectTypeOf: [RelDefinesByType]
 	objectTypeOfDir: [Object]
@@ -264,6 +292,21 @@ type DoorStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeO
 	sizeable: Boolean
 }
 
+type PropertySetDefinition implements Addressable & IfcRoot & IfcPropertyDefinition & IfcPropertySetDefinition {
+	type: String!
+	globalId: ID!
+	name: String
+	description: String
+	ownerHistoryRef: Ref
+	ownerHistory: OwnerHistory
+	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociates!]
+	propertyDefinitionOfRef: [Ref!]
+	propertyDefinitionOf: [RelDefinesByProperties!]
+	definesTypeRef: [Ref!]
+	definesType: [TypeObject!]
+}
+
 type DoorLiningProperties implements Addressable & IfcRoot & IfcPropertyDefinition & IfcPropertySetDefinition {
 	type: String!
 	globalId: ID!
@@ -272,8 +315,11 @@ type DoorLiningProperties implements Addressable & IfcRoot & IfcPropertyDefiniti
 	ownerHistoryRef: Ref
 	ownerHistory: OwnerHistory
 	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociates!]
 	propertyDefinitionOfRef: [Ref!]
+	propertyDefinitionOf: [RelDefinesByProperties!]
 	definesTypeRef: [Ref!]
+	definesType: [TypeObject!]
 }
 
 type WindowStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTypeObject & IfcTypeProduct {
@@ -297,6 +343,7 @@ type WindowStyle implements Addressable & IfcRoot & IfcObjectDefinition & IfcTyp
 	decomposesDir: [ObjectDefinition!]
 	applicableOccurrence: String
 	hasPropertySetsRef: [Ref!]
+	hasPropertySets: [PropertySetDefinition]
 	objectTypeOfRef: [Ref!]
 	objectTypeOf: [RelDefinesByType]
 	objectTypeOfDir: [Object]
@@ -316,8 +363,11 @@ type WindowLiningProperties implements Addressable & IfcRoot & IfcPropertyDefini
 	ownerHistoryRef: Ref
 	ownerHistory: OwnerHistory
 	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociates!]
 	propertyDefinitionOfRef: [Ref!]
+	propertyDefinitionOf: [RelDefinesByProperties!]
 	definesTypeRef: [Ref!]
+	definesType: [TypeObject!]
 }
 
 type RelAggregates implements Addressable & IfcRoot {

@@ -63,6 +63,7 @@ interface IfcSpatialStructureElement {
 interface IfcTypeObject {
 	applicableOccurrence: String
 	hasPropertySetsRef: [Ref!]
+	hasPropertySets: [IfcPropertySetDefinition]
 	objectTypeOfRef: [Ref!]
 	objectTypeOf: [RelDefinesByType]
 	objectTypeOfDir: [IfcObject]
@@ -75,9 +76,12 @@ interface IfcTypeProduct {
 
 interface IfcPropertyDefinition {
 	hasAssociationsRef: [Ref!]
+	hasAssociations: [RelAssociates!]
 }
 
 interface IfcPropertySetDefinition {
 	propertyDefinitionOfRef: [Ref!]
+	propertyDefinitionOf: [RelDefinesByProperties!]
 	definesTypeRef: [Ref!]
+	definesType: [IfcTypeObject!]
 }
