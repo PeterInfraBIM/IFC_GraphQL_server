@@ -844,7 +844,14 @@ type WallStandardCase implements Addressable & IfcRoot & IfcObjectDefinition & I
 }
 
 # IfcOpeningElement
-type OpeningElement implements Addressable & IfcRoot & IfcObjectDefinition & IfcObject & IfcProduct & IfcElement {
+type OpeningElement implements 
+		Addressable & 
+		IfcRoot & 
+		IfcObjectDefinition & 
+		IfcObject & 
+		IfcProduct & 
+		IfcElement & 
+		IfcFeatureElementSubtraction {
 	type: String!
 	globalId: ID!
 	name: String
@@ -882,6 +889,8 @@ type OpeningElement implements Addressable & IfcRoot & IfcObjectDefinition & Ifc
 	providesBoundariesRef: [Ref!]
 	providesBoundaries: [RelSpaceBoundary]
 	containedInStructureRef: [Ref!]
+	voidsElementsRef: [Ref!]
+	voidsElements: [RelVoidsElement]
 }
 
 # IfcDoor

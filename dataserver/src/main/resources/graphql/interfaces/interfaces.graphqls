@@ -48,6 +48,11 @@ interface IfcElement {
 	containedInStructureRef: [Ref!]
 }
 
+interface IfcFeatureElementSubtraction {
+	voidsElementsRef: [Ref!]
+	voidsElements: [RelVoidsElement]
+}
+
 interface IfcRelAssociates {
 	relatedObjectsRef: [Ref!]
 }

@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.mongodb.core.mapping.Field;
 
-public class IfcOpeningElement extends IfcElement {
+public class IfcOpeningElement extends IfcFeatureElementSubtraction {
 	@Field("hasFillings")
 	private List<Ref> hasFillingsRef;
 
