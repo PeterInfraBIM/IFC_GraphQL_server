@@ -23,6 +23,7 @@ import nl.infrabim.ifc.dataserver.models.IfcFooting;
 import nl.infrabim.ifc.dataserver.models.IfcFurnishingElement;
 import nl.infrabim.ifc.dataserver.models.IfcIntegerValue;
 import nl.infrabim.ifc.dataserver.models.IfcLabel;
+import nl.infrabim.ifc.dataserver.models.IfcMember;
 import nl.infrabim.ifc.dataserver.models.IfcObject;
 import nl.infrabim.ifc.dataserver.models.IfcObjectDefinition;
 import nl.infrabim.ifc.dataserver.models.IfcOpeningElement;
@@ -69,6 +70,7 @@ import nl.infrabim.ifc.dataserver.services.IfcDoorStyleService;
 import nl.infrabim.ifc.dataserver.services.IfcElementService;
 import nl.infrabim.ifc.dataserver.services.IfcFootingService;
 import nl.infrabim.ifc.dataserver.services.IfcFurnishingElementService;
+import nl.infrabim.ifc.dataserver.services.IfcMemberService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectDefinitionService;
 import nl.infrabim.ifc.dataserver.services.IfcObjectService;
 import nl.infrabim.ifc.dataserver.services.IfcOpeningElementService;
@@ -173,6 +175,8 @@ public class Query implements GraphQLQueryResolver {
 	private IfcFootingService footingService;
 	@Autowired
 	private IfcFurnishingElementService furnishingElementService;
+	@Autowired
+	private IfcMemberService memberService;
 	@Autowired
 	private IfcSlabService slabService;
 	@Autowired
@@ -434,6 +438,14 @@ public class Query implements GraphQLQueryResolver {
 
 	public IfcFurnishingElement oneFurnishingElement(String globalId) throws IOException {
 		return furnishingElementService.getOneFurnishingElement(globalId);
+	}
+
+	public List<IfcMember> allMembers() throws IOException {
+		return memberService.getAllMembers();
+	}
+
+	public IfcMember oneMember(String globalId) throws IOException {
+		return memberService.getOneMember(globalId);
 	}
 
 	public List<IfcSlab> allSlabs() throws IOException {
